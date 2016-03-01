@@ -59,10 +59,11 @@ div.homepage {
   div.banner-top {
     background: url(../images/banner.png) no-repeat center center;
     background-size: cover;
-    padding: 250px 0;
+    padding: 170px 0 100px 0;
 
     div.message {
       text-align: center;
+      margin: 0;
       hr {
         width: 400px;
       }

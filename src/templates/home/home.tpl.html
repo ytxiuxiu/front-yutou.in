@@ -1,24 +1,23 @@
 <div class="homepage">
+  <!-- top banner -->
   <div class="banner banner-top">
     <div class="container">
       <div class="rows">
+        <!-- banner message -->
         <div class="message col-lg-12">
           <h1>Yutou.in</h1>
           <h3>A <span id="banner-typing"></span> Website of Johnny.</h3>
           <hr>
-          <ul class="list-inline">
-            <li>
-              <a href="https://twitter.com/ytxiuxiu" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-            </li>
-            <li>
-              <a href="https://github.com/ytxiuxiu" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-            </li>
-          </ul>
+          <!-- social list -->
+          <div ng-include="'templates/home/social-list.tpl.html'"></div>
         </div>
+        <!-- end banner message -->
       </div>
     </div>
   </div>
+  <!-- end top banner -->
 
+  <!-- main section -->
   <div class="container container-below-banner">
     <div class="rows">
       <div class="col-lg-3">
@@ -36,7 +35,9 @@
       </div>
     </div>
   </div>
+  <!-- end main section -->
 
+  <!-- bottom banner -->
   <div class="banner banner-bottom">
     <div class="container">
       <div class="row">
@@ -44,35 +45,31 @@
           <h2>Would like to know more:</h2>
         </div>
         <div class="col-lg-6 text-right">
-          <ul class="list-inline social-buttons">
-            <li>
-              <a href="https://twitter.com/ytxiuxiu" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
-            </li>
-            <li>
-              <a href="https://github.com/ytxiuxiu" target="_blank" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
-            </li>
-          </ul>
+          <div ng-include="templates/home/social-list.tpl.html"></div>
         </div>
       </div>
     </div>
   </div>
+  <!-- end bottom banner -->
 
+  <!-- footer -->
   <footer>
-      <div class="container">
-          <div class="row">
-              <div class="col-lg-12">
-                  <ul class="list-inline">
-                      <li>
-                          <a href="#">Home</a>
-                      </li>
-                      <li class="footer-menu-divider">⋅</li>
-                      <li>
-                          <a href="#about">About</a>
-                      </li>
-                  </ul>
-                  <p class="copyright text-muted small">Copyright © Yutou.in 2016. All Rights Reserved</p>
-              </div>
-          </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="list-inline">
+            <li>
+              <a href="#">Home</a>
+            </li>
+            <li class="footer-menu-divider">⋅</li>
+            <li>
+              <a href="#about">About</a>
+            </li>
+          </ul>
+          <p class="copyright text-muted small">Copyright © Yutou.in 2016. All Rights Reserved</p>
+        </div>
       </div>
+    </div>
   </footer>
+  <!-- end footer -->
 </div>

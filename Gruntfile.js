@@ -8,9 +8,15 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
 
     clean: {
-      build: ['dist'],
+      build: ['.tmp', 'dist'],
     },
-
+    copy: {
+      html: {
+        files: {
+          '.tmp/index.html': 'src/index.html',
+        },
+      },
+    },
     sass: {
       app: {
         files: [{
@@ -22,19 +28,13 @@ module.exports = function(grunt) {
         }],
       },
     },
-    copy: {
-      html: {
-        src: 'src/index.html',
-        dest: 'dist/index.html',
-      },
-    },
     imagemin: {
       img: {
         files: [{
           expand: true,
           cwd: 'src/',
           src: ['**/*.{png,jpg,gif}'],
-          dest: 'dist/'
+          dest: 'dist/',
         }],
       },
     },
@@ -49,17 +49,43 @@ module.exports = function(grunt) {
       options: {
         banner: '/*! <%= pkg.name %> - <%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
       },
+      templates: {
+        files: {
+          'dist/js/templates.js': ['.tmp/ngtemplates/templates.js'],
+        },
+      },
     },
 
     usemin: {
-      html: 'dist/index.html'
+      html: '.tmp/index.html'
     },
 
     ngtemplates: {
       app: {
-        cwd: 'src',
+        cwd: '.tmp/htmlmin',
         src: 'templates/**/*.html',
-        dest: 'dist/js/templates.js',
+        dest: '.tmp/ngtemplates/templates.js',
+      },
+    },
+
+    htmlmin: {
+      options: {
+        removeComments: true,
+        collapseWhitespace: true,
+      },
+      html: {
+        files: [{
+          src: '.tmp/index.html',
+          dest: 'dist/index.html',
+        }],
+      },
+      templates: {
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: 'templates/**/*.html',
+          dest: '.tmp/htmlmin',
+        }],
       },
     },
 
@@ -112,6 +138,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -121,14 +148,17 @@ module.exports = function(grunt) {
   grunt.registerTask('build', [
     'clean',
     'copy',
+    'htmlmin:templates',
     'sass',
     'imagemin',
     'useminPrepare', 
     'ngtemplates',
-    'concat', 
-    'cssmin',
-    'uglify',
+    'concat:generated', 
+    'cssmin:generated',
+    'uglify:generated',
     'usemin',
+    'htmlmin:html',
+    'uglify:templates',
     'connect:build',
     'open:build',
     'watch'

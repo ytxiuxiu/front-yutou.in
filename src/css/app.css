@@ -34,9 +34,10 @@ div.homepage div.banner {
 div.homepage div.banner-top {
   background: url(../images/banner.png) no-repeat center center;
   background-size: cover;
-  padding: 250px 0; }
+  padding: 170px 0 100px 0; }
   div.homepage div.banner-top div.message {
-    text-align: center; }
+    text-align: center;
+    margin: 0; }
     div.homepage div.banner-top div.message hr {
       width: 400px; }
 div.homepage div.container-below-banner {
