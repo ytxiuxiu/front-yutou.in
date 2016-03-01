@@ -51,7 +51,7 @@ module.exports = function(grunt) {
       },
       templates: {
         files: {
-          'dist/js/templates.js': ['.tmp/ngtemplates/templates.js'],
+          'dist/js/templates.min.js': ['.tmp/ngtemplates/templates.js'],
         },
       },
     },
