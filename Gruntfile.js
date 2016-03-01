@@ -16,6 +16,14 @@ module.exports = function(grunt) {
           '.tmp/index.html': 'src/index.html',
         },
       },
+      fonts: {
+        files: [{
+          expand: true,
+          cwd: 'src/css/icons/fonts',
+          src: '*.*',
+          dest: 'dist/css/fonts',
+        }],
+      },
     },
     sass: {
       app: {
