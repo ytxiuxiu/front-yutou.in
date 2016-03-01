@@ -1,4 +1,4 @@
-# front-yutou.in - Front-end of yutou.in
+### front-yutou.in - Front-end of yutou.in
 
 ## Install
 ### NPM dependencies
