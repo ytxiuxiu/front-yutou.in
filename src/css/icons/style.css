@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icons';
-    src:    url('fonts/icons.eot?3ayjh8');
-    src:    url('fonts/icons.eot?3ayjh8#iefix') format('embedded-opentype'),
-        url('fonts/icons.ttf?3ayjh8') format('truetype'),
-        url('fonts/icons.woff?3ayjh8') format('woff'),
-        url('fonts/icons.svg?3ayjh8#icons') format('svg');
+    src:    url('fonts/icons.eot?7zlm4i');
+    src:    url('fonts/icons.eot?7zlm4i#iefix') format('embedded-opentype'),
+        url('fonts/icons.ttf?7zlm4i') format('truetype'),
+        url('fonts/icons.woff?7zlm4i') format('woff'),
+        url('fonts/icons.svg?7zlm4i#icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -26,5 +26,8 @@
 
 .icon-brain:before {
     content: "\e900";
+}
+.icon-dictionary:before {
+    content: "\e901";
 }
 

@@ -10,6 +10,9 @@ module.exports = function(grunt) {
     clean: {
       build: ['.tmp', 'dist'],
     },
+    unzip: {
+      'src/css/icons': 'src/css/icons.zip',
+    },
     copy: {
       html: {
         files: {
@@ -136,6 +139,10 @@ module.exports = function(grunt) {
           spawn: false,
         },
       },
+      unzip: {
+        files: ['src/css/icons.zip'],
+        tesks: ['unzip'],
+      }
     },
 	});
 
@@ -152,9 +159,11 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-angular-templates');
+  grunt.loadNpmTasks('grunt-zip');
 
   grunt.registerTask('build', [
     'clean',
+    'unzip',
     'copy',
     'htmlmin:templates',
     'sass',
@@ -174,6 +183,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'sass',
+    'unzip',
     'connect:dev',
     'open:dev',
     'watch'
