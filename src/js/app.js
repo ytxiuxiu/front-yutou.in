@@ -6,7 +6,8 @@
 angular.module('app', [
     'ui.bootstrap', 
     'ui.router', 
-    'app.controllers'
+    'app.controllers',
+    'app.directives'
   ])
   .config(['$stateProvider', '$urlRouterProvider' ,function($stateProvider, $urlRouterProvider) {
     $stateProvider
