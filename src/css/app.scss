@@ -4,11 +4,33 @@
 // size
 $section-gap: 30px;
 
-
-
+div.below-navbar {
+  margin-top: 50px;
+}
 
 div.rows > div {
   margin-bottom: $section-gap;
+}
+
+/**
+ * icons
+ */
+
+button.btn.icon {
+  color: #777;
+  text-decoration: none;
+}
+button.btn.icon:hover {
+  color: #333;
+}
+button.btn.icon.disabled:hover {
+  color: #777;
+}
+.icon-large {
+  font-size: 70px;
+}
+.icon-medium {
+  font-size: 40px;
 }
 
 /**
@@ -20,12 +42,7 @@ body {
   font-size: 14px;
 }
 
-.icon-large {
-  font-size: 100px;
-}
-.icon-medium {
-  font-size: 40px;
-}
+
 
 div.homepage {
 
@@ -67,7 +84,7 @@ div.homepage {
   div.banner-top {
     background: url(../images/banner.png) no-repeat center center;
     background-size: cover;
-    padding: 170px 0 100px 0;
+    padding: 100px 0;
 
     div.message {
       text-align: center;

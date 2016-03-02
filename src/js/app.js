@@ -9,13 +9,14 @@ angular.module('app', [
     'app.controllers'
   ])
   .config(['$stateProvider', '$urlRouterProvider' ,function($stateProvider, $urlRouterProvider) {
-    $stateProvider.state('home', {
+    $stateProvider
+    .state('home', {
       url: '',
       templateUrl: 'templates/home/home.tpl.html',
       controller: 'HomeController',
     })
     .state('links', {
-      url: 'links',
+      url: '/links',
       templateUrl: 'templates/links/links.tpl.html',
       controller: 'LinksController',
     });

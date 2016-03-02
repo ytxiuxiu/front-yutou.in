@@ -3,8 +3,11 @@
 *
 * Description
 */
-angular.module('app.controllers', []).
-  controller('HomeController', ['$scope', function($scope) {
+angular.module('app.controllers', [])
+  .controller('HomeController', ['$scope', function($scope) {
 
+    
+  }])
+  .controller('LinksController', ['$scope', function($scope) {
     
   }]);
