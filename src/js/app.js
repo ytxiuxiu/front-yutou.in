@@ -1,5 +1,5 @@
 /**
-* yutouApp Module
+* app Module
 *
 * Description
 */
@@ -7,7 +7,8 @@ angular.module('app', [
     'ui.bootstrap', 
     'ui.router', 
     'app.controllers',
-    'app.directives'
+    'app.directives',
+    'app.services'
   ])
   .config(['$stateProvider', '$urlRouterProvider' ,function($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -17,7 +18,7 @@ angular.module('app', [
       controller: 'HomeController',
     })
     .state('links', {
-      url: '/links',
+      url: '/links/{category}',
       templateUrl: 'templates/links/links.tpl.html',
       controller: 'LinksController',
     });

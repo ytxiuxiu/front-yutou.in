@@ -4,8 +4,10 @@
 // size
 $section-gap: 30px;
 
+$space-below-navbar: 17px;
+
 div.below-navbar {
-  margin-top: 50px;
+  margin-top: (50px + $space-below-navbar);
 }
 
 div.rows > div {
@@ -16,15 +18,32 @@ div.rows > div {
  * icons
  */
 
-button.btn.icon {
+.btn.icon {
   color: #777;
   text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+  a {
+    color: #777;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #333;
+  }
 }
-button.btn.icon:hover {
-  color: #333;
-}
-button.btn.icon.disabled:hover {
+.btn.icon.disabled a:hover {
   color: #777;
+}
+.btn.icon img {
+  max-width: 50px;
+  max-height: 50px;
+  margin-bottom: 7px;
+}
+@media screen and (min-width: 992px) {
+  .btn.icon img {
+    max-width: 70px;
+    max-height: 70px;
+  }
 }
 .icon-large {
   font-size: 70px;
@@ -45,6 +64,7 @@ body {
 
 
 div.homepage {
+  margin-top: -$space-below-navbar;
 
   h1, h2, h3, h4, h5 {
     margin-top: 10px;

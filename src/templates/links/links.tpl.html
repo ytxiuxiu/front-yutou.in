@@ -1,3 +1,50 @@
 <div class="links">
-  hi
+  <div class="rows">
+    <!-- sidebar -->
+    <div class="col-sm-3">
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="item in links.categories" ng-class="{ active: item.link == links.category.link }" ui-sref="links({category: item.link})">{{ item.name }}</a>
+      </div>
+    </div>
+    <!-- end sidebar -->
+    <!-- main section -->
+    <div class="col-sm-9">
+      <div class="page-header">
+        <h1>Links <small ng-bind="links.category.name"></small></h1>
+      </div>
+      <div class="rows">
+        <!-- link -->
+        <div class="col-md-2 col-xs-3 text-center" ng-repeat="link in links.links">
+          <div class="btn btn-link icon">
+            <a href="{{ link.url }}" target="_blank">
+              <div>
+                <img src="{{ link.icon }}" class="img-responsive" alt="{{ link.name }}">
+              </div>
+            </a>
+            <!-- text -->
+            <!-- dropdown -->
+            <span uib-dropdown ng-if="link.dropdown" on-toggle="toggled(open)">
+              <a href id="links-dropdown-{{ link.name }}" uib-dropdown-toggle>
+                {{ link.name }} <span class="caret"></span>
+              </a>
+              <!-- dropdown items -->
+              <ul uib-dropdown-menu aria-labelledby="links-dropdown-{{ link.name }}">
+                <li ng-repeat="item in link.dropdown">
+                  <a href="{{ item.url }}" target="_blank">{{ item.name }}</a>
+                </li>
+              </ul>
+              <!-- end dropdown items -->
+            </span>
+            <!-- end dropdown -->
+            <a ng-if="!link.dropdown" href="{{ link.url }}" target="_blank">
+              {{ link.name }}
+            </a>
+            <!-- end text -->
+          </div>
+        </div>
+        <!-- end link -->
+      </div>
+    </div>
+    <!-- end main section -->
+  </div>
 </div>
