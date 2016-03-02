@@ -139,10 +139,6 @@ module.exports = function(grunt) {
           spawn: false,
         },
       },
-      unzip: {
-        files: ['src/css/icons.zip'],
-        tesks: ['unzip'],
-      }
     },
 	});
 
