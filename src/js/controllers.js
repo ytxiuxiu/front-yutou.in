@@ -8,11 +8,12 @@ angular.module('app.controllers', [])
 
     
   }])
-  .controller('LinksController', ['$scope', '$stateParams', 'LinksService', function($scope, $stateParams, linksService) {
+  .controller('LinksController', ['$scope', '$stateParams', 'LinksService', 
+    function($scope, $stateParams, linksService) {
     $scope.links = {
       categories: null,
       category: null,
-      links: null,
+      links: null
     };
 
     // get all categories
@@ -37,4 +38,44 @@ angular.module('app.controllers', [])
     });
     
     
+  }])
+  .controller('KnowledgeController', ['$scope', '$stateParams', 'KnowledgeService', 
+    function($scope, $stateParams, knowledgeService) {
+    $scope.knowledge = {
+      categories: null,
+      category: null,
+      map: null
+    };
+
+    // get all categories
+    knowledgeService.getAllCategories().then(function(response) {
+      $scope.knowledge.categories = response.data.categories;
+
+      // find out current category
+      if ($stateParams.category) {
+        for (var i = 0; i < $scope.knowledge.categories.length; i++) {
+          if ($scope.knowledge.categories[i].link == $stateParams.category) {
+            $scope.knowledge.category = $scope.knowledge.categories[i];
+          }
+        }
+      } else {
+        $scope.knowledge.category = $scope.knowledge.categories[0];
+      }
+
+      // get map of current category
+      knowledgeService.getMap($scope.knowledge.category.link).then(function(response) {
+        $scope.knowledge.map = response.data.map;
+
+        
+      });
+    });
   }]);
+
+
+
+
+
+
+
+
+

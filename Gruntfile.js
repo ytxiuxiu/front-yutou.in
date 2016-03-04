@@ -27,6 +27,14 @@ module.exports = function(grunt) {
           dest: 'dist/css/fonts',
         }],
       },
+      api: {
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: 'api/**/*.json',
+          dest: 'dist',
+        }],
+      },
     },
     sass: {
       app: {
@@ -125,7 +133,7 @@ module.exports = function(grunt) {
     },
     watch: {
       html: {
-        files: ['src/**/*.html', 'src/**/*.js', 'src/**/*.css'],
+        files: ['src/**/*.html', 'src/**/*.js', 'src/**/*.css', 'src/**/*.json'],
         options: {
           livereload: true,
           spawn: false,
