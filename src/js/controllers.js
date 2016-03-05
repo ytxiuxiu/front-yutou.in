@@ -41,6 +41,7 @@ angular.module('app.controllers', [])
   }])
   .controller('KnowledgeController', ['$scope', '$stateParams', 'KnowledgeService', 
     function($scope, $stateParams, knowledgeService) {
+
     $scope.knowledge = {
       categories: null,
       category: null,
@@ -65,10 +66,17 @@ angular.module('app.controllers', [])
       // get map of current category
       knowledgeService.getMap($scope.knowledge.category.link).then(function(response) {
         $scope.knowledge.map = response.data.map;
-
-        
       });
     });
+
+    $scope.onDragstart = function(list, event) {
+       list.dragging = true;
+       if (event.dataTransfer.setDragImage) {
+         var img = new Image();
+         img.src = 'images/node.png';
+         event.dataTransfer.setDragImage(img, 0, 0);
+       }
+    };
   }]);
 
 

@@ -6,6 +6,12 @@ $section-gap: 30px;
 
 $space-below-navbar: 17px;
 
+
+body {
+  overflow-x: hidden;
+}
+
+
 div.below-navbar {
   margin-top: (50px + $space-below-navbar);
 }
@@ -112,6 +118,11 @@ div.homepage {
       hr {
         width: 400px;
       }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    div.banner-top {
+      background: url(../images/banner.png) no-repeat;
     }
   }
 

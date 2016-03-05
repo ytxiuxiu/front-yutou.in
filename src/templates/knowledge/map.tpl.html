@@ -1,0 +1,51 @@
+<div class="links">
+  <div class="rows">
+    <!-- sidebar -->
+    <div class="col-sm-3">
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="item in knowledge.categories" ng-class="{ active: item.link == knowledge.category.link }" ui-sref="knowledge({category: item.link})">{{ item.name }}</a>
+      </div>
+    </div>
+    <!-- end sidebar -->
+    <!-- main section -->
+    <div class="col-sm-9">
+      <div class="page-header">
+        <h1>Knowledge <small ng-bind="knowledge.category.name"></small></h1>
+      </div>
+      <div class="rows">
+        <!-- map -->
+        <div class="map-container col-xs-12">
+          <div class="map" ng-if="knowledge.map">
+            <div class="node node-root" href="#">
+              {{ knowledge.map.name }}
+            </div>
+            <ul class="children"
+              dnd-list="knowledge.map.children">
+              <li ng-repeat="child in knowledge.map.children" 
+                dnd-draggable="child"
+                dnd-dragstart="onDragstart(knowledge.map.children, event)"
+                dnd-moved="knowledge.map.children.splice($index, 1)"
+                ng-include="'templates/knowledge/map-node.tpl.html'" 
+                class="children-item"></li>
+              <li class="children-item dndPlaceholder">
+                <span class="icon-arrow-left"></span> Drop here
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- end map -->
+      </div>
+    </div>
+    <!-- end main section -->
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+

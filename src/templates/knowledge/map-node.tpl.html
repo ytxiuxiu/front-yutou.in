@@ -1,0 +1,26 @@
+<!-- with popover if content -->
+<div class="node" ng-if="child.content" ng-class="{'have-children': child.children, 'have-small': child.small}" uib-popover-template="'templates/knowledge/map-node-popover.tpl.html'" popover-placement="bottom">
+  <div><span class="icon icon-text"></span> {{ child.name }}</div>
+  <div class="small" ng-if="child.small">{{ child.small }}</div>
+</div>
+<!-- end with popover if content -->
+<!-- without popover -->
+<div class="node" ng-if="!child.content" ng-class="{'have-children': child.children, 'have-small': child.small}">
+  <div>{{ child.name }}</div>
+  <div class="small" ng-if="child.small">{{ child.small }}</div>
+</div>
+<!-- end without popover -->
+<ul class="children" ng-if="child.children"
+  dnd-list="child.children"
+  ng-init="list = child.children">
+  <li ng-repeat="child in child.children"
+    dnd-draggable="child"
+    dnd-effect-allowed="move"
+    dnd-dragstart="onDragstart(list, event)"
+    dnd-moved="list.splice($index, 1)"
+    ng-include="'templates/knowledge/map-node.tpl.html'" 
+    class="children-item"></li>
+  <li class="children-item dndPlaceholder">
+    <span class="icon-arrow-left"></span> Drop here
+  </li>
+</ul>

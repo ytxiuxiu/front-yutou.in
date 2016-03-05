@@ -10,7 +10,8 @@ angular.module('app', [
     'app.controllers',
     'app.directives',
     'app.services',
-    'app.filters'
+    'app.filters',
+    'dndLists'
   ])
   .config(['$stateProvider', '$urlRouterProvider' ,function($stateProvider, $urlRouterProvider) {
     $stateProvider
