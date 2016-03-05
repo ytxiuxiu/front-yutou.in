@@ -1,0 +1,16 @@
+{
+  "categories": [{
+      "id": 1,
+      "name": "MIT Semester 1",
+      "link": "mit-semester-1"
+    }, {
+      "id": 2,
+      "name": "Back-end",
+      "link": "back-end"
+    }, {
+      "id": 3,
+      "name": "Version Control",
+      "link": "version-control"
+    }],
+  "error": null
+}

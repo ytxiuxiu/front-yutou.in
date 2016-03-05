@@ -1,0 +1,118 @@
+{
+  "map": {
+    "name": "Semester 1",
+    "children": [{
+        "name": "FIT9131",
+        "small": "Programming",
+        "children": [{
+            "name": "Week 1",
+            "small": "Basic OO concepts"
+          }, {
+            "name": "Week 2",
+            "small": "Class define"
+          }, {
+            "name": "Week 3"
+          }, {
+            "name": "Week 4"
+          }]
+      }, {
+        "name": "FIT9132",
+        "small": "Database",
+        "children": [{
+            "name": "Week 1",
+            "small": "Introduction to database"
+          }, {
+            "name": "Week 2",
+            "small": "Relational Model"
+          }, {
+            "name": "Week 3",
+            "small": "SQL Data Definition"
+          }, {
+            "name": "SQL Query",
+            "children": [{
+                "name": "Week 4",
+                "small": "Single and multiple tables retrieval"
+              }, {
+                "name": "Week 5",
+                "small": "aggregate function and group by clause"
+              }]
+          }]
+      }, {
+        "name": "FIT9134",
+        "small": "Operating System",
+        "children": [{
+            "name": "Week 1",
+            "small": "Introduction to Digital Computers"
+          }, {
+            "name": "Week 2",
+            "small": "Introduction to Operating Systems"
+          }]
+      }, {
+        "name": "FIT9135",
+        "small": "Network",
+        "children": [{
+            "name": "Week 1",
+            "small": "Introduction to Data Communications",
+            "children": [{
+                "name": "Components",
+                "children": [{
+                    "name": "Server",
+                    "small": "Peer-to-peer networks without server"
+                  }, {
+                    "name": "Circuit",
+                    "small": "Switch & cable"
+                  }, {
+                    "name": "Router",
+                    "small": "Connects 2/more networks"
+                  }, {
+                    "name": "Client",
+                    "small": "Personal computer"
+                  }]
+              }, {
+                "name": "Types",
+                "children": [{
+                    "name": "LAN",
+                    "small": "Local Area Network",
+                    "content": "<p>100Mbps (100 Mega bit / s)</p>"
+                  }, {
+                    "name": "BN",
+                    "small": "Backbone Network",
+                    "content": "<p>100 - 1000Mbps</p>"
+                  }, {
+                    "name": "MAN",
+                    "small": "Metropolitan Area Network"
+                  }, {
+                    "name": "WAN",
+                    "small": "Wide Area Network",
+                    "content": "<p>64Kbps - 10Gbps</p>"
+                  }]
+              }, {
+                "name": "Network Models",
+                "children": [{
+                  "name": "OSI Model",
+                  "small": "Open System Interconnection Reference Model"
+                }, {
+                  "name": "Internet Model",
+                  "children": [{
+                    "name": "Physical Layer",
+                    "content": "<p>Physical connection between the sender and receiver, transfer a series signals through the circuit.</p><h2>Include</h2><ul><li>Hardware devices<ul><li>Computers</li><li>Modems</li><li>Switches</li></ul></li><li>Physical media<ul><li>Cables</li><li>Satellites</li></ul></li></ul>"
+                  }]
+                }]
+              }]
+          }, {
+            "name": "Week 2",
+            "small": "Application Layer"
+          }, {
+            "name": "Week 3",
+            "small": "Physical Layer"
+          }, {
+            "name": "Week 4",
+            "small": "Data Link Layer"
+          }, {
+            "name": "Week 5",
+            "small": "Network and Transport Layers"
+          }]
+      }]
+  },
+  "error": null
+}
