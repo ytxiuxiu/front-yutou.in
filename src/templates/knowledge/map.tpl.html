@@ -13,6 +13,23 @@
         <h1>Knowledge <small ng-bind="knowledge.category.name"></small></h1>
       </div>
       <div class="rows">
+        <div class="">
+          <ul class="toolbar-item">
+            <li ng-repeat="child in knowledge.newNode" 
+              dnd-draggable="child"
+              dnd-effect-allowed="copy"
+              dnd-dragstart="onDragstart(knowledge.newNode, event)"
+              class="btn btn-default"
+              uib-popover="Drag to add new node">
+              {{ child.name }}
+            </li>
+          </ul>
+
+          <ul class="toolbar-item trash"
+            dnd-list="[]">
+            <li class="btn btn-default" uib-popover="Drop node here to remove">Trash</li>
+          </ul>
+        </div>
         <!-- map -->
         <div class="map-container col-xs-12">
           <div class="map" ng-if="knowledge.map">

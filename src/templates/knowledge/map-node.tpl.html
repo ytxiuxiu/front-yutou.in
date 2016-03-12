@@ -1,18 +1,28 @@
 <!-- with popover if content -->
 <div class="node" ng-if="child.content" ng-class="{'have-children': child.children, 'have-small': child.small}" uib-popover-template="'templates/knowledge/map-node-popover.tpl.html'" popover-placement="bottom">
-  <div><span class="icon icon-text"></span> {{ child.name }}</div>
-  <div class="small" ng-if="child.small">{{ child.small }}</div>
+  <div><span class="icon icon-text"></span>
+    <input type="text" dnd-nodrag pu-elastic-input ng-model="child.name" placeholder="Node Name">
+  </div>
+  <div>
+    <input type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" placeholder="Description">
+  </div>
 </div>
 <!-- end with popover if content -->
 <!-- without popover -->
-<div class="node" ng-if="!child.content" ng-class="{'have-children': child.children, 'have-small': child.small}">
-  <div>{{ child.name }}</div>
-  <div class="small" ng-if="child.small">{{ child.small }}</div>
+<div class="node" ng-if="!child.content" ng-class="{'have-one-child': child.children && child.children.length == 1, 'have-more-than-one-children': child.children && child.children.length > 1, 'have-small': child.small}">
+  <div>
+    <input type="text" dnd-nodrag pu-elastic-input ng-model="child.name" placeholder="Node Name">
+  </div>
+  <div>
+    <input type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" placeholder="Description">
+  </div>
 </div>
 <!-- end without popover -->
-<ul class="children" ng-if="child.children"
+<ul ng-if="child.children"
   dnd-list="child.children"
-  ng-init="list = child.children">
+  ng-init="list = child.children"
+  ng-class="{'no-child': list.length == 0}"
+  class="children">
   <li ng-repeat="child in child.children"
     dnd-draggable="child"
     dnd-effect-allowed="move"

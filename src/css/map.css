@@ -7,6 +7,7 @@
   -moz-user-select: none;
   user-select: none;
   white-space: nowrap;
+  /* Input */
   /* Draggable */
   /* Popover */ }
   .map .node {
@@ -22,11 +23,17 @@
     direction: ltr;
     font-size: 14px;
     max-width: 150px; }
+    .map .node input.small {
+      max-width: 138px !important; }
+  .map ul.children.new-node:before {
+    border: 0; }
   .map .node:hover {
     box-shadow: 0 0 3px 0 #3498DB;
     max-width: 300px; }
-    .map .node:hover ~ ol .node {
+    .map .node:hover ~ ul .node {
       box-shadow: 0 0 3px 0 #a8d3f0; }
+    .map .node:hover input.small {
+      max-width: 300px !important; }
   .map .node:active {
     box-shadow: 0 0 1px 0 #3498DB;
     max-width: 300px; }
@@ -42,7 +49,7 @@
     padding: 5px 15px;
     position: relative;
     top: 3px; }
-  .map .children {
+  .map ul.children {
     position: relative;
     list-style: none;
     margin: 0;
@@ -50,20 +57,29 @@
     padding: 0 0 0 10px;
     display: inline-block;
     vertical-align: middle; }
-  .map .children:before {
+  .map ul.children:before {
     content: '';
     position: absolute;
     top: 50%;
     left: -2px;
     width: 12px;
     border-top: 1px solid #ccc; }
-  .map .children-item {
+  .map li.children-item {
     position: relative;
     padding: 0 0 0 12px;
     border-left: 1px solid #ccc; }
-  .map .have-children.have-small {
+  .map .have-one-child.have-small {
+    position: relative;
+    top: 3px; }
+    .map .have-one-child.have-small ~ ul {
+      top: -11px; }
+  .map .have-more-than-one-children.have-small {
     position: relative;
     top: 15px; }
+  .map .have-small ~ .no-child {
+    top: -15px; }
+  .map ul.children.no-child:before {
+    border: 0; }
   .map .children-item:first-child, .map .children-item:last-child {
     border-left: 1px solid transparent; }
   .map .children-item:before {
@@ -94,10 +110,17 @@
     border: 0;
     border-radius: 0;
     border-top: 1px solid #ccc; }
+  .map li input {
+    padding: 0;
+    margin: 0;
+    border: 0; }
   .map ul[dnd-list], .map ul[dnd-list] > li {
     position: relative; }
   .map ul[dnd-list] .dndDraggingSource {
     display: none; }
+  .map ul[dnd-list].no-child {
+    width: 100px;
+    height: 26px; }
   .map .dndPlaceholder {
     padding-top: 3px;
     padding-left: 15px; }
@@ -126,5 +149,14 @@
         font-size: 14px; }
       .map .popover .popover-content ul {
         padding-left: 20px; }
+
+/* Trash */
+.trash .dndPlaceholder {
+  display: none; }
+
+.trash.dndDragover li.btn {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad; }
 
 /*# sourceMappingURL=map.css.map */

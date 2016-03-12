@@ -45,7 +45,11 @@ angular.module('app.controllers', [])
     $scope.knowledge = {
       categories: null,
       category: null,
-      map: null
+      map: null,
+      newNode: [{
+        name: 'New Node',
+        children: []
+      }],
     };
 
     // get all categories

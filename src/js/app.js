@@ -11,7 +11,8 @@ angular.module('app', [
     'app.directives',
     'app.services',
     'app.filters',
-    'dndLists'
+    'dndLists',
+    'puElasticInput'
   ])
   .config(['$stateProvider', '$urlRouterProvider' ,function($stateProvider, $urlRouterProvider) {
     $stateProvider

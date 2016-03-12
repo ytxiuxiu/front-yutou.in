@@ -31,12 +31,23 @@ $node-popover-width: 400px;
 	  direction: ltr;
 	  font-size: 14px;
 	  max-width: $max-node-width;
+
+	  input.small {
+	  	max-width: $max-node-width - 12px !important;
+	  }
+	}
+	ul.children.new-node:before {
+		border: 0;
 	}
 	.node:hover {
 	  box-shadow: 0 0 3px 0 #3498DB;
 	  max-width: $max-hover-node-width;
-	  ~ ol .node {
+	  ~ ul .node {
 	  	box-shadow: 0 0 3px 0 #a8d3f0;
+	  }
+
+	  input.small {
+	  	max-width: $max-hover-node-width !important;
 	  }
 	}
 	.node:active {
@@ -58,7 +69,7 @@ $node-popover-width: 400px;
 	  top: 3px;
 	}
 
-	.children {
+	ul.children {
 	  position: relative;
 	  list-style: none;
 	  margin: 0;
@@ -67,7 +78,7 @@ $node-popover-width: 400px;
 	  display: inline-block;
 	  vertical-align: middle;
 	}
-	.children:before {
+	ul.children:before {
 	  content: '';
 	  position: absolute;
 	  top: 50%;
@@ -75,14 +86,27 @@ $node-popover-width: 400px;
 	  width: $length-left-connection-line;
 	  border-top: 1px solid #ccc;
 	}
-	.children-item {
+	li.children-item {
 	  position: relative;
 	  padding: 0 0 0 $length-right-connection-line;
 	  border-left: 1px solid #ccc;
 	}
-	.have-children.have-small {
+	.have-one-child.have-small {
+		position: relative;
+		top: 3px;
+		~ ul {
+			top: -11px;
+		}
+	}
+	.have-more-than-one-children.have-small {
 		position: relative;
 		top: 15px;
+	}
+	.have-small ~ .no-child {
+		top: -15px;
+	}
+	ul.children.no-child:before {
+		border: 0;
 	}
 
 	.children-item:first-child, .children-item:last-child {
@@ -121,6 +145,13 @@ $node-popover-width: 400px;
 	  border-top: 1px solid #ccc;
 	}
 
+	/* Input */
+	li input {
+		padding: 0;
+		margin: 0;
+		border: 0;
+	}
+
 	/* Draggable */
 	ul[dnd-list], ul[dnd-list] > li {
 	  position: relative;
@@ -128,6 +159,11 @@ $node-popover-width: 400px;
 	ul[dnd-list] .dndDraggingSource {
 	  display: none;
 	}
+	ul[dnd-list].no-child {
+		width: 100px;
+	  height: 26px;
+	}
+	
 	.dndPlaceholder {
 		padding-top: 3px;
 		padding-left: 15px;
@@ -175,7 +211,15 @@ $node-popover-width: 400px;
 	}
 }
 
-
+/* Trash */
+.trash .dndPlaceholder {
+  display: none;
+}
+.trash.dndDragover li.btn {
+	color: #333;
+	background-color: #e6e6e6;
+	border-color: #adadad;
+}
 
 
 
