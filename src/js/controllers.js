@@ -4,6 +4,43 @@
 * Description
 */
 angular.module('app.controllers', [])
+  .controller('AppController', ['$scope', 'GooglePlus', function($scope, GooglePlus) {
+    $scope.auth = {
+      user: {},
+      logout: function() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function() {
+          $scope.user = {};
+          $scope.$apply();
+        });
+      },
+      login: function(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var auth = $scope.auth;
+        auth.user.name = profile.getName();
+        auth.user.familyName = profile.getFamilyName();
+        auth.user.givenName = profile.getGivenName();
+        auth.user.email = profile.getEmail();
+        auth.user.image = profile.getImageUrl();
+        auth.user.idToken = googleUser.getAuthResponse().id_token;
+        $scope.$apply();
+      }
+    };
+
+    gapi.load('auth2', function() {
+      auth2 = gapi.auth2.init({
+        client_id: '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com',
+        cookiepolicy: 'single_host_origin',
+        scope: 'email profile'
+      });
+      auth2.attachClickHandler(document.getElementById('btn-login'), {},
+        function(googleUser) {
+          $scope.auth.login(googleUser);
+        }, function(error) {
+          alert(JSON.stringify(error, undefined, 2));
+        });
+    });
+  }])
   .controller('HomeController', ['$scope', function($scope) {
 
     

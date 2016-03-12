@@ -12,9 +12,10 @@ angular.module('app', [
     'app.services',
     'app.filters',
     'dndLists',
-    'puElasticInput'
+    'puElasticInput',
+    'googleplus'
   ])
-  .config(['$stateProvider', '$urlRouterProvider' ,function($stateProvider, $urlRouterProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('home', {
       url: '',
@@ -31,4 +32,9 @@ angular.module('app', [
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
     });
+  }])
+  .config(['GooglePlusProvider', function(GooglePlusProvider) {
+     GooglePlusProvider.init({
+        clientId: '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com'
+     });
   }]);
