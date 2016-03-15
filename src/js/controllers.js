@@ -3,39 +3,49 @@
 *
 * Description
 */
+var GOOGLE_LOGIN_API_GLIENT_ID = '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com';
+
 angular.module('app.controllers', [])
-  .controller('AppController', ['$scope', 'GooglePlus', function($scope, GooglePlus) {
+  .controller('AppController', ['$scope', '$localStorage', 'AppService', function($scope, $localStorage, appService) {
     $scope.auth = {
       user: {},
       logout: function() {
         var auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(function() {
-          $scope.user = {};
+          $scope.auth.user = {};
+          $scope.$storage.auth = null;
           $scope.$apply();
         });
-      },
-      login: function(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        var auth = $scope.auth;
-        auth.user.name = profile.getName();
-        auth.user.familyName = profile.getFamilyName();
-        auth.user.givenName = profile.getGivenName();
-        auth.user.email = profile.getEmail();
-        auth.user.image = profile.getImageUrl();
-        auth.user.idToken = googleUser.getAuthResponse().id_token;
-        $scope.$apply();
       }
     };
+    $scope.$storage = $localStorage;
 
+    // auth
+    if ($scope.$storage.auth && $scope.$storage.auth.idToken) {
+      // if idToken in local storage
+      appService.auth($scope.$storage.auth.idToken).then(function(response) {
+        $scope.auth.user = response.data.user;
+      });
+    }
+
+    // init login button
     gapi.load('auth2', function() {
       auth2 = gapi.auth2.init({
-        client_id: '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com',
+        client_id: GOOGLE_LOGIN_API_GLIENT_ID,
         cookiepolicy: 'single_host_origin',
         scope: 'email profile'
       });
       auth2.attachClickHandler(document.getElementById('btn-login'), {},
         function(googleUser) {
-          $scope.auth.login(googleUser);
+          var idToken = googleUser.getAuthResponse().id_token;
+          // auth
+          appService.auth(idToken).then(function(response) {
+            $scope.auth.user = response.data.user;
+            // store idToken in local storage
+            $scope.$storage.auth = {
+              idToken: idToken
+            };
+          });
         }, function(error) {
           alert(JSON.stringify(error, undefined, 2));
         });

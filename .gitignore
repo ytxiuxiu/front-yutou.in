@@ -3,10 +3,8 @@
 bower_components
 dist
 node_modules
-src/css/app.css
-src/css/app.css.map
-src/css/map.css
-src/css/map.css.map
+src/css/*.css
+src/css/*.css.map
 src/css/icons/demo-files
 src/css/icons/demo.html
 src/css/icons/Read Me.txt

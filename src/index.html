@@ -38,13 +38,13 @@
             <li><a href="#">About</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
-            <li ng-class="{ hidden: auth.user.name }">
+            <li ng-class="{ hidden: auth.user.email }">
                <a id="btn-login">Login</a>
             </li>
-            <li ng-if="auth.user.name">
-              <a ng-bind="auth.user.name"></a>
+            <li ng-if="auth.user.email">
+              <a ng-bind="auth.user.givenName"></a>
             </li>
-            <li ng-if="auth.user.name">
+            <li ng-if="auth.user.email">
               <a ng-click="auth.logout()">Logout</a>
             </li>
           </ul>
@@ -66,7 +66,7 @@
     <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="/bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
     <script src="/bower_components/angular-elastic-input/src/angular-elastic-input.js"></script>
-    <script src="/bower_components/angular-google-plus/src/angular-google-plus.js"></script>
+    <script src="/bower_components/ngstorage/ngstorage.js"></script>
     <!-- endbuild -->
     <!-- build:js js/script.min.js -->
     <script src="js/app.js"></script>
@@ -75,17 +75,26 @@
     <script src="js/http-error-handler.js"></script>
     <script src="js/services.js"></script>
     <script src="js/filters.js"></script>
-    <script src="js/google-login.js"></script>
     <!-- endbuild -->
     <script src="js/templates.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
     <script src="https://apis.google.com/js/api:client.js"></script>
+
+    <!-- google login -->
     <script>
-      function onSignIn(googleUser) {
-        var auth = window.$scope.auth;
-        auth.login(googleUser);
-      }
+      // function onSignIn(googleUser) {
+      //   var xhr = new XMLHttpRequest();
+      //   xhr.open('POST', '/api/' + 'auth/');
+      //   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      //   xhr.onload = function() {
+      //     window.$scope.auth.user = JSON.parse(xhr.responseText).user;
+      //     console.log('Signed in as: ' + JSON.parse(xhr.responseText));
+      //   };
+      //   xhr.send('idToken=' + googleUser.getAuthResponse().id_token);
+      //   console.log(googleUser.getAuthResponse().id_token);
+      // }
     </script>
     <div class="g-signin2" data-onsuccess="onSignIn" style="display: none"></div>
+    <!-- end google login -->
   </body>
 </html>

@@ -13,7 +13,7 @@ angular.module('app', [
     'app.filters',
     'dndLists',
     'puElasticInput',
-    'googleplus'
+    'ngStorage'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -33,8 +33,41 @@ angular.module('app', [
       controller: 'KnowledgeController'
     });
   }])
-  .config(['GooglePlusProvider', function(GooglePlusProvider) {
-     GooglePlusProvider.init({
-        clientId: '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com'
-     });
+  .config(['$httpProvider',function($httpProvider) {
+    $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+    $httpProvider.defaults.transformRequest = [function(data) {
+      var param = function(obj) {
+        var query = '';
+        var name, value, fullSubName, subName, subValue, innerObj, i;
+        for (name in obj) {
+          value = obj[name];
+          if (value instanceof Array) {
+            for (i = 0; i < value.length; ++i) {
+              subValue = value[i];
+              fullSubName = name + '[' + i + ']';
+              innerObj = {};
+              innerObj[fullSubName] = subValue;
+              query += param(innerObj) + '&';
+            }
+          } else if (value instanceof Object) {
+            for (subName in value) {
+              subValue = value[subName];
+              fullSubName = name + '[' + subName + ']';
+              innerObj = {};
+              innerObj[fullSubName] = subValue;
+              query += param(innerObj) + '&';
+            }
+          } else if (value !== undefined && value !== null) {
+            query += encodeURIComponent(name) + '='
+              + encodeURIComponent(value) + '&';
+          }
+        }
+        return query.length ? query.substr(0, query.length - 1) : query;
+      };
+      return angular.isObject(data) && String(data) !== '[object File]'
+        ? param(data)
+        : data;
+    }];
   }]);
