@@ -13,7 +13,8 @@ angular.module('app', [
     'app.filters',
     'dndLists',
     'puElasticInput',
-    'ngStorage'
+    'ngStorage',
+    'typer'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider

@@ -108,6 +108,22 @@ module.exports = function(grunt) {
       },
     },
 
+    cloudinary: {
+      options: {
+        roots: [
+          'dist'
+        ]
+      },
+      images: {
+        files: [{
+          expand: true,
+          cwd: 'dist',
+          src: ['css/**/*.css', '**/*.html'],
+          dest: 'dist'
+        }],
+      },
+    },
+
     connect: {
       dev: {
         options: {
@@ -164,6 +180,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-usemin');
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-zip');
+  grunt.loadNpmTasks('grunt-cloudinary-upload');
 
   grunt.registerTask('build', [
     'clean',
@@ -174,12 +191,13 @@ module.exports = function(grunt) {
     'imagemin',
     'useminPrepare', 
     'ngtemplates',
-    'concat:generated', 
+    'concat:generated',
     'cssmin:generated',
     'uglify:generated',
     'usemin',
     'htmlmin:html',
     'uglify:templates',
+    'cloudinary',
     'connect:build',
     'open:build',
     'watch'
