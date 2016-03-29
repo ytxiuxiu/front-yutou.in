@@ -36,6 +36,12 @@ $node-popover-width: 400px;
 	  	max-width: $max-node-width - 12px !important;
 	  }
 	}
+	.node.dirty {
+		background-color: #f2ffe6;
+		input {
+			background-color: #f2ffe6;
+		}
+	}
 	ul.children.new-node:before {
 		border: 0;
 	}

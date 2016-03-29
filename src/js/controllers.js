@@ -96,6 +96,7 @@ angular.module('app.controllers', [])
         var node = list[index];
         node.editionId = appService.uuid();
         node.path = parent.path + '/' + node.node.nodeId;
+        node.dirty = true;
         $scope.knowledge.history.push({
           type: 'update',
           node: node
@@ -118,7 +119,8 @@ angular.module('app.controllers', [])
             path: $itemScope.child.path + '/' + nodeId,
             small: null,
             content: null,
-            children: []
+            children: [],
+            dirty: true
           });
           $scope.knowledge.history.push({
             type: 'add',
@@ -126,17 +128,19 @@ angular.module('app.controllers', [])
           });
         }],
         ['Remove', function($itemScope) {
-          $itemScope.list[$itemScope.$index].editionId = appService.uuid();
-          $itemScope.list[$itemScope.$index].deleted = true;
+          var node = $itemScope.list[$itemScope.$index];
+          node.editionId = appService.uuid();
+          node.deleted = true;
           $scope.knowledge.history.push({
             type: 'remove',
-            node: $itemScope.list[$itemScope.$index]
+            node: node
           });
           $itemScope.list.splice($itemScope.$index, 1);
         }]
       ],
       change: function(node) {
         node.editionId = appService.uuid();
+        node.dirty = true;
         $scope.knowledge.history.push({
           type: 'update',
           node: node
@@ -145,39 +149,45 @@ angular.module('app.controllers', [])
       save: function() {
         var history = $scope.knowledge.history;
         var saveList = [];
-        for (i = history.length - 1; i >= 0; i--) {
-          var add = true;
-          for (j = 0; j < saveList.length; j++) {
-            // do not add same type changing of a same node
-            if (saveList[j].node.nodeId === history[i].node.nodeId) {
-              if (saveList[j].type === history[i].type) {
-                add = false;
-              }
-              // do not add update after add of a same node
-              else if (saveList[j].type === 'update' && history[i].type === 'add') {
-                saveList.splice(j, 1);
-                break;
-              }
-              // do not handle remove after add of a same node
-              else if (saveList[j].type === 'remove' && history[i].type === 'add') {
-                saveList.splice(j, 1);
-                add = false;
+        (function() {
+          for (var i = history.length - 1; i >= 0; i--) {
+            var add = true;
+            for (var j = 0, lj = saveList.length; j < lj; j++) {
+              // do not add same type changing of a same node
+              if (saveList[j].node.node.nodeId === history[i].node.node.nodeId) {
+                if (saveList[j].type === history[i].type) {
+                  add = false;  // no same type
+                }
+                // do not add update after add of a same node
+                else if (saveList[j].type === 'update' && history[i].type === 'add') {
+                  saveList.splice(j, 1);  // no update
+                  break;
+                }
+                // do not handle remove after add of a same node
+                else if (saveList[j].type === 'remove' && history[i].type === 'add') {
+                  saveList.splice(j, 1);  // no add
+                  add = false;  // no remove
+                  break;
+                }
               }
             }
+            if (add) {
+              saveList.push(history[i]);
+            }
           }
-          if (add) {
-            saveList.push(history[i]);
-          }
-        }
-        saveList.reverse();
-
-        console.log(saveList);
+        })();
         
-        for (i = 0; i < saveList.length; i++) {
-          knowledgeService.addEdition(saveList[i]);
-        }
-        history = [];
-        saveList = [];
+        saveList.reverse();
+        
+        (function() {
+          for (var i = 0, li = saveList.length; i < li; i++) {
+            knowledgeService.addEdition(saveList[i]).then(function(response) {
+              var nodeId = response.data.node.node.nodeId;
+            });
+          }
+        })();
+        history.splice(0, history.length);
+        saveList.splice(0, saveList.length);
       }
     };
 
