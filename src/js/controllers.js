@@ -102,6 +102,16 @@ angular.module('app.controllers', [])
           node: node
         });
       },
+      found: null,
+      findNodeInNode: function(inNode, nodeId) {
+        if (inNode.node.nodeId === nodeId) {
+          $scope.knowledge.found = inNode;
+        } else {
+          for (var i = 0, l = inNode.children.length; i < l; i++) {
+            $scope.knowledge.findNodeInNode(inNode.children[i], nodeId);
+          }
+        }
+      },
       contextMenu: [
         ['Show after', function($itemScope) {
           $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
@@ -182,7 +192,14 @@ angular.module('app.controllers', [])
         (function() {
           for (var i = 0, li = saveList.length; i < li; i++) {
             knowledgeService.addEdition(saveList[i]).then(function(response) {
-              var nodeId = response.data.node.node.nodeId;
+              var edition = response.data.node;
+              var nodeId = edition.node.nodeId;
+              if (edition.deleted) {
+
+              } else {
+                $scope.knowledge.findNodeInNode($scope.knowledge.map, nodeId);
+                $scope.knowledge.found.dirty = false;
+              }
             });
           }
         })();
