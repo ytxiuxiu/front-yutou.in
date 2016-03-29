@@ -14,7 +14,9 @@ angular.module('app', [
     'dndLists',
     'puElasticInput',
     'ngStorage',
-    'typer'
+    'typer',
+    'ui.bootstrap.contextMenu',
+    'uuid'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
@@ -29,7 +31,7 @@ angular.module('app', [
       controller: 'LinksController'
     })
     .state('knowledge', {
-      url: '/knowledge/{category}',
+      url: '/knowledge/{nodeId}',
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
     });

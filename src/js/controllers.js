@@ -86,38 +86,102 @@ angular.module('app.controllers', [])
     
     
   }])
-  .controller('KnowledgeController', ['$scope', '$stateParams', 'KnowledgeService', 
-    function($scope, $stateParams, knowledgeService) {
+  .controller('KnowledgeController', ['$scope', '$stateParams', 'AppService', 'KnowledgeService',
+    function($scope, $stateParams, appService, knowledgeService) {
 
     $scope.knowledge = {
-      categories: null,
-      category: null,
       map: null,
-      newNode: [{
-        name: 'New Node',
-        children: []
-      }],
-    };
-
-    // get all categories
-    knowledgeService.getAllCategories().then(function(response) {
-      $scope.knowledge.categories = response.data.categories;
-
-      // find out current category
-      if ($stateParams.category) {
-        for (var i = 0; i < $scope.knowledge.categories.length; i++) {
-          if ($scope.knowledge.categories[i].link == $stateParams.category) {
-            $scope.knowledge.category = $scope.knowledge.categories[i];
+      history: [],
+      drop: function(event, parent, list, index) {
+        var node = list[index];
+        node.editionId = appService.uuid();
+        node.path = parent.path + '/' + node.node.nodeId;
+        $scope.knowledge.history.push({
+          type: 'update',
+          node: node
+        });
+      },
+      contextMenu: [
+        ['Add child', function($itemScope) {
+          var list = $itemScope.child.children;
+          var nodeId = appService.uuid();
+          list.push({
+            node: {
+              nodeId: nodeId
+            },
+            editionId: appService.uuid(),
+            name: null,
+            path: $itemScope.child.path + '/' + nodeId,
+            small: null,
+            content: null,
+            children: []
+          });
+          $scope.knowledge.history.push({
+            type: 'add',
+            node: list[list.length - 1]
+          });
+        }],
+        ['Remove', function($itemScope) {
+          $itemScope.list[$itemScope.$index].editionId = appService.uuid();
+          $itemScope.list[$itemScope.$index].deleted = true;
+          $scope.knowledge.history.push({
+            type: 'remove',
+            node: $itemScope.list[$itemScope.$index]
+          });
+          $itemScope.list.splice($itemScope.$index, 1);
+        }]
+      ],
+      change: function(node) {
+        node.editionId = appService.uuid();
+        $scope.knowledge.history.push({
+          type: 'update',
+          node: node
+        });
+      },
+      save: function() {
+        var history = $scope.knowledge.history;
+        var saveList = [];
+        for (i = history.length - 1; i >= 0; i--) {
+          var add = true;
+          for (j = 0; j < saveList.length; j++) {
+            // do not add same type changing of a same node
+            if (saveList[j].node.nodeId === history[i].node.nodeId) {
+              if (saveList[j].type === history[i].type) {
+                add = false;
+              }
+              // do not add update after add of a same node
+              else if (saveList[j].type === 'update' && history[i].type === 'add') {
+                saveList.splice(j, 1);
+                break;
+              }
+              // do not handle remove after add of a same node
+              else if (saveList[j].type === 'remove' && history[i].type === 'add') {
+                saveList.splice(j, 1);
+                add = false;
+              }
+            }
+          }
+          if (add) {
+            saveList.push(history[i]);
           }
         }
-      } else {
-        $scope.knowledge.category = $scope.knowledge.categories[0];
-      }
+        saveList.reverse();
 
-      // get map of current category
-      knowledgeService.getMap($scope.knowledge.category.link).then(function(response) {
-        $scope.knowledge.map = response.data.map;
-      });
+        console.log(saveList);
+        
+        for (i = 0; i < saveList.length; i++) {
+          knowledgeService.addEdition(saveList[i]);
+        }
+        history = [];
+        saveList = [];
+      }
+    };
+
+
+    // get map
+    var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
+    knowledgeService.getMap(nodeId).then(function(response) {
+      $scope.knowledge.map = response.data.map;
     });
 
     $scope.onDragstart = function(list, event) {

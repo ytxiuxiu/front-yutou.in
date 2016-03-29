@@ -147,9 +147,10 @@ $node-popover-width: 400px;
 
 	/* Input */
 	li input {
-		padding: 0;
+		padding: 0 2px;
 		margin: 0;
 		border: 0;
+		border-radius: 4px;
 	}
 
 	/* Draggable */
@@ -209,16 +210,6 @@ $node-popover-width: 400px;
 			}
 		}
 	}
-}
-
-/* Trash */
-.trash .dndPlaceholder {
-  display: none;
-}
-.trash.dndDragover li.btn {
-	color: #333;
-	background-color: #e6e6e6;
-	border-color: #adadad;
 }
 
 

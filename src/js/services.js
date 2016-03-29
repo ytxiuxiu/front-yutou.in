@@ -6,13 +6,44 @@
 var API_PREFIX = 'api/';
 var API_SUFFIX = '';
 
-angular.module('app.services', [])
-  .factory('AppService', ['$http', function($http) {
+angular.module('app.services', ['uuid'])
+  .factory('AppService', ['$http', 'rfc4122', function($http, rfc4122) {
     return {
       auth: function(idToken) {
         return $http.post(API_PREFIX + 'auth', {
           idToken: idToken
         });
+      },
+      uuid: function() {
+        return rfc4122.v4().split('-').join('');
+      },
+      objToParams: function(obj) {
+        var query = '';
+        var name, value, fullSubName, subName, subValue, innerObj, i;
+        for (name in obj) {
+          value = obj[name];
+          if (value instanceof Array) {
+            for (i = 0; i < value.length; ++i) {
+              subValue = value[i];
+              fullSubName = name + '[' + i + ']';
+              innerObj = {};
+              innerObj[fullSubName] = subValue;
+              query += param(innerObj) + '&';
+            }
+          } else if (value instanceof Object) {
+            for (subName in value) {
+              subValue = value[subName];
+              fullSubName = name + '[' + subName + ']';
+              innerObj = {};
+              innerObj[fullSubName] = subValue;
+              query += param(innerObj) + '&';
+            }
+          } else if (value !== undefined && value !== null) {
+            query += encodeURIComponent(name) + '='
+              + encodeURIComponent(value) + '&';
+          }
+        }
+        return query.length ? query.substr(0, query.length - 1) : query;
       }
     };
   }])
@@ -26,13 +57,27 @@ angular.module('app.services', [])
       }
     };
   }])
-  .factory('KnowledgeService', ['$http', function($http) {
+  .factory('KnowledgeService', ['$http', 'rfc4122', '$localStorage', 'AppService', function($http, rfc4122, $localStorage, appService) {
     return {
-      getAllCategories: function() {
-        return $http.get(API_PREFIX + 'knowledge/all-categories' + '.json');
+      getMap: function(path) {
+        return $http.get(API_PREFIX + 'knowledge/map/' + path);
       },
-      getMap: function(category) {
-        return $http.get(API_PREFIX + 'knowledge/map/' + category + '.json');
+      addEdition: function(saveItem) {
+        var data = saveItem.node;
+        return $http.post(API_PREFIX + 'knowledge/map/edition/add', {
+          idToken: $localStorage.auth.idToken,
+          editionId: data.editionId,
+          nodeId: data.node.nodeId,
+          name: data.name,
+          path: data.path,
+          small: data.small,
+          content: data.content,
+          deleted: data.deleted
+        });
       }
     };
   }]);
+
+
+
+
