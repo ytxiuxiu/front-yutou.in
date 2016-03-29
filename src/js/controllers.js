@@ -86,8 +86,8 @@ angular.module('app.controllers', [])
     
     
   }])
-  .controller('KnowledgeController', ['$scope', '$stateParams', 'AppService', 'KnowledgeService',
-    function($scope, $stateParams, appService, knowledgeService) {
+  .controller('KnowledgeController', ['$scope', '$state', '$stateParams', 'AppService', 'KnowledgeService',
+    function($scope, $state, $stateParams, appService, knowledgeService) {
 
     $scope.knowledge = {
       map: null,
@@ -102,6 +102,10 @@ angular.module('app.controllers', [])
         });
       },
       contextMenu: [
+        ['Show after', function($itemScope) {
+          $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
+        }],
+        null,
         ['Add child', function($itemScope) {
           var list = $itemScope.child.children;
           var nodeId = appService.uuid();
