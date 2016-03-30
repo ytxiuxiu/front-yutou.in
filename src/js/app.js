@@ -16,7 +16,8 @@ angular.module('app', [
     'ngStorage',
     'typer',
     'ui.bootstrap.contextMenu',
-    'uuid'
+    'uuid',
+    'ui.layout'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider

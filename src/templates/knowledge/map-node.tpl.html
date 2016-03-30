@@ -1,20 +1,13 @@
-<!-- with popover if content -->
-<div class="node" ng-if="child.content" ng-class="{'dirty': child.dirty, 'have-children': child.children, 'have-small': child.small}" uib-popover-template="'templates/knowledge/map-node-popover.tpl.html'" popover-placement="bottom">
-  <div><span class="icon icon-text"></span>
-    <input type="text" dnd-nodrag pu-elastic-input ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required>
-  </div>
-  <div>
-    <input type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description">
-  </div>
-</div>
-<!-- end with popover if content -->
 <!-- without popover -->
-<div class="node" ng-if="!child.content" ng-class="{'dirty': child.dirty, 'have-one-child': child.children && child.children.length == 1, 'have-more-than-one-children': child.children && child.children.length > 1, 'have-small': child.small}">
+<div class="node" ng-class="{'dirty': child.dirty, 'have-one-child': child.children && child.children.length == 1, 'have-more-than-one-children': child.children && child.children.length > 1, 'have-small': child.small}">
   <div>
-    <input type="text" dnd-nodrag pu-elastic-input ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required>
+    <span ng-if="child.content" class="icon icon-text"></span>
+    <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required>
+    <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
   </div>
   <div>
-    <input type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description">
+    <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description">
+    <span ng-if="knowledge.mode == 'normal' && child.small" class="small">{{ child.small }}</span>
   </div>
 </div>
 <!-- end without popover -->

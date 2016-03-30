@@ -1,38 +1,45 @@
-<div class="links">
-  <div class="rows">
+<div ui-layout="{ flow: 'row' }">
+  <div ui-layout-container="central" id="layout-map">
     <!-- main section -->
-    <div class="col-sm-12">
-      <div class="page-header">
-        <h1>Knowledge <small ng-bind="knowledge.category.name"></small></h1>
+    <!-- map -->
+    <form name="mapForm" novalidate class="map-container">
+      <div class="toolbar">
+        <div class="btn-group">
+          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'">Normal</label>
+          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'edit'">Edit</label>
+        </div>
+        <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid" value="Save" class="btn btn-default">
       </div>
-      <div class="rows">
-        <!-- map -->
-        <form name="mapForm" novalidate class="map-container col-xs-12">
-          <input type="submit" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid" value="Save" class="btn btn-default">
-          <div class="map" ng-if="knowledge.map">
-            <div class="node node-root" href="#">
-              {{ knowledge.map.name }}
-            </div>
-            <ul class="children"
-              ng-init="child = knowledge.map; list = knowledge.map.children"
-              dnd-list="list"
-              dnd-inserted="knowledge.drop(event, child, list, index)">
-              <li ng-repeat="child in list" 
-                dnd-draggable="child"
-                dnd-moved="list.splice($index, 1)"
-                ng-include="'templates/knowledge/map-node.tpl.html'" 
-                context-menu="knowledge.contextMenu"
-                class="children-item"></li>
-              <li class="children-item dndPlaceholder">
-                <span class="icon-arrow-left"></span> Drop here
-              </li>
-            </ul>
-          </div>
-        </form>
-        <!-- end map -->
+      <div class="map" ng-if="knowledge.map">
+        <div class="node node-root" href="#">
+          {{ knowledge.map.name }}
+        </div>
+        <ul class="children"
+          ng-init="child = knowledge.map; list = knowledge.map.children"
+          dnd-list="list"
+          dnd-inserted="knowledge.drop(event, child, list, index)">
+          <li ng-repeat="child in list" 
+            dnd-draggable="child"
+            dnd-moved="list.splice($index, 1)"
+            ng-include="'templates/knowledge/map-node.tpl.html'" 
+            context-menu="knowledge.contextMenu"
+            class="children-item"></li>
+          <li class="children-item dndPlaceholder">
+            <span class="icon-arrow-left"></span> Drop here
+          </li>
+        </ul>
       </div>
-    </div>
+    </form>
+    <!-- end map -->
     <!-- end main section -->
+  </div>
+  <div ui-layout-container id="layout-editor" size="395px" max-size="90%">
+    <div ng-hide="knowledge.mode != 'edit'" class="editor-container">
+      <textarea id="node-content-editor" ng-model="knowledge.content"></textarea>
+    </div>
+    <div class="content-container" ng-if="knowledge.mode == 'normal'">
+      <div ng-bind-html="knowledge.currentEditing.content | marked"></div>
+    </div>
   </div>
 </div>
 

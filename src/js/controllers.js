@@ -91,6 +91,7 @@ angular.module('app.controllers', [])
 
     $scope.knowledge = {
       map: null,
+      mode: 'normal',
       history: [],
       drop: function(event, parent, list, index) {
         var node = list[index];
@@ -116,6 +117,12 @@ angular.module('app.controllers', [])
         ['Show after', function($itemScope) {
           $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
         }],
+        ['Show content', function($itemScope) {
+          $scope.knowledge.contentEditor.value($itemScope.child.content);
+          $scope.knowledge.currentEditing = $itemScope.child;
+        }, function($itemScope) {
+          return $itemScope.child.content;
+        }],
         null,
         ['Add child', function($itemScope) {
           var list = $itemScope.child.children;
@@ -136,6 +143,8 @@ angular.module('app.controllers', [])
             type: 'add',
             node: list[list.length - 1]
           });
+        }, function() {
+          return $scope.knowledge.mode === 'edit';
         }],
         ['Remove', function($itemScope) {
           var node = $itemScope.list[$itemScope.$index];
@@ -146,6 +155,8 @@ angular.module('app.controllers', [])
             node: node
           });
           $itemScope.list.splice($itemScope.$index, 1);
+        }, function() {
+          return $scope.knowledge.mode === 'edit';
         }]
       ],
       change: function(node) {
@@ -156,6 +167,41 @@ angular.module('app.controllers', [])
           node: node
         });
       },
+      currentEditing: {
+        content: ''
+      },
+      contentEditor: new SimpleMDE({
+        element: document.getElementById('node-content-editor'),
+        forceSync: true,
+        placeholder: 'Type here...! Supports Markdown :)',
+        tabSize: 4,
+        toolbar: [
+          "bold", "italic", "heading", "|", 
+          "quote", "code", "|", 
+          "unordered-list", "ordered-list", "|", 
+          "link", "image", "table", "horizontal-rule", "|",
+          "preview", "side-by-side", "fullscreen", "|",
+          {
+            name: "markdown",
+            action: function() {
+              var win = window.open('http://daringfireball.net/projects/markdown/', '_blank');
+              win.focus();
+            },
+            className: "fa fa-question-circle",
+            title: "Guide"
+          }
+        ],
+        insertTexts: {
+          horizontalRule: ["", "\n-----\n"],
+          table: ["", "\n| column 1 | column 2 | column 3 |\n| -----------  | ----------- | ----------- |\n| text 1         | text 2        | text 3        |\n| text 1         | text 2        | text 3        |\n"],
+        },
+        renderingConfig: {
+          codeSyntaxHighlighting: true
+        },
+        blockStyles: {
+          italic: '_'
+        }
+      }),
       save: function() {
         var history = $scope.knowledge.history;
         var saveList = [];
@@ -207,14 +253,6 @@ angular.module('app.controllers', [])
         saveList.splice(0, saveList.length);
       }
     };
-
-
-    // get map
-    var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
-    knowledgeService.getMap(nodeId).then(function(response) {
-      $scope.knowledge.map = response.data.map;
-    });
-
     $scope.onDragstart = function(list, event) {
        list.dragging = true;
        if (event.dataTransfer.setDragImage) {
@@ -223,6 +261,34 @@ angular.module('app.controllers', [])
          event.dataTransfer.setDragImage(img, 0, 0);
        }
     };
+
+    // get map
+    var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
+    knowledgeService.getMap(nodeId).then(function(response) {
+      $scope.knowledge.map = response.data.map;
+    });
+
+    // editor
+    $scope.$on('ui.layout.resize', function(e, beforeContainer, afterContainer) {
+      var codeMirror = document.getElementsByClassName('CodeMirror')[0];
+      codeMirror.setAttribute('style', 'height: ' + (afterContainer.size - 70) + 'px');
+    });
+
+    $scope.knowledge.contentEditor.codemirror.on('change', function() {
+      if ($scope.knowledge.currentEditing) {
+        var node = $scope.knowledge.currentEditing;
+        node.editionId = appService.uuid();
+        node.content = $scope.knowledge.contentEditor.value();
+        node.dirty = true;
+        $scope.knowledge.history.push({
+          type: 'update',
+          node: node
+        });
+        $scope.$apply();
+      }
+    });
+
+    
   }]);
 
 

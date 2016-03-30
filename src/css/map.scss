@@ -9,14 +9,14 @@ $node-popover-height: 400px;
 $node-popover-width: 400px;
 
 .map-container {
-	overflow-x: auto;
-	padding-bottom: 70px;
+	padding: 65px 15px 0 15px;
 }
 .map {
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
 	white-space: nowrap;
+	margin-top: 10px;
 
 	.node {
 	  display: inline-block;
@@ -218,7 +218,45 @@ $node-popover-width: 400px;
 	}
 }
 
+/* editor */
+.editor-container {
 
+  .editor-toolbar:before {
+    margin-bottom: 2px;
+  }
+  .editor-toolbar {
+  	background: #ffffff;
+  	opacity: 0.95;
+  }
+  .editor-toolbar:after {
+    margin-top: 2px;
+  }
+
+  .CodeMirror {
+    min-height: 50px;
+  }
+  .CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+    background: rgba(255,0,0,.05);
+  }
+
+  .editor-toolbar.fullscreen {
+    top: 45px;
+  }
+  .CodeMirror-fullscreen {
+    top: 90px;
+  }
+  .editor-preview-side {
+    top: 90px;
+  }
+}
+
+.content-container {
+	padding: 15px;
+
+	table {
+		border: 1px solid #efefef;
+	}
+}
 
 
 
