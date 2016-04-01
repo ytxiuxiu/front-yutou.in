@@ -14,6 +14,9 @@ angular.module('app.services', ['uuid'])
           idToken: idToken
         });
       },
+      getNoLoginUser: function() {
+        return $http.get(API_PREFIX + 'auth/no-login-user');
+      },
       uuid: function() {
         return rfc4122.v4().split('-').join('');
       },

@@ -13,6 +13,7 @@ angular.module('app.controllers')
 
           // refresh
           $state.go($state.current, {}, {reload: true});
+          $scope.$broadcast('auth.user.change', $scope.auth.user);
         });
       }
     };
@@ -63,6 +64,7 @@ angular.module('app.controllers')
       // if idToken in local storage
       appService.auth($scope.$storage.auth.idToken).then(function(response) {
         $scope.auth.user = response.data.user;
+        $scope.$broadcast('auth.user.change', $scope.auth.user);
       }).catch(function(response) {
         $scope.toast.open('info', 'Login timout! Please login again.');
       });
@@ -87,6 +89,7 @@ angular.module('app.controllers')
           $scope.toast.open('success', 'Logined successfully :)');
           // refresh
           $state.go($state.current, {}, {reload: true});
+          $scope.$broadcast('auth.user.change', $scope.auth.user);
         });
       }, function(error) {
         console.log(JSON.stringify(error, undefined, 2));
