@@ -7,7 +7,7 @@
 var HEADER_NAME = 'MyApp-Handle-Errors-Generically';
 var specificallyHandleInProgress = false;
 
-angular.module('app').factory('RequestsErrorHandler', ['$q', function($q) {
+angular.module('app').factory('RequestsErrorHandler', ['$q', '$rootScope', function($q, $rootScope) {
   return {
     // --- The user's API for claiming responsiblity for requests ---
     specificallyHandled: function(specificallyHandledBlock) {
@@ -26,7 +26,7 @@ angular.module('app').factory('RequestsErrorHandler', ['$q', function($q) {
 
       if (shouldHandle) {
         // --- Your generic error handling goes here ---
-        alert('http request error');
+        $rootScope.$broadcast('httpRequestError', rejection);
       }
 
       return $q.reject(rejection);

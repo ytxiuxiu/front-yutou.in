@@ -17,7 +17,10 @@ angular.module('app', [
     'typer',
     'ui.bootstrap.contextMenu',
     'uuid',
-    'ui.layout'
+    'ui.layout',
+    'ngAnimate',
+    'toastr',
+    'angular-loading-bar'
   ])
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
