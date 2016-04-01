@@ -8,4 +8,14 @@ angular.module('app.directives', [])
     return {
       templateUrl: 'templates/home/social-links.tpl.html',
     };
+  })
+  .directive('powerControl', function() {
+    return {
+      transclude: true,
+      link: function($scope, element, attributes) {
+        if (attributes.pcRequires === 'h') {
+          
+        }
+      }
+    };
   });

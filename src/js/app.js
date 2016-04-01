@@ -78,3 +78,5 @@ angular.module('app', [
         : data;
     }];
   }]);
+
+angular.module('app.controllers', []);

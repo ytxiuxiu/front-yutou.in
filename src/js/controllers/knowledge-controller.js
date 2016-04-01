@@ -1,116 +1,4 @@
-/**
-* app.controller Module
-*
-* Description
-*/
-var GOOGLE_LOGIN_API_GLIENT_ID = '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com';
-
-angular.module('app.controllers', [])
-  .controller('AppController', ['$scope', '$localStorage', 'toastr', 'AppService', function($scope, $localStorage, toastr, appService) {
-    $scope.auth = {
-      user: {},
-      logout: function() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function() {
-          $scope.auth.user = {};
-          $scope.$storage.auth = null;
-          $scope.$apply();
-        });
-      }
-    };
-    $scope.$storage = $localStorage;
-
-    $scope.safeApply = function(fn) {
-      var phase = this.$root.$$phase;
-      if (phase == '$apply' || phase == '$digest') {
-        if (fn && (typeof(fn) === 'function')) {
-          fn();
-        }
-      } else {
-        this.$apply(fn);
-      }
-    };
-
-    // auth
-    if ($scope.$storage.auth && $scope.$storage.auth.idToken) {
-      // if idToken in local storage
-      appService.auth($scope.$storage.auth.idToken).then(function(response) {
-        $scope.auth.user = response.data.user;
-      }).catch(function(response) {
-        toastr.info('Login timout! Please login again.');
-      });
-    }
-
-    // init login button
-    gapi.load('auth2', function() {
-      auth2 = gapi.auth2.init({
-        client_id: GOOGLE_LOGIN_API_GLIENT_ID,
-        cookiepolicy: 'single_host_origin',
-        scope: 'email profile'
-      });
-      auth2.attachClickHandler(document.getElementById('btn-login'), {}, function(googleUser) {
-        var idToken = googleUser.getAuthResponse().id_token;
-        // auth
-        appService.auth(idToken).then(function(response) {
-          $scope.auth.user = response.data.user;
-          // store idToken in local storage
-          $scope.$storage.auth = {
-            idToken: idToken
-          };
-          toastr.success('Logined successfully :)');
-        });
-      }, function(error) {
-        console.log(JSON.stringify(error, undefined, 2));
-      });
-    });
-
-    // http request handler
-    $scope.$on('httpRequestError', function(event, error) {
-      switch (error.status) {
-        case 404:
-          toastr.error('Sorry, Server is currently not available. Please try later.');
-          break;
-        case 502:
-          toastr.error('Sorry, Server is currently not available. Please try later.');
-          break;
-      }
-    });
-  }])
-  .controller('HomeController', ['$scope', function($scope) {
-
-    
-  }])
-  .controller('LinksController', ['$scope', '$stateParams', 'LinksService', 
-    function($scope, $stateParams, linksService) {
-    $scope.links = {
-      categories: null,
-      category: null,
-      links: null
-    };
-
-    // get all categories
-    linksService.getAllCategories().then(function(response) {
-      $scope.links.categories = response.data.categories;
-
-      // find out current category
-      if ($stateParams.category) {
-        for (var i = 0; i < $scope.links.categories.length; i++) {
-          if ($scope.links.categories[i].link == $stateParams.category) {
-            $scope.links.category = $scope.links.categories[i];
-          }
-        }
-      } else {
-        $scope.links.category = $scope.links.categories[0];
-      }
-
-      // get links of current category
-      linksService.getLinks($scope.links.category.link).then(function(response) {
-        $scope.links.links = response.data.links;
-      });
-    });
-    
-    
-  }])
+angular.module('app.controllers')
   .controller('KnowledgeController', ['$scope', '$state', '$stateParams', 'AppService', 'KnowledgeService',
     function($scope, $state, $stateParams, appService, knowledgeService) {
 
@@ -291,8 +179,6 @@ angular.module('app.controllers', [])
     var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
     knowledgeService.getMap(nodeId).then(function(response) {
       $scope.knowledge.map = response.data.map;
-    }).catch(function(error) {
-      console.log(error);
     });
 
     // editor
@@ -317,15 +203,4 @@ angular.module('app.controllers', [])
         }
       }
     });
-
-    
   }]);
-
-
-
-
-
-
-
-
-

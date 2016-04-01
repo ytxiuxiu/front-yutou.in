@@ -7,7 +7,7 @@ var API_PREFIX = 'api/';
 var API_SUFFIX = '';
 
 angular.module('app.services', ['uuid'])
-  .factory('AppService', ['$http', 'rfc4122', function($http, rfc4122) {
+  .factory('AppService', ['$http', 'rfc4122', '$localStorage', function($http, rfc4122, $localStorage) {
     return {
       auth: function(idToken) {
         return $http.post(API_PREFIX + 'auth', {
@@ -16,6 +16,9 @@ angular.module('app.services', ['uuid'])
       },
       uuid: function() {
         return rfc4122.v4().split('-').join('');
+      },
+      getIdToken: function() {
+        return $localStorage.auth ? $localStorage.auth.idToken : 'no-login';
       },
       objToParams: function(obj) {
         var query = '';
@@ -57,15 +60,15 @@ angular.module('app.services', ['uuid'])
       }
     };
   }])
-  .factory('KnowledgeService', ['$http', 'rfc4122', '$localStorage', 'AppService', function($http, rfc4122, $localStorage, appService) {
+  .factory('KnowledgeService', ['$http', 'rfc4122', 'AppService', function($http, rfc4122, appService) {
     return {
       getMap: function(path) {
-        return $http.get(API_PREFIX + 'knowledge/map/' + path);
+        return $http.get(API_PREFIX + 'knowledge/map/' + path + '?idToken=' + appService.getIdToken());
       },
       addEdition: function(saveItem) {
         var data = saveItem.node;
         return $http.post(API_PREFIX + 'knowledge/map/edition/add', {
-          idToken: $localStorage.auth.idToken,
+          idToken: appService.getIdToken(),
           editionId: data.editionId,
           nodeId: data.node.nodeId,
           name: data.name,
