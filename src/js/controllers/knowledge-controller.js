@@ -1,6 +1,6 @@
 angular.module('app.controllers')
-  .controller('KnowledgeController', ['$scope', '$state', '$stateParams', 'AppService', 'KnowledgeService',
-    function($scope, $state, $stateParams, appService, knowledgeService) {
+  .controller('KnowledgeController', ['$scope', '$state', '$stateParams', '$document', 'AppService', 'KnowledgeService',
+    function($scope, $state, $stateParams, $document, appService, knowledgeService) {
 
     $scope.knowledge = {
       map: null,
@@ -23,8 +23,10 @@ angular.module('app.controllers')
         [function($itemScope) {
           return $scope.knowledge.mode === 'normal' ? 'Show content' : 'Edit content';
         }, function($itemScope) {
-          $scope.knowledge.contentEditor.value($itemScope.child.content ? $itemScope.child.content : '');
           $scope.knowledge.currentEditing = $itemScope.child;
+          $scope.knowledge.layout.open('south');
+          $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
+          $scope.knowledge.contentEditor.value($itemScope.child.content ? $itemScope.child.content : '');
         }],
         null,
         ['Add child', function($itemScope) {
@@ -176,13 +178,8 @@ angular.module('app.controllers')
     });
 
     // editor
-    $scope.$on('ui.layout.resize', function(e, beforeContainer, afterContainer) {
-      var codeMirror = document.getElementsByClassName('CodeMirror')[0];
-      codeMirror.setAttribute('style', 'height: ' + (afterContainer.size - 70) + 'px');
-    });
-
     $scope.knowledge.contentEditor.codemirror.on('change', function() {
-      if ($scope.knowledge.currentEditing) {
+      if ($scope.knowledge.currentEditing && $scope.knowledge.mode === 'edit' && $scope.knowledge.contentEditor.value() !== $scope.knowledge.currentEditing.content) {
         var node = $scope.knowledge.currentEditing;
         if (node.node) {  // this event will happen when the editor first rended
           $scope.safeApply(function() {
@@ -197,4 +194,21 @@ angular.module('app.controllers')
         }
       }
     });
+
+    $('#map-layout').height($(window).height());
+    $('div.below-navbar').css('margin-top', '0px');
+    $scope.knowledge.layout = $('#map-layout').layout({
+      onresize: function(name, element, state, options, name) {
+        $('.CodeMirror').height($('.CodeMirror').parent().parent().height() - 130);
+      }
+    });
+    $scope.knowledge.layout.close('south');
+    $(window).on('resize', function(){
+      $('#map-layout').height($(window).height());
+    });
+
+    $scope.$watch('knowledge.mode', function() {
+      $scope.knowledge.layout.close('south');
+    });
+
   }]);

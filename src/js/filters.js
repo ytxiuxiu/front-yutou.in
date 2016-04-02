@@ -16,6 +16,6 @@ angular.module('app.filters', [])
         smartLists: true,
         smartypants: false
       });
-      return marked(input);
+      return marked(input ? input : '');
     };
   });

@@ -8,8 +8,19 @@ $max-hover-node-width: 300px;
 $node-popover-height: 400px;
 $node-popover-width: 400px;
 
+.ui-layout-pane {
+	border: none;
+}
+
 .map-container {
-	padding: 65px 15px 0 15px;
+	padding-top: 50px;
+
+	.toolbar {
+	  height: 44px;
+	  background: #e7e7e7;
+  	padding: 5px 10px;
+  	margin: -10px -10px 20px -10px;
+	}
 }
 .map {
 	-webkit-user-select: none;
@@ -187,34 +198,6 @@ $node-popover-width: 400px;
 		.arrow {
 			left: 30px !important;
 		}
-
-		.popover-content {
-			height: $node-popover-height - 5px;
-			overflow-y: auto;
-
-			h1, h2, h3, h4, h5, h6 {
-				margin: 0 0 5px 0;
-			}
-			hr {
-				margin: 7px 0 5px 0;
-			}
-			h1 {
-				font-size: 20px;
-			}
-			h2 {
-				font-size: 18px;
-			}
-			h3 {
-				font-size: 16px;
-			}
-			h4, h5 {
-				font-size: 14px;
-			}
-
-			ul {
-				padding-left: 20px;
-			}
-		}
 	}
 }
 
@@ -250,16 +233,53 @@ $node-popover-width: 400px;
   }
 }
 
-.content-container {
-	padding: 15px;
+#layout-editor {
 
-	table {
-		border: 1px solid #efefef;
+	.content-title {
+		height: 40px;
+		padding: 10px 10px 5px 10px;
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0 0 5px 0;
+	}
+	hr {
+		margin: 7px 0 5px 0;
+	}
+	h1 {
+		font-size: 20px;
+	}
+	h2 {
+		font-size: 18px;
+	}
+	h3 {
+		font-size: 16px;
+	}
+	h4, h5 {
+		font-size: 14px;
+	}
+
+	ul {
+		padding-left: 20px;
+	}
+
+	.content-container {
+		padding: 0 10px 10px 10px;
+
+		$table-border-color: #dfdfdf;
+
+		table {
+			border: 1px solid $table-border-color;
+			tr {
+				border: 1px solid $table-border-color;
+				th, td {
+					border: 1px solid $table-border-color;
+					padding: 1px 3px;
+				}
+			}
+		}
 	}
 }
-
-
-
 
 
 

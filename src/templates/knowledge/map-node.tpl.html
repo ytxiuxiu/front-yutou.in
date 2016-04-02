@@ -1,7 +1,7 @@
 <!-- without popover -->
 <div class="node" ng-class="{'dirty': child.dirty, 'have-one-child': child.children && child.children.length == 1, 'have-more-than-one-children': child.children && child.children.length > 1, 'have-small': child.small}">
   <div>
-    <span ng-if="child.content" class="icon icon-text"></span>
+    <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
     <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required>
     <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
   </div>

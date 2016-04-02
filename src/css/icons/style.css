@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icons';
-    src:    url('fonts/icons.eot?dq9dgn');
-    src:    url('fonts/icons.eot?dq9dgn#iefix') format('embedded-opentype'),
-        url('fonts/icons.ttf?dq9dgn') format('truetype'),
-        url('fonts/icons.woff?dq9dgn') format('woff'),
-        url('fonts/icons.svg?dq9dgn#icons') format('svg');
+    src:    url('fonts/icons.eot?2u3zyj');
+    src:    url('fonts/icons.eot?2u3zyj#iefix') format('embedded-opentype'),
+        url('fonts/icons.ttf?2u3zyj') format('truetype'),
+        url('fonts/icons.woff?2u3zyj') format('woff'),
+        url('fonts/icons.svg?2u3zyj#icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -27,11 +27,17 @@
 .icon-brain:before {
     content: "\e900";
 }
+.icon-edit:before {
+    content: "\e909";
+}
 .icon-dictionary:before {
     content: "\e901";
 }
 .icon-text:before {
     content: "\e904";
+}
+.icon-bug:before {
+    content: "\e908";
 }
 .icon-currency:before {
     content: "\e902";
@@ -41,6 +47,9 @@
 }
 .icon-link:before {
     content: "\e903";
+}
+.icon-eye:before {
+    content: "\e90a";
 }
 .icon-add:before {
     content: "\e907";

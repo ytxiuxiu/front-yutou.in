@@ -1,14 +1,23 @@
-<div ui-layout="{ flow: 'row', disableToggle: true }">
-  <div ui-layout-container="central" id="layout-map">
+<div id="map-layout">
+  <div id="layout-map" class="ui-layout-center">
     <!-- main section -->
     <!-- map -->
     <form name="mapForm" novalidate class="map-container">
       <div class="toolbar">
         <div class="btn-group" power-control="knowledge.map.edit" style="display: node;">
-          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'">Normal</label>
-          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'edit'">Edit</label>
+          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'">
+            <span class="icon-eye"></span> Normal
+          </label>
+          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'edit'">
+            <span class="icon-edit"></span> Edit
+          </label>
+          <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
         </div>
-        <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
+        <div class="pull-right">
+          <a class="btn btn-default" href="https://github.com/ytxiuxiu/front-yutou.in/issues/new" target="_blank">
+            <span class="icon-bug"></span> Report Bugs
+          </a>
+        </div>
       </div>
       <div class="map" ng-if="knowledge.map">
         <div class="node node-root" href="#">
@@ -33,7 +42,14 @@
     <!-- end map -->
     <!-- end main section -->
   </div>
-  <div ui-layout-container id="layout-editor" size="395px" max-size="90%">
+  <div class="ui-layout-south" id="layout-editor" style="padding: 0px">
+    <div class="content-title" ng-if="knowledge.currentEditing.name">
+      <h1 class="pull-left">
+        <span class="icon-text"></span>
+        <span ng-bind="knowledge.currentEditing.name"></span>
+      </h1>
+      <span ng-if="knowledge.mode == 'edit'" class="pull-right">Styling with Markdown is supported</span>
+    </div>
     <div ng-hide="knowledge.mode != 'edit'" class="editor-container">
       <textarea id="node-content-editor" ng-model="knowledge.content"></textarea>
     </div>
