@@ -16,25 +16,15 @@ angular.module('app.controllers')
           node: node
         });
       },
-      found: null,
-      findNodeInNode: function(inNode, nodeId) {
-        if (inNode.node.nodeId === nodeId) {
-          $scope.knowledge.found = inNode;
-        } else {
-          for (var i = 0, l = inNode.children.length; i < l; i++) {
-            $scope.knowledge.findNodeInNode(inNode.children[i], nodeId);
-          }
-        }
-      },
       contextMenu: [
         ['Show after', function($itemScope) {
           $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
         }],
-        ['Show content', function($itemScope) {
-          $scope.knowledge.contentEditor.value($itemScope.child.content);
-          $scope.knowledge.currentEditing = $itemScope.child;
+        [function($itemScope) {
+          return $scope.knowledge.mode === 'normal' ? 'Show content' : 'Edit content';
         }, function($itemScope) {
-          return $itemScope.child.content;
+          $scope.knowledge.contentEditor.value($itemScope.child.content ? $itemScope.child.content : '');
+          $scope.knowledge.currentEditing = $itemScope.child;
         }],
         null,
         ['Add child', function($itemScope) {
@@ -150,19 +140,23 @@ angular.module('app.controllers')
         
         (function() {
           for (var i = 0, li = saveList.length; i < li; i++) {
+            $scope.knowledge.saving = true;
             knowledgeService.addEdition(saveList[i]).then(function(response) {
               var edition = response.data.node;
               var nodeId = edition.node.nodeId;
-              if (edition.deleted) {
-
-              } else {
-                $scope.knowledge.findNodeInNode($scope.knowledge.map, nodeId);
-                $scope.knowledge.found.dirty = false;
+              for (var j = 0, lj = history.length; j < lj; j++) {
+                while (history[j] && history[j].node.node.nodeId === nodeId) {
+                  history[j].node.dirty = false;
+                  history.splice(j, 1);
+                }
+              }
+              if (history.length === 0) {
+                $scope.knowledge.saving = false;
+                $scope.toast.open('success', 'All changes saved successfully :)');
               }
             });
           }
         })();
-        history.splice(0, history.length);
         saveList.splice(0, saveList.length);
       }
     };

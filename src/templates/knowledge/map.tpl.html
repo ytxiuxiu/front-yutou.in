@@ -8,7 +8,7 @@
           <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'">Normal</label>
           <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'edit'">Edit</label>
         </div>
-        <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid" value="Save" class="btn btn-default">
+        <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
       </div>
       <div class="map" ng-if="knowledge.map">
         <div class="node node-root" href="#">
