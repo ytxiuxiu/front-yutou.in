@@ -2,6 +2,8 @@ var GOOGLE_LOGIN_API_GLIENT_ID = '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.
 
 angular.module('app.controllers')
   .controller('AppController', ['$scope', '$state', '$localStorage', 'toastr', 'AppService', function($scope, $state, $localStorage, toastr, appService) {
+    $scope.navbar = {};
+
     $scope.auth = {
       user: {},
       logout: function() {

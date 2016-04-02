@@ -13,6 +13,9 @@
           </label>
           <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
         </div>
+        <a class="btn btn-default" ng-click="knowledge.load()">
+            <span class="icon-reload"></span> Reload
+          </a>
         <div class="pull-right">
           <a class="btn btn-default" href="https://github.com/ytxiuxiu/front-yutou.in/issues/new" target="_blank">
             <span class="icon-bug"></span> Report Bugs
@@ -23,7 +26,7 @@
         <div class="node node-root" href="#">
           {{ knowledge.map.name }}
         </div>
-        <ul class="children"
+        <ul class="children" ng-if="knowledge.mode === 'edit'"
           ng-init="child = knowledge.map; list = knowledge.map.children"
           dnd-list="list"
           dnd-inserted="knowledge.drop(event, child, list, index)">
@@ -36,6 +39,13 @@
           <li class="children-item dndPlaceholder">
             <span class="icon-arrow-left"></span> Drop here
           </li>
+        </ul>
+        <ul class="children" ng-if="knowledge.mode === 'normal'"
+          ng-init="child = knowledge.map; list = knowledge.map.children">
+          <li ng-repeat="child in list" 
+            ng-include="'templates/knowledge/map-node.tpl.html'" 
+            context-menu="knowledge.contextMenu"
+            class="children-item"></li>
         </ul>
       </div>
     </form>

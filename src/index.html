@@ -40,8 +40,9 @@
         <!-- links -->
         <div class="navbar-collapse" uib-collapse="navbar.collapsed">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
+            <li ng-class="{ active: navbar.current == 'home' }"><a ui-sref="home">Home</a></li>
+            <li ng-class="{ active: navbar.current == 'knowledge' }"><a ui-sref="knowledge">Knowledge</a></li>
+            <li ng-class="{ active: navbar.current == 'about' }"><a href="#">About</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
             <li ng-class="{ hidden: auth.user.email }">

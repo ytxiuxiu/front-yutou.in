@@ -25,6 +25,11 @@ angular.module('app', [
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
     $stateProvider
     .state('home', {
+      url: '/',
+      templateUrl: 'templates/home/home.tpl.html',
+      controller: 'HomeController'
+    })
+    .state('same-as-home', {
       url: '',
       templateUrl: 'templates/home/home.tpl.html',
       controller: 'HomeController'

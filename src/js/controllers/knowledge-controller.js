@@ -2,6 +2,8 @@ angular.module('app.controllers')
   .controller('KnowledgeController', ['$scope', '$state', '$stateParams', '$document', 'AppService', 'KnowledgeService',
     function($scope, $state, $stateParams, $document, appService, knowledgeService) {
 
+    $scope.navbar.current = 'knowledge';
+
     $scope.knowledge = {
       map: null,
       mode: 'normal',
@@ -16,6 +18,22 @@ angular.module('app.controllers')
           node: node
         });
       },
+      load: function() {
+        var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
+        knowledgeService.getMap(nodeId).then(function(response) {
+          $scope.knowledge.map = response.data.map;
+        });
+      },
+      showContent: function(node) {
+        if (node.content && node.content != '' || $scope.knowledge.mode === 'edit') {
+          $scope.knowledge.currentEditing = node;
+          $scope.knowledge.layout.open('south');
+          $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
+          $scope.knowledge.contentEditor.value(node.content ? node.content : '');
+        } else {
+          $scope.knowledge.layout.close('south');
+        }
+      },
       contextMenu: [
         ['Show after', function($itemScope) {
           $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
@@ -23,10 +41,11 @@ angular.module('app.controllers')
         [function($itemScope) {
           return $scope.knowledge.mode === 'normal' ? 'Show content' : 'Edit content';
         }, function($itemScope) {
-          $scope.knowledge.currentEditing = $itemScope.child;
-          $scope.knowledge.layout.open('south');
-          $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
-          $scope.knowledge.contentEditor.value($itemScope.child.content ? $itemScope.child.content : '');
+          $scope.knowledge.showContent($itemScope.child);
+        }, function($itemScope) {
+          if ($scope.knowledge.mode === 'normal' && !$itemScope.child.content || $itemScope.child.content === '') {
+            return false;
+          }
         }],
         null,
         ['Add child', function($itemScope) {
@@ -172,10 +191,7 @@ angular.module('app.controllers')
     };
 
     // get map
-    var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
-    knowledgeService.getMap(nodeId).then(function(response) {
-      $scope.knowledge.map = response.data.map;
-    });
+    $scope.knowledge.load();
 
     // editor
     $scope.knowledge.contentEditor.codemirror.on('change', function() {
