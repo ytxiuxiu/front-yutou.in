@@ -134,17 +134,17 @@ module.exports = function(grunt) {
       },
       build: {
         options: {
-          port: 8001,
+          port: 8000,
           base: ['dist'],
         }
       },
     },
     open: {
       dev: {
-        url: 'http://localhost:8000/',
+        url: 'http://localhost:88/',
       },
       build: {
-        url: 'http://localhost:8001/'
+        url: 'http://localhost:88/'
       },
     },
     watch: {

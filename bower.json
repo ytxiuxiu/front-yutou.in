@@ -33,6 +33,10 @@
     "angular-toastr": "~1.7.0",
     "angular-loading-bar": "~0.9.0",
     "jquery": "~2.2.2",
-    "jquery-ui": "~1.11.4"
+    "jquery-ui": "~1.11.4",
+    "jquery-layout.js": "http://layout.jquery-dev.com/lib/js/jquery.layout-latest.js",
+    "jquery-layout.css": "http://layout.jquery-dev.com/lib/css/layout-default-latest.css",
+    "highlight.js": "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js",
+    "highlight.css": "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css"
   }
 }

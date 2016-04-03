@@ -29,6 +29,11 @@ $node-popover-width: 400px;
 	white-space: nowrap;
 	margin-top: 10px;
 
+	ul.map-root {
+		list-style-type: none;
+		padding: 0;
+	}
+
 	.node {
 	  display: inline-block;
 	  border: 1px solid #ccc;
