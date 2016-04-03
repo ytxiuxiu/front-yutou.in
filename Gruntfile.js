@@ -19,6 +19,14 @@ module.exports = function(grunt) {
           '.tmp/index.html': 'src/index.html',
         },
       },
+      templates: {
+        files: [{
+          expand: true,
+          cwd: 'src/templates',
+          src: '**/*.html',
+          dest: '.tmp/templates'
+        }]
+      },
       fonts: {
         files: [{
           expand: true,
@@ -70,21 +78,35 @@ module.exports = function(grunt) {
       },
       templates: {
         files: {
-          'dist/js/templates.min.js': ['.tmp/ngtemplates/templates.js'],
+          'dist/js/templates.js': ['.tmp/ngtemplates/templates.js'],
         },
       },
     },
 
-    usemin: {
-      html: '.tmp/index.html'
+    filerev: {
+      options: {
+        process: function(basename, name, extension) {
+          return basename + '-' + name + '.' + extension;
+        }
+      },
+      assets: {
+        src: [
+          'dist/js/**/*.js',
+          'dist/css/**/*.{css,eot,svg,ttf,woff}',
+          'dist/images/**/*.{png,jpg,jpeg,gif}',
+        ]
+      },
+      templates: {
+        src: 'dist/js/templates.js'
+      }
     },
 
-    ngtemplates: {
-      app: {
-        cwd: '.tmp/htmlmin',
-        src: 'templates/**/*.html',
-        dest: '.tmp/ngtemplates/templates.js',
-      },
+    usemin: {
+      html: ['.tmp/index.html', '.tmp/templates/**/*.tpl.html'],
+      css: 'dist/css/**/*.css',
+      options: {
+        assetsDirs: ['dist', 'dist/images', 'dist/css', 'dist/css/fonts'] 
+      }
     },
 
     htmlmin: {
@@ -101,10 +123,18 @@ module.exports = function(grunt) {
       templates: {
         files: [{
           expand: true,
-          cwd: 'src',
+          cwd: '.tmp',
           src: 'templates/**/*.html',
           dest: '.tmp/htmlmin',
         }],
+      },
+    },
+
+    ngtemplates: {
+      app: {
+        cwd: '.tmp/htmlmin',
+        src: 'templates/**/*.html',
+        dest: '.tmp/ngtemplates/templates.js',
       },
     },
 
@@ -114,7 +144,15 @@ module.exports = function(grunt) {
           'dist'
         ]
       },
-      images: {
+      // templates: {
+      //   files: [{
+      //     expand: true,
+      //     cwd: 'src',
+      //     src: ['templates/**/*.html'],
+      //     dest: '.tmp/cloudinary'
+      //   }]
+      // },
+      assets: {
         files: [{
           expand: true,
           cwd: 'dist',
@@ -181,23 +219,28 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-angular-templates');
   grunt.loadNpmTasks('grunt-zip');
   grunt.loadNpmTasks('grunt-cloudinary-upload');
+  grunt.loadNpmTasks('grunt-filerev');
 
   grunt.registerTask('build', [
     'clean',
     'unzip',
     'copy',
-    'htmlmin:templates',
     'sass',
     'imagemin',
     'useminPrepare', 
-    'ngtemplates',
     'concat:generated',
     'cssmin:generated',
     'uglify:generated',
+    'filerev:assets',
     'usemin',
-    'htmlmin:html',
+    'htmlmin:templates',
+    // 'cloudinary:templates',
+    'ngtemplates',
     'uglify:templates',
-    'cloudinary',
+    'filerev:templates',
+    'usemin:html',
+    'htmlmin:html',
+    'cloudinary:assets',
     'connect:build',
     'open:build',
     'watch'
