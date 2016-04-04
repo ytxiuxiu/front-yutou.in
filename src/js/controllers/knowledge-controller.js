@@ -94,6 +94,7 @@ angular.module('app.controllers')
       currentEditing: {
         content: ''
       },
+      editorIsFull: false,
       contentEditor: new SimpleMDE({
         element: document.getElementById('node-content-editor'),
         forceSync: true,
@@ -215,7 +216,7 @@ angular.module('app.controllers')
     $('div.below-navbar').css('margin-top', '0px');
     $scope.knowledge.layout = $('#map-layout').layout({
       onresize: function(name, element, state, options, name) {
-        $('.CodeMirror').height($('.CodeMirror').parent().parent().height() - 130);
+        $('.CodeMirror').height($('.CodeMirror').parent().parent().height() - 135);
       }
     });
     $scope.knowledge.layout.close('south');
@@ -225,6 +226,21 @@ angular.module('app.controllers')
 
     $scope.$watch('knowledge.mode', function() {
       $scope.knowledge.layout.close('south');
+    });
+
+    $('.editor-container').delegate('.editor-toolbar a', 'click', function() {
+      var title = $(this).attr('title');
+      if (title.startsWith('Toggle Side by Side')) {
+        $scope.knowledge.editorIsFull = true;
+      } else if (title.startsWith('Toggle Fullscreen')) {
+        $scope.knowledge.editorIsFull = !$scope.knowledge.editorIsFull;
+      }
+      
+      if ($scope.knowledge.editorIsFull) {
+        $scope.knowledge.layout.sizePane('south', $(window).height());
+      } else {
+        $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
+      }
     });
 
   }]);
