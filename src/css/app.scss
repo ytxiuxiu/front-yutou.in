@@ -10,6 +10,8 @@ $space-below-navbar: 17px;
 body {
   overflow-x: hidden;
   overflow-y: scroll;
+  font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
 }
 
 
@@ -75,11 +77,7 @@ div.rows > div {
 /**
  * homepage 
  */
-body {
-  font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-}
+
 
 
 

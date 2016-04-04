@@ -48,6 +48,12 @@ $node-popover-width: 400px;
 	  font-size: 14px;
 	  max-width: $max-node-width;
 
+	  input.name {
+	  	max-width: $max-node-width - 12px !important;
+	  }
+	  input.name.have-content {
+	  	max-width: $max-node-width - 29px !important;
+	  }
 	  input.small {
 	  	max-width: $max-node-width - 12px !important;
 	  }
@@ -251,16 +257,16 @@ $node-popover-width: 400px;
 	hr {
 		margin: 7px 0 5px 0;
 	}
-	h1 {
+	h1, .cm-header-1 {
 		font-size: 20px;
 	}
-	h2 {
+	h2, .cm-header-2 {
 		font-size: 18px;
 	}
-	h3 {
+	h3, .cm-header-3 {
 		font-size: 16px;
 	}
-	h4, h5 {
+	h4, h5, .cm-header-4, .cm-header-5 {
 		font-size: 14px;
 	}
 
