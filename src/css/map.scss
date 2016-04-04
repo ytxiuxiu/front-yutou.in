@@ -1,216 +1,169 @@
-$space-below-node: 4px;
-$length-left-connection-line: 12px;
-$length-right-connection-line: 12px;
-
-$max-node-width: 150px;
-$max-hover-node-width: 300px;
-
-$node-popover-height: 400px;
-$node-popover-width: 400px;
-
 .ui-layout-pane {
 	border: none;
 }
 
-.map-container {
-	padding-top: 50px;
-
+#layout-toolbar {
 	.toolbar {
-	  height: 44px;
-	  background: #e7e7e7;
-  	padding: 5px 10px;
-  	margin: -10px -10px 20px -10px;
+		margin-top: 47px;
 	}
+	padding-bottom: 0;
+	background: #efefef;
+}
+
+.resizer-toolbar-hide {
+	background: #efefef;
+}
+
+
+/* map node */
+
+.map:before {
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	width: 0;
 }
 .map {
-	-webkit-user-select: none;
-	-moz-user-select: none;
 	user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
 	white-space: nowrap;
-	margin-top: 10px;
 
 	ul.map-root {
-		list-style-type: none;
+		list-style: none;
 		padding: 0;
 	}
 
 	.node {
-	  display: inline-block;
-	  border: 1px solid #ccc;
-	  padding: 2px 6px;
-	  margin: $space-below-node 0;
-	  background: #fff;
-	  border-radius: 4px;
-	  text-align: left;
-	  cursor: pointer;
-	  transition: all .2s;
-	  direction: ltr;
-	  font-size: 14px;
-	  max-width: $max-node-width;
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		height: 25px;
+		border: 1px solid #ccc;
+		padding: 2px 4px;
+		margin: 5px 0;
+		background: #fff;
+		border-radius: 4px;
+		text-align: left;
+		cursor: pointer;
+		transition: all .2s;
+		direction: ltr;
+		max-width: 130px;
 
-	  input.name {
-	  	max-width: $max-node-width - 12px !important;
-	  }
-	  input.name.have-content {
-	  	max-width: $max-node-width - 29px !important;
-	  }
-	  input.small {
-	  	max-width: $max-node-width - 12px !important;
-	  }
-	}
-	.node.dirty {
-		background-color: #f2ffe6;
-		input {
-			background-color: #f2ffe6;
+		div {
+			overflow: hidden;
+			input {
+				border: none;
+				padding: 0;
+				max-width: 130px !important;
+			}
+			input.ng-invalid {
+				background: red;
+			}
 		}
 	}
-	ul.children.new-node:before {
-		border: 0;
+	.node.has-small, .node.edit-mode {
+		height: 45px;
+		input.small {
+			border: none;
+			padding: 0;
+			max-width: 147px !important;
+		}
 	}
 	.node:hover {
-	  box-shadow: 0 0 3px 0 #3498DB;
-	  max-width: $max-hover-node-width;
-	  ~ ul .node {
-	  	box-shadow: 0 0 3px 0 #a8d3f0;
-	  }
+  	box-shadow: 0 0 3px 0 #aaaaaa;
+  	width: initial;
+  	max-width: initial;
+  	~ul .node {
+  		box-shadow: 0 0 3px 0 #dddddd;
+  	}
+	}
+	.node.editing {
+		box-shadow: 0 0 6px 0 #de2222;
+		width: initial;
+  	max-width: initial;
+	}
+	.node.dirty {
+		background: #fbfde6;
+		input {
+			background: #fbfde6;
+		}
+	}
 
-	  input.small {
-	  	max-width: $max-hover-node-width !important;
-	  }
+	ul.children:before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: -4px;
+		width: 10px;
+		border-top: 1px solid #ccc;
 	}
-	.node:active {
-	  box-shadow: 0 0 1px 0 #3498DB;
-	  max-width: $max-hover-node-width;
+	ul.children.no-child:before {
+		border-top: none;
 	}
-	.node .small {
-		font-weight: lighter;
-		color: #777;
-		overflow: hidden;
+
+	ul.children.no-child {
+		min-height: 25px;
+		min-width: 100px;
 	}
-	.node-root {
-	  border: 0;
-	  background: #3498DB;
-	  color: #fff;
-	  font-size: 18px;
-	  padding: 5px 15px;
-	  position: relative;
-	  top: 3px;
+	.node.has-small~ul.children.no-child {
+		min-height: 45px;
+		min-width: 100px;
 	}
 
 	ul.children {
-	  position: relative;
-	  list-style: none;
-	  margin: 0;
-	  text-align: left;
-	  padding: 0 0 0 $length-left-connection-line - 2px;
-	  display: inline-block;
-	  vertical-align: middle;
-	}
-	ul.children:before {
-	  content: '';
-	  position: absolute;
-	  top: 50%;
-	  left: -2px;
-	  width: $length-left-connection-line;
-	  border-top: 1px solid #ccc;
-	}
-	li.children-item {
-	  position: relative;
-	  padding: 0 0 0 $length-right-connection-line;
-	  border-left: 1px solid #ccc;
-	}
-	.have-one-child.have-small {
 		position: relative;
-		top: 3px;
-		~ ul {
-			top: -11px;
-		}
-	}
-	.have-more-than-one-children.have-small {
-		position: relative;
-		top: 15px;
-	}
-	.have-small ~ .no-child {
-		top: -15px;
-	}
-	ul.children.no-child:before {
-		border: 0;
-	}
-
-	.children-item:first-child, .children-item:last-child {
-	  border-left: 1px solid transparent;
-	}
-	.children-item:before {
-	  content: '';
-	  width: $length-right-connection-line;
-	  border-top: 1px solid #ccc;
-	  position: absolute;
-	  top: 50%;
-	  left: 0;
-	}
-	.children-item:first-child:before {
-	  left: -1px;
-	  width: $length-right-connection-line + 1px;
-	  bottom: 0;
-	  border-radius: 4px 0 0 0;
-	  border-left: 1px solid #ccc;
-	}
-	.children-item:last-child:before {
-	  left: -1px;
-	  width: $length-right-connection-line + 1px;
-	  top: 0;
-	  bottom: 50%;
-	  border-radius: 0 0 0 4px;
-	  border: 0;
-	  border-left: 1px solid #ccc;
-	  border-bottom: 1px solid #ccc;
-	}
-	.children-item:first-child:last-child:before {
-	  top: 50%;
-	  bottom: auto;
-	  border: 0;
-	  border-radius: 0;
-	  border-top: 1px solid #ccc;
-	}
-
-	/* Input */
-	li input {
-		padding: 0 2px;
+		list-style: none;
 		margin: 0;
-		border: 0;
-		border-radius: 4px;
-	}
+		text-align: left;
+		padding: 0 0 0 6px;
+		display: inline-block;
+		vertical-align: middle;
 
-	/* Draggable */
-	ul[dnd-list], ul[dnd-list] > li {
-	  position: relative;
-	}
-	ul[dnd-list] .dndDraggingSource {
-	  display: none;
-	}
-	ul[dnd-list].no-child {
-		width: 100px;
-	  height: 26px;
+		li {
+			position: relative;
+			padding: 0 0 0 10px;
+			border-left: 1px solid #ccc;
+		}
+		li:first-child, li:last-child {
+			border-left: 1px solid transparent;
+		}
+		li:before {
+			content: '';
+			width: 10px;
+			border-top: 1px solid #ccc;
+			position: absolute;
+			top: 50%;
+			left: 0;
+		}
+		li:first-child:before {
+			left: -1px;
+			bottom: 0;
+			border-radius: 4px 0 0 0;
+			border-left: 1px solid #ccc;
+		}
+		li:last-child:before {
+			left: -1px;
+			top: 0;
+			bottom: 50%;
+			border-radius: 0 0 0 4px;
+			border: 0;
+			border-left: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
+		}
+		li:first-child:last-child:before {
+			top: 50%;
+			bottom: auto;
+			border: 0;
+			border-radius: 0;
+			border-top: 1px solid #ccc;
+		}
 	}
 	
-	.dndPlaceholder {
-		padding-top: 3px;
-		padding-left: 15px;
-	}
-
-	/* Popover */
-	.popover {
-		left: 0 !important;
-		width: $node-popover-width;
-		height: $node-popover-height;
-		max-width: none;
-		margin: 0 20px 10px 0;
-		
-		.arrow {
-			left: 30px !important;
-		}
-	}
 }
+
 
 /* editor */
 .editor-container {

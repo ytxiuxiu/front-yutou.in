@@ -1,8 +1,6 @@
-<div id="map-layout">
-  <div id="layout-map" class="ui-layout-center">
-    <!-- main section -->
-    <!-- map -->
-    <form name="mapForm" novalidate class="map-container">
+<form name="mapForm" novalidate class="map-container">
+  <div id="map-layout">
+    <div id="layout-toolbar" class="ui-layout-north">
       <div class="toolbar">
         <div class="btn-group" power-control="knowledge.map.edit" style="display: node;">
           <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'">
@@ -22,17 +20,23 @@
           </a>
         </div>
       </div>
+    </div>
+    <div id="layout-map" class="ui-layout-center">
+      <!-- main section -->
+      <!-- map -->
+      
+        
       <div class="map" ng-if="knowledge.map" ng-init="child = knowledge.map; list = knowledge.map.children">
         <ul class="map-root">
           <li>
-            <div class="node" ng-class="{ 'node-root': knowledge.mode == 'normal' }" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'have-one-child': child.children && child.children.length == 1, 'have-more-than-one-children': child.children && child.children.length > 1, 'have-small': child.small}" context-menu="knowledge.contextMenu">
+            <div class="node" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
               <div>
                 <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
-                <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-class="{'have-content': child.content && child.content !== ''}" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required>
+                <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">
                 <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
               </div>
               <div>
-                <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description">
+                <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description" maxlength="60">
                 <span ng-if="knowledge.mode == 'normal' && child.small" class="small">{{ child.small }}</span>
               </div>
             </div>
@@ -46,7 +50,9 @@
                 context-menu="knowledge.contextMenu"
                 class="children-item"></li>
               <li class="children-item dndPlaceholder">
-                <span class="icon-arrow-left"></span> Drop here
+                <div class="node">
+                  <span class="icon-arrow-left"></span> Drop here
+                </div>
               </li>
             </ul>
             <ul class="children" ng-if="knowledge.mode === 'normal'"
@@ -59,27 +65,28 @@
           </li>
         </ul>
       </div>
-    </form>
-    <!-- end map -->
-    <!-- end main section -->
+      
+      <!-- end map -->
+      <!-- end main section -->
+    </div>
+    <div id="layout-editor" class="ui-layout-south" style="padding: 0px">
+      <div class="content-title" ng-if="knowledge.currentEditing.node.nodeId">
+        <h1 class="pull-left">
+          <span class="icon-text"></span>
+          <span ng-bind="knowledge.currentEditing.name"></span>
+          <small ng-bind="knowledge.currentEditing.small"></small>
+        </h1>
+        <span ng-if="knowledge.mode == 'edit'" class="pull-right">Styling with Markdown is supported</span>
+      </div>
+      <div ng-hide="knowledge.mode != 'edit'" class="editor-container">
+        <textarea id="node-content-editor" ng-model="knowledge.content"></textarea>
+      </div>
+      <div class="content-container" ng-if="knowledge.mode == 'normal'">
+        <div ng-bind-html="knowledge.currentEditing.content | marked"></div>
+      </div>
+    </div>
   </div>
-  <div class="ui-layout-south" id="layout-editor" style="padding: 0px">
-    <div class="content-title" ng-if="knowledge.currentEditing.name">
-      <h1 class="pull-left">
-        <span class="icon-text"></span>
-        <span ng-bind="knowledge.currentEditing.name"></span>
-        <small ng-bind="knowledge.currentEditing.small"></small>
-      </h1>
-      <span ng-if="knowledge.mode == 'edit'" class="pull-right">Styling with Markdown is supported</span>
-    </div>
-    <div ng-hide="knowledge.mode != 'edit'" class="editor-container">
-      <textarea id="node-content-editor" ng-model="knowledge.content"></textarea>
-    </div>
-    <div class="content-container" ng-if="knowledge.mode == 'normal'">
-      <div ng-bind-html="knowledge.currentEditing.content | marked"></div>
-    </div>
-  </div>
-</div>
+</form>
 
 
 

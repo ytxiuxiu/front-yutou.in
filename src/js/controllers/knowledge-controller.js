@@ -24,6 +24,14 @@ angular.module('app.controllers')
           $scope.knowledge.map = response.data.map;
         });
       },
+      onDragstart: function(list, event) {
+        list.dragging = true;
+        if (event.dataTransfer.setDragImage) {
+          var img = new Image();
+          img.src = '';
+          event.dataTransfer.setDragImage(img, 0, 0);
+        }
+      },
       showContent: function(node) {
         if (node.content && node.content != '' || $scope.knowledge.mode === 'edit') {
           $scope.knowledge.currentEditing = node;
@@ -182,14 +190,6 @@ angular.module('app.controllers')
         saveList.splice(0, saveList.length);
       }
     };
-    $scope.onDragstart = function(list, event) {
-       list.dragging = true;
-       if (event.dataTransfer.setDragImage) {
-         var img = new Image();
-         img.src = 'images/node.png';
-         event.dataTransfer.setDragImage(img, 0, 0);
-       }
-    };
 
     // get map
     $scope.knowledge.load();
@@ -215,6 +215,11 @@ angular.module('app.controllers')
     $('#map-layout').height($(window).height());
     $('div.below-navbar').css('margin-top', '0px');
     $scope.knowledge.layout = $('#map-layout').layout({
+      north: {
+        resizerClass: 'resizer-toolbar-hide',
+        resizable: false,
+        closable: false
+      },
       onresize: function(name, element, state, options, name) {
         $('.CodeMirror').height($('.CodeMirror').parent().parent().height() - 135);
       }
