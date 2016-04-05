@@ -43,6 +43,11 @@ angular.module('app', [
       url: '/knowledge/{nodeId}',
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
+    })
+    .state('same-as-knowledge', {
+      url: '/knowledge',
+      templateUrl: 'templates/knowledge/map.tpl.html',
+      controller: 'KnowledgeController'
     });
   }])
   .config(['$httpProvider',function($httpProvider) {
