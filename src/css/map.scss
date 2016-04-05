@@ -187,13 +187,13 @@
   }
 
   .editor-toolbar.fullscreen {
-    top: 45px;
+    top: 136px;
   }
   .CodeMirror-fullscreen {
-    top: 90px;
+    top: 177px;
   }
   .editor-preview-side {
-    top: 90px;
+    top: 177px;
   }
 }
 
@@ -224,6 +224,9 @@
 	}
 
 	ul {
+		padding-left: 20px;
+	}
+	ol {
 		padding-left: 20px;
 	}
 

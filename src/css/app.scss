@@ -74,6 +74,19 @@ div.rows > div {
   font-size: 40px;
 }
 
+
+/**
+ * toolbar
+ */
+.btn-group-small {
+  margin: 0 0 0 10px;
+  .btn {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+
 /**
  * homepage 
  */

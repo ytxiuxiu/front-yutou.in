@@ -163,6 +163,10 @@ module.exports = function(grunt) {
     },
 
     connect: {
+      options: {
+        hostname: 'localhost'
+        // hostname: '192.168.0.5'
+      },
       dev: {
         options: {
           port: 8000,
@@ -174,6 +178,7 @@ module.exports = function(grunt) {
         options: {
           port: 8000,
           base: ['dist'],
+          keepalive: true
         }
       },
     },

@@ -76,6 +76,17 @@
           <span ng-bind="knowledge.currentEditing.name"></span>
           <small ng-bind="knowledge.currentEditing.small"></small>
         </h1>
+        <div class="pull-right btn-group btn-group-small">
+          <a class="btn btn-default" ng-click="knowledge.editor.small()" ng-if="knowledge.editor.isBig">
+            <span class="icon-minus"></span>
+          </a>
+          <a class="btn btn-default" ng-click="knowledge.editor.big()" ng-if="!knowledge.editor.isBig">
+            <span class="icon-add"></span>
+          </a>
+          <a class="btn btn-default" ng-click="knowledge.editor.close()">
+            <span class="icon-close"></span>
+          </a>
+        </div>
         <span ng-if="knowledge.mode == 'edit'" class="pull-right">Styling with Markdown is supported</span>
       </div>
       <div ng-hide="knowledge.mode != 'edit'" class="editor-container">

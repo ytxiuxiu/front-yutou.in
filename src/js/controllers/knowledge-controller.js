@@ -35,11 +35,14 @@ angular.module('app.controllers')
       showContent: function(node) {
         if (node.content && node.content != '' || $scope.knowledge.mode === 'edit') {
           $scope.knowledge.currentEditing = node;
-          $scope.knowledge.layout.open('south');
-          $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
+          if ($scope.knowledge.editor.isBig) {
+            $scope.knowledge.editor.big();
+          } else {
+            $scope.knowledge.editor.small();
+          }
           $scope.knowledge.contentEditor.value(node.content ? node.content : '');
         } else {
-          $scope.knowledge.layout.close('south');
+          $scope.knowledge.editor.close();
         }
       },
       contextMenu: [
@@ -102,7 +105,6 @@ angular.module('app.controllers')
       currentEditing: {
         content: ''
       },
-      editorIsFull: false,
       contentEditor: new SimpleMDE({
         element: document.getElementById('node-content-editor'),
         forceSync: true,
@@ -188,6 +190,23 @@ angular.module('app.controllers')
           }
         })();
         saveList.splice(0, saveList.length);
+      },
+      editor: {
+        isBig: false,
+        big: function() {
+          $scope.knowledge.layout.open('south');
+          $scope.knowledge.layout.sizePane('south', $(window).height());
+          $scope.knowledge.editor.isBig = true;
+        },
+        small: function() {
+          $scope.knowledge.layout.open('south');
+          $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
+          $scope.knowledge.editor.isBig = false;
+        },
+        close: function() {
+          $scope.knowledge.layout.close('south');
+          $scope.knowledge.editor.isBig = false;
+        }
       }
     };
 
@@ -230,21 +249,21 @@ angular.module('app.controllers')
     });
 
     $scope.$watch('knowledge.mode', function() {
-      $scope.knowledge.layout.close('south');
+      $scope.knowledge.editor.close();
     });
 
     $('.editor-container').delegate('.editor-toolbar a', 'click', function() {
       var title = $(this).attr('title');
       if (title.startsWith('Toggle Side by Side')) {
-        $scope.knowledge.editorIsFull = true;
+        $scope.knowledge.editor.isBig = true;
       } else if (title.startsWith('Toggle Fullscreen')) {
-        $scope.knowledge.editorIsFull = !$scope.knowledge.editorIsFull;
+        $scope.knowledge.editor.isBig = !$scope.knowledge.editor.isBig;
       }
       
-      if ($scope.knowledge.editorIsFull) {
-        $scope.knowledge.layout.sizePane('south', $(window).height());
+      if ($scope.knowledge.editor.isBig) {
+        $scope.knowledge.editor.big();
       } else {
-        $scope.knowledge.layout.sizePane('south', $(window).height() * 0.4);
+        $scope.knowledge.editor.small();
       }
     });
 
