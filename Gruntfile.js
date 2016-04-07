@@ -14,11 +14,6 @@ module.exports = function(grunt) {
       'src/css/icons': 'src/css/icons.zip',
     },
     copy: {
-      html: {
-        files: {
-          '.tmp/index.html': 'src/index.html',
-        },
-      },
       templates: {
         files: [{
           expand: true,
@@ -58,7 +53,7 @@ module.exports = function(grunt) {
       },
     },
     useminPrepare: {
-      html: 'src/index.html',
+      html: '.tmp/index.html',
       options: {
         dest: 'dist',
       },
@@ -155,7 +150,7 @@ module.exports = function(grunt) {
     },
 
     replace: {
-      product: {
+      js: {
         options: {
           patterns: [{
             match: /\/\* env:product(((.)|[\r\n])*)\*\//g,
@@ -166,6 +161,34 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'src',
           src: ['js/**/*.js'],
+          dest: '.tmp'
+        }]
+      },
+      html: {
+        options: {
+          patterns: [{
+            match: /<!-- env:product(((.)|[\r\n])*)-->/g,
+            replacement: '$1'
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: ['index.html'],
+          dest: '.tmp'
+        }]
+      },
+      css: {
+        options: {
+          patterns: [{
+            match: /\/\* env:product(((.)|[\r\n])*)\*\//g,
+            replacement: '$1'
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: ['css/**/*.css'],
           dest: '.tmp'
         }]
       }
@@ -241,6 +264,7 @@ module.exports = function(grunt) {
     'copy',
     'sass',
     'imagemin',
+    'replace',
     'useminPrepare', 
     'concat:generated',
     'cssmin:generated',
