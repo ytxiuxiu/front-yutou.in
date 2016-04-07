@@ -22,7 +22,7 @@ angular.module('app', [
     'toastr',
     'angular-loading-bar'
   ])
-  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
     .state('home', {
       url: '/',
@@ -48,7 +48,16 @@ angular.module('app', [
       url: '/knowledge',
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
+    })
+    .state('404', {
+      url: '/404',
+      templateUrl: 'templates/error/404.tpl.html'
     });
+
+    $urlRouterProvider.otherwise('/404');
+    /* env:product
+    $locationProvider.html5Mode(true);
+    */
   }])
   .config(['$httpProvider',function($httpProvider) {
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';

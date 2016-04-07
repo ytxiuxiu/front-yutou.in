@@ -34,15 +34,7 @@ module.exports = function(grunt) {
           src: '*.*',
           dest: 'dist/css/fonts',
         }],
-      },
-      api: {
-        files: [{
-          expand: true,
-          cwd: 'src',
-          src: 'api/**/*.json',
-          dest: 'dist',
-        }],
-      },
+      }
     },
     sass: {
       app: {
@@ -162,10 +154,26 @@ module.exports = function(grunt) {
       },
     },
 
+    replace: {
+      product: {
+        options: {
+          patterns: [{
+            match: /\/\* env:product(((.)|[\r\n])*)\*\//g,
+            replacement: '$1'
+          }]
+        },
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: ['js/**/*.js'],
+          dest: '.tmp'
+        }]
+      }
+    },
+
     connect: {
       options: {
-        hostname: 'localhost'
-        // hostname: '192.168.0.5'
+        hostname: '0.0.0.0'
       },
       dev: {
         options: {
@@ -225,6 +233,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-zip');
   grunt.loadNpmTasks('grunt-cloudinary-upload');
   grunt.loadNpmTasks('grunt-filerev');
+  grunt.loadNpmTasks('grunt-replace');
 
   grunt.registerTask('build', [
     'clean',
