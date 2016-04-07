@@ -29,6 +29,14 @@ module.exports = function(grunt) {
           src: '*.*',
           dest: 'dist/css/fonts',
         }],
+      },
+      dev: {
+        files: [{
+          expand: true,
+          cwd: 'src',
+          src: '**/*.*',
+          dest: 'dev'
+        }]
       }
     },
     sass: {
@@ -150,45 +158,37 @@ module.exports = function(grunt) {
     },
 
     replace: {
-      js: {
+      dev: {
         options: {
           patterns: [{
-            match: /\/\* env:product(((.)|[\r\n])*)\*\//g,
-            replacement: '$1'
+            match: /<!-- env:product -->(.|\s)*?<!-- endenv -->/g,
+            replacement: ''
+          }, {
+            match: /\/\* env:product \*\/(.|\s)*?\/\* endenv \*\//g,
+            replacement: ''
           }]
         },
         files: [{
           expand: true,
-          cwd: 'src',
-          src: ['js/**/*.js'],
-          dest: '.tmp'
+          cwd: 'dev',
+          src: ['js/**/*.js', 'index.html', 'css/**/*.css'],
+          dest: 'dev'
         }]
       },
-      html: {
+      product: {
         options: {
           patterns: [{
-            match: /<!-- env:product(((.)|[\r\n])*)-->/g,
-            replacement: '$1'
+            match: /<!-- env:dev -->(.|\s)*?<!-- endenv -->/g,
+            replacement: ''
+          }, {
+            match: /\/\* env:dev \*\/(.|\s)*?\/\* endenv \*\//g,
+            replacement: ''
           }]
         },
         files: [{
           expand: true,
           cwd: 'src',
-          src: ['index.html'],
-          dest: '.tmp'
-        }]
-      },
-      css: {
-        options: {
-          patterns: [{
-            match: /\/\* env:product(((.)|[\r\n])*)\*\//g,
-            replacement: '$1'
-          }]
-        },
-        files: [{
-          expand: true,
-          cwd: 'src',
-          src: ['css/**/*.css'],
+          src: ['js/**/*.js', 'index.html', 'css/**/*.css'],
           dest: '.tmp'
         }]
       }
@@ -201,7 +201,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           port: 8000,
-          base: ['.', 'src'],
+          base: ['.', 'dev'],
           livereload: true,
         },
       },
@@ -260,11 +260,12 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean',
+    'replace:product',
     'unzip',
-    'copy',
+    'copy:templates',
+    'copy:fonts',
     'sass',
     'imagemin',
-    'replace',
     'useminPrepare', 
     'concat:generated',
     'cssmin:generated',
@@ -286,6 +287,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'sass',
+    'copy:dev',
+    'replace:dev',
     'unzip',
     'connect:dev',
     'open:dev',

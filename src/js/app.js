@@ -55,9 +55,9 @@ angular.module('app', [
     });
 
     $urlRouterProvider.otherwise('/404');
-    /* env:product
+    /* env:product */
     $locationProvider.html5Mode(true);
-    */
+    /* endenv */
   }])
   .config(['$httpProvider',function($httpProvider) {
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
