@@ -1,0 +1,44 @@
+nav.navbar.navbar-fixed-top {
+  background-color: #222;
+  border-color: #080808;
+
+  .navbar-toggle {
+    border-color: #333;
+    .icon-bar {
+      background-color: #fff;
+    }
+  }
+  .navbar-toggle:hover, .navbar-toggle:focus {
+    background-color: #333;
+  }
+  .navbar-brand {
+    color: #9d9d9d;
+  }
+  .navbar-collapse, .navbar-form {
+    border-color: #101010;
+  }
+  .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+    color: #fff;
+    background-color: #080808;
+  }
+  .navbar-nav > li > a {
+    color: #9d9d9d;
+  }
+  .navbar-nav > li > a:hover, .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: transparent;
+  }
+}
+
+
+/* Homepage */
+div.homepage {
+  div.banner-top {
+    background-image: url(../../images/banner-5cmps.jpg);
+    background-position: center bottom;
+  }
+
+  div.banner-bottom {
+    background-image: url(../../images/bottom-5cmps.png);
+  }
+}

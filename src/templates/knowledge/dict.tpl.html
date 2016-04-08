@@ -1,0 +1,48 @@
+<div class="container">
+  <form class="form" ng-submit="dict.go()">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><span class="icon-search"></span></div>
+        <input type="text" class="form-control input-lg" placeholder="Find..." ng-model="dict.keyword">
+      </div>
+      <input type="submit" class="hidden"></input>
+    </div>
+  </form>
+
+  <div class="panel panel-default" ng-repeat="group in dict.result.explanationGroups">
+    <div class="panel-heading" ng-if="group.groupName != 'default'">
+      <h3 class="panel-title">
+        {{ group.groupName }}
+      </h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+        <li ng-repeat="explanation in group.explanations">
+          <h5>
+            <span class="label label-default">{{ explanation.partOfSpeech }}</span>
+            {{ explanation.explanation }}
+            <small><span class="label babel-show-ch" ng-class="{ active: explanation.showChinese }" ng-click="explanation.showChinese = !explanation.showChinese">Ch</span></small>
+          </h5>
+          <p ng-show="explanation.showChinese">{{ explanation.explanationChinese }}</p>
+          <ul>
+            <li ng-repeat="example in explanation.examples">
+              <h5>{{ example.english }}
+                <small><span class="label babel-show-ch" ng-class="{ active: example.showChinese }" ng-click="example.showChinese = !example.showChinese">Ch</span></small>
+              </h5>
+              <p ng-show="example.showChinese">{{ example.chinese }}</p>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div ng-if="!dict.result">
+    
+  </div>
+
+  <div class="notice text-muted small">
+    <p>All results are retrieved from <a href="http://www.iciba.com/{{ dict.keyword }}" target="_blank">iciba.com</a></p>
+    <p>This is just a tool which is able to hide Chinese explanations :)</p>
+  </div>
+</div>

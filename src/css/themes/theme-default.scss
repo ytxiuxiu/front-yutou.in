@@ -1,0 +1,26 @@
+nav.navbar.navbar-fixed-top {
+  background-color: #f8f8f8;
+  border-color: #e7e7e7;
+  .navbar-brand {
+    color: #777;
+  }
+  .navbar-nav > .active > a, .navbar-nav > .active > a:hover, .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #e7e7e7;
+  }
+  .navbar-nav > li > a {
+    color: #777;
+  }
+}
+
+
+/* Homepage */
+div.homepage {
+  div.banner-top {
+    background-image: url(../../images/banner.png);
+  }
+
+  div.banner-bottom {
+    background-image: url(../../images/bottom.png);
+  }
+}

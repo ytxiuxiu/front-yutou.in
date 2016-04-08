@@ -1,0 +1,30 @@
+nav.navbar.navbar-fixed-top {
+  background-color: #222;
+  border-color: #080808; }
+  nav.navbar.navbar-fixed-top .navbar-toggle {
+    border-color: #333; }
+    nav.navbar.navbar-fixed-top .navbar-toggle .icon-bar {
+      background-color: #fff; }
+  nav.navbar.navbar-fixed-top .navbar-toggle:hover, nav.navbar.navbar-fixed-top .navbar-toggle:focus {
+    background-color: #333; }
+  nav.navbar.navbar-fixed-top .navbar-brand {
+    color: #9d9d9d; }
+  nav.navbar.navbar-fixed-top .navbar-collapse, nav.navbar.navbar-fixed-top .navbar-form {
+    border-color: #101010; }
+  nav.navbar.navbar-fixed-top .navbar-nav > .active > a, nav.navbar.navbar-fixed-top .navbar-nav > .active > a:hover, nav.navbar.navbar-fixed-top .navbar-nav > .active > a:focus {
+    color: #fff;
+    background-color: #080808; }
+  nav.navbar.navbar-fixed-top .navbar-nav > li > a {
+    color: #9d9d9d; }
+  nav.navbar.navbar-fixed-top .navbar-nav > li > a:hover, nav.navbar.navbar-fixed-top .navbar-nav > li > a:focus {
+    color: #fff;
+    background-color: transparent; }
+
+/* Homepage */
+div.homepage div.banner-top {
+  background-image: url(../../images/banner-5cmps.jpg);
+  background-position: center bottom; }
+div.homepage div.banner-bottom {
+  background-image: url(../../images/bottom-5cmps.png); }
+
+/*# sourceMappingURL=theme-5cmps.css.map */

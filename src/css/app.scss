@@ -133,7 +133,8 @@ div.homepage {
   }
 
   div.banner-top {
-    background: url(../images/banner.png) no-repeat center center;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
     padding: 100px 0;
 
@@ -145,9 +146,9 @@ div.homepage {
       }
     }
   }
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 992px) {
     div.banner-top {
-      background: url(../images/banner.png) no-repeat;
+      padding: 40px 0;
     }
   }
 
@@ -157,7 +158,8 @@ div.homepage {
 
   div.banner-bottom {
     padding: 50px;
-    background: url(../images/bottom.png) no-repeat center center;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: cover;
 
     ul.social-buttons {

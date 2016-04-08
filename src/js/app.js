@@ -49,6 +49,16 @@ angular.module('app', [
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
     })
+    .state('dict', {
+      url: '/dict/{keyword}',
+      templateUrl: 'templates/knowledge/dict.tpl.html',
+      controller: 'DictController'
+    })
+    .state('same-as-dict', {
+      url: '/dict',
+      templateUrl: 'templates/knowledge/dict.tpl.html',
+      controller: 'DictController'
+    })
     .state('404', {
       url: '/404',
       templateUrl: 'templates/error/404.tpl.html'

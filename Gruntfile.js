@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 
     clean: {
       build: ['.tmp', 'dist'],
+      dev: ['dev']
     },
     unzip: {
       'src/css/icons': 'src/css/icons.zip',
@@ -44,7 +45,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'src/css',
-          src: ['*.scss'],
+          src: ['**/*.scss'],
           dest: 'src/css',
           ext: '.css',
         }],
@@ -127,7 +128,7 @@ module.exports = function(grunt) {
 
     ngtemplates: {
       app: {
-        cwd: '.tmp/htmlmin',
+        cwd: '.tmp/cloudinary',
         src: 'templates/**/*.html',
         dest: '.tmp/ngtemplates/templates.js',
       },
@@ -136,17 +137,18 @@ module.exports = function(grunt) {
     cloudinary: {
       options: {
         roots: [
-          'dist'
-        ]
+          'dist', 'dist/css/themes', 'dist/css'
+        ],
+        removeVersion: true
       },
-      // templates: {
-      //   files: [{
-      //     expand: true,
-      //     cwd: 'src',
-      //     src: ['templates/**/*.html'],
-      //     dest: '.tmp/cloudinary'
-      //   }]
-      // },
+      templates: {
+        files: [{
+          expand: true,
+          cwd: '.tmp',
+          src: ['templates/**/*.html'],
+          dest: '.tmp/cloudinary'
+        }]
+      },
       assets: {
         files: [{
           expand: true,
@@ -218,25 +220,18 @@ module.exports = function(grunt) {
         url: 'http://localhost:88/',
       },
       build: {
-        url: 'http://localhost:88/'
+        url: 'http://localhost:89/'
       },
     },
     watch: {
-      html: {
-        files: ['src/**/*.html', 'src/**/*.js', 'src/**/*.css', 'src/**/*.json'],
+      files: {
+        files: ['src/**/*.*'],
+        tasks: ['sass', 'copy:dev', 'replace:dev'],
         options: {
           livereload: true,
           spawn: false,
         },
-      },
-      sass: {
-        files: ['src/css/**/*.scss'],
-        tasks: ['sass'],
-        options: {
-          livereload: true,
-          spawn: false,
-        },
-      },
+      }
     },
 	});
 
@@ -273,7 +268,7 @@ module.exports = function(grunt) {
     'filerev:assets',
     'usemin',
     'htmlmin:templates',
-    // 'cloudinary:templates',
+    'cloudinary:templates',
     'ngtemplates',
     'uglify:templates',
     'filerev:templates',
@@ -285,7 +280,12 @@ module.exports = function(grunt) {
     'watch'
   ]);
 
+  grunt.registerTask('test', [
+    'cloudinary:assets'
+  ]);
+
   grunt.registerTask('default', [
+    'clean:dev',
     'sass',
     'copy:dev',
     'replace:dev',

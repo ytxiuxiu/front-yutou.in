@@ -80,6 +80,9 @@ angular.module('app.services', ['uuid'])
           content: data.content,
           deleted: data.deleted
         });
+      },
+      dictFind: function(keyword) {
+        return $http.get(API_PREFIX + '/knowledge/dict/' + keyword + '?idToken=' + appService.getIdToken());
       }
     };
   }]);

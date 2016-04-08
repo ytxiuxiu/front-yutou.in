@@ -1,0 +1,18 @@
+nav.navbar.navbar-fixed-top {
+  background-color: #f8f8f8;
+  border-color: #e7e7e7; }
+  nav.navbar.navbar-fixed-top .navbar-brand {
+    color: #777; }
+  nav.navbar.navbar-fixed-top .navbar-nav > .active > a, nav.navbar.navbar-fixed-top .navbar-nav > .active > a:hover, nav.navbar.navbar-fixed-top .navbar-nav > .active > a:focus {
+    color: #555;
+    background-color: #e7e7e7; }
+  nav.navbar.navbar-fixed-top .navbar-nav > li > a {
+    color: #777; }
+
+/* Homepage */
+div.homepage div.banner-top {
+  background-image: url(../../images/banner.png); }
+div.homepage div.banner-bottom {
+  background-image: url(../../images/bottom.png); }
+
+/*# sourceMappingURL=theme-default.css.map */
