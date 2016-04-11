@@ -48,7 +48,7 @@
           <ul class="nav navbar-nav">
             <li ng-class="{ active: navbar.current == 'home' }"><a ui-sref="home">Home</a></li>
             <li ng-class="{ active: navbar.current == 'knowledge' }"><a ui-sref="knowledge">Knowledge</a></li>
-            <li ng-class="{ active: navbar.current == 'about' }"><a href="#">About</a></li>
+            <li ng-class="{ active: navbar.current == 'about' }"><a ui-sref="about">About</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
             <li ng-class="{ hidden: auth.user.email }">

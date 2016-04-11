@@ -59,6 +59,10 @@ angular.module('app', [
       templateUrl: 'templates/knowledge/dict.tpl.html',
       controller: 'DictController'
     })
+    .state('about', {
+      url: '/about',
+      templateUrl: 'templates/home/about.tpl.html'
+    })
     .state('404', {
       url: '/404',
       templateUrl: 'templates/error/404.tpl.html'
