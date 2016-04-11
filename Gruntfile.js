@@ -226,7 +226,7 @@ module.exports = function(grunt) {
     watch: {
       files: {
         files: ['src/**/*.*'],
-        tasks: ['sass', 'copy:dev', 'replace:dev'],
+        tasks: ['unzip', 'sass', 'copy:dev', 'replace:dev'],
         options: {
           livereload: true,
           spawn: false,
@@ -278,10 +278,6 @@ module.exports = function(grunt) {
     'connect:build',
     'open:build',
     'watch'
-  ]);
-
-  grunt.registerTask('test', [
-    'cloudinary:assets'
   ]);
 
   grunt.registerTask('default', [

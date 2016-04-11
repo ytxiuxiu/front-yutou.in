@@ -197,60 +197,101 @@
   }
 }
 
-#layout-editor {
-
+.layout-editor {
 	.content-title {
 		height: 40px;
 		padding: 10px 10px 5px 10px;
 	}
 
-	h1, h2, h3, h4, h5, h6 {
-		margin: 0 0 5px 0;
-	}
-	hr {
-		margin: 7px 0 5px 0;
-	}
-	h1, .cm-header-1 {
-		font-size: 20px;
-	}
-	h2, .cm-header-2 {
-		font-size: 18px;
-	}
-	h3, .cm-header-3 {
-		font-size: 16px;
-	}
-	h4, h5, .cm-header-4, .cm-header-5 {
-		font-size: 14px;
-	}
-
-	ul {
-		padding-left: 20px;
-	}
-	ol {
-		padding-left: 20px;
-	}
-
 	.content-container {
 		padding: 0 10px 10px 10px;
-
-		$table-border-color: #dfdfdf;
-
-		table {
-			border: 1px solid $table-border-color;
-			tr {
-				border: 1px solid $table-border-color;
-				th, td {
-					border: 1px solid $table-border-color;
-					padding: 1px 3px;
-				}
-			}
-		}
 	}
 }
 
+/* content */
+.content {
+  $table-border-color: #dfdfdf;
 
+  table {
+    border: 1px solid $table-border-color;
+    margin: 5px;
 
+    tr {
+      border: 1px solid $table-border-color;
+      th, td {
+        border: 1px solid $table-border-color;
+        padding: 1px 3px;
+      }
+    }
+  }
 
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin: 0 0 5px 0 !important;
+  }
+  hr {
+    margin: 7px 0 5px 0;
+  }
+  h1, .cm-header-1, .h1 {
+    font-size: 20px !important;
+  }
+  h2, .cm-header-2, .h2 {
+    font-size: 18px !important;
+  }
+  h3, .cm-header-3, .h3 {
+    font-size: 16px !important;
+  }
+  h4, h5, .cm-header-4, .cm-header-5, .h4, .h5 {
+    font-size: 14px !important;
+  }
 
+  ul {
+    padding-left: 20px;
+  }
+  ol {
+    padding-left: 20px;
+  }
+}
+
+/* book */
+.contents {
+  ul {
+    list-style: none;
+    padding-left: 12px;
+
+    li {
+
+    }
+  }
+}
+
+.section {
+  .section-title {
+    background: #f5f5f5;
+    margin: 10px 0 15px 5px;
+    padding: 5px;
+
+    h1, .h1 {
+      font-size: 22px;
+    }
+
+    .toggle-hidden {
+      padding: 6px;
+      color: #aaaaaa;
+      cursor: pointer;
+    }
+
+    .toggle-hidden:hover {
+      color: #000000;
+    }
+  }
+  .section-content {
+    padding-left: 10px;
+  }
+
+  ul.section {
+    list-style: none;
+    padding-left: 5px;
+  }
+}
 
 

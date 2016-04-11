@@ -9,7 +9,6 @@ $space-below-navbar: 17px;
 
 body {
   overflow-x: hidden;
-  overflow-y: scroll;
   font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 14px;
 }
@@ -25,6 +24,10 @@ div.rows > div {
 
 .hide {
   display: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 /**
@@ -72,6 +75,21 @@ div.rows > div {
 }
 .icon-medium {
   font-size: 40px;
+}
+
+/**
+ * back to top
+ */
+.btn-top {
+  position: fixed;
+  bottom: 30px;
+  right: 60px;
+  background-color: #51a351;
+  color: #ffffff;
+}
+.btn-top:hover {
+  background-color: #57ad57;
+  color: #ffffff;
 }
 
 

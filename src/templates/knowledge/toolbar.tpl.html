@@ -1,0 +1,22 @@
+<div class="toolbar">
+  <div class="btn-group" style="display: node;">
+    <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'book'" ui-sref="knowledge-book({nodeId: knowledge.map.node.nodeId})">
+      <span class="icon-dictionary"></span>&nbsp;Book
+    </label>
+    <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'" ui-sref="knowledge({nodeId: knowledge.map.node.nodeId})">
+      <span class="icon-map"></span>&nbsp;Map
+    </label>
+    <label power-control="knowledge.map.edit" class="btn btn-primary" ng-hide="knowledge.mode == 'book'" ng-model="knowledge.mode" uib-btn-radio="'edit'">
+      <span class="icon-edit"></span>&nbsp;Edit
+    </label>
+    <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
+  </div>
+  <a class="btn btn-default" ng-click="knowledge.load()" ng-hide="knowledge.mode == 'book'">
+    <span class="icon-reload"></span>&nbsp;Reload
+  </a>
+  <div class="pull-right">
+    <a class="btn btn-default" href="https://github.com/ytxiuxiu/front-yutou.in/issues/new" target="_blank">
+      <span class="icon-bug"></span>&nbsp;Report Bugs
+    </a>
+  </div>
+</div>

@@ -1,32 +1,12 @@
 <form name="mapForm" novalidate class="map-container">
   <div id="map-layout">
     <div id="layout-toolbar" class="ui-layout-north">
-      <div class="toolbar">
-        <div class="btn-group" power-control="knowledge.map.edit" style="display: node;">
-          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'normal'">
-            <span class="icon-eye"></span>&nbsp;Normal
-          </label>
-          <label class="btn btn-primary" ng-model="knowledge.mode" uib-btn-radio="'edit'">
-            <span class="icon-edit"></span>&nbsp;Edit
-          </label>
-          <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
-        </div>
-        <a class="btn btn-default" ng-click="knowledge.load()">
-            <span class="icon-reload"></span>&nbsp;Reload
-          </a>
-        <div class="pull-right">
-          <a class="btn btn-default" href="https://github.com/ytxiuxiu/front-yutou.in/issues/new" target="_blank">
-            <span class="icon-bug"></span>&nbsp;Report Bugs
-          </a>
-        </div>
-      </div>
+      <div ng-include="'templates/knowledge/toolbar.tpl.html'"></div>
     </div>
     <div id="layout-map" class="ui-layout-center">
       <!-- main section -->
       <!-- map -->
-      
-        
-      <div class="map" ng-if="knowledge.map" ng-init="child = knowledge.map; list = knowledge.map.children">
+      <div class="map" ng-if="knowledge.map && knowledge.mode == 'normal' || knowledge.mode == 'edit'" ng-init="child = knowledge.map; list = knowledge.map.children">
         <ul class="map-root">
           <li>
             <div class="node" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
@@ -69,7 +49,8 @@
       <!-- end map -->
       <!-- end main section -->
     </div>
-    <div id="layout-editor" class="ui-layout-south" style="padding: 0px">
+    <div id="layout-editor" class="ui-layout-south layout-editor content" style="padding: 0px">
+      <!-- title -->
       <div class="content-title" ng-if="knowledge.currentEditing.node.nodeId">
         <h1 class="pull-left">
           <span class="icon-text"></span>
@@ -89,11 +70,13 @@
         </div>
         <span ng-if="knowledge.mode == 'edit'" class="pull-right">Styling with Markdown is supported</span>
       </div>
+      <!-- editor -->
       <div ng-hide="knowledge.mode != 'edit'" class="editor-container">
         <textarea id="node-content-editor" ng-model="knowledge.content"></textarea>
       </div>
+      <!-- content -->
       <div class="content-container" ng-if="knowledge.mode == 'normal'">
-        <div ng-bind-html="knowledge.currentEditing.content | marked"></div>
+        <div class="node-content" ng-bind-html="knowledge.currentEditing.content | marked"></div>
       </div>
     </div>
   </div>

@@ -1,0 +1,4 @@
+{{ number }} <a class="pointer" ng-click="gotoAnchor(content.node.nodeId)">{{ content.name }}</a>
+<ul ng-init="number = number + ($index + 1) + '.'; contents = content.children">
+  <li ng-repeat="content in contents" ng-include="'templates/knowledge/contents-node.tpl.html'"></li>
+</ul>

@@ -128,7 +128,7 @@ angular.module('app.controllers')
         ],
         insertTexts: {
           horizontalRule: ["", "\n-----\n"],
-          table: ["", "\n| column 1 | column 2 | column 3 |\n| -----------  | ----------- | ----------- |\n| text 1         | text 2        | text 3        |\n| text 1         | text 2        | text 3        |\n"],
+          table: ["", "\n| column1 | column2 | column3 |\n| -----------  | ----------- | ----------- |\n| text1         | text2        | text3        |\n| text1         | text2        | text3        |\n"],
         },
         renderingConfig: {
           codeSyntaxHighlighting: true
@@ -243,6 +243,8 @@ angular.module('app.controllers')
         $('.CodeMirror').height($('.CodeMirror').parent().parent().height() - 135);
       }
     });
+    $scope.knowledge.layout.sizePane('north', 91);
+
     $scope.knowledge.layout.close('south');
     $(window).on('resize', function(){
       $('#map-layout').height($(window).height());

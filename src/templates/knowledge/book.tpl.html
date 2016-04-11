@@ -1,0 +1,36 @@
+<div id="map-layout">
+  <div id="layout-toolbar" class="ui-layout-north">
+    <div ng-include="'templates/knowledge/toolbar.tpl.html'"></div>
+  </div>
+  <div id="layout-map" class="ui-layout-center">
+    <!-- contents -->
+    <div class="panel panel-default">
+      <div class="panel-heading" id="anchortop">Contents of {{ knowledge.map.name }}</div>
+      <div class="panel-body contents" ng-if="knowledge.map">
+        <ul>
+          <li ng-repeat="content in knowledge.map.children" ng-include="'templates/knowledge/contents-node.tpl.html'"></li>
+        </ul>
+      </div>
+    </div>
+    <!-- contents -->
+
+    <!-- page -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {{ knowledge.map.name }}
+      </div>
+      <div class="section panel-body" ng-if="knowledge.map" ng-init="section = knowledge.map; sections = knowledge.map.children">
+        <h1 class="section-title">{{ section.name }}</h1>
+        <div class="section-content content" ng-bind-html="section.content | marked"></div>
+        <ul class="section">
+          <li ng-repeat="section in sections" ng-include="'templates/knowledge/book-section.tpl.html'"></li>
+        </ul>
+      </div>
+    </div>
+    <!-- end page -->
+  </div>
+</div>
+
+<div class="btn btn-default btn-top" ng-if="knowledge.scroll > 1000" ng-click="gotoAnchor('top')">
+  <span class="icon-up"></span> Top
+</div>
