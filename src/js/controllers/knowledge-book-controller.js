@@ -3,6 +3,7 @@ angular.module('app.controllers')
     function($scope, $state, $stateParams, $document, appService, knowledgeService) {
 
     $scope.navbar.current = 'knowledge';
+    $scope.changeTitle('Knowledge Book');
 
     $scope.knowledge = {
       map: null,

@@ -3,6 +3,7 @@ angular.module('app.controllers')
     function($scope, $state, $stateParams, $document, appService, knowledgeService) {
 
     $scope.navbar.current = 'knowledge';
+    $scope.changeTitle('Knowledge Map');
 
     $scope.knowledge = {
       map: null,
@@ -46,6 +47,9 @@ angular.module('app.controllers')
         }
       },
       contextMenu: [
+        ['Open', function($itemScope) {
+          $state.go('knowledge-node', { nodeId: $itemScope.child.node.nodeId });
+        }],
         ['Show after', function($itemScope) {
           $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
         }],
@@ -64,13 +68,34 @@ angular.module('app.controllers')
           var nodeId = appService.uuid();
           list.push({
             node: {
-              nodeId: nodeId
+              nodeId: nodeId,
+              nodeType: 'node'
             },
             editionId: appService.uuid(),
             name: null,
             path: $itemScope.child.path + '/' + nodeId,
             small: null,
             content: null,
+            children: [],
+            dirty: true
+          });
+          $scope.knowledge.history.push({
+            type: 'add',
+            node: list[list.length - 1]
+          });
+        }, function() {
+          return $scope.knowledge.mode === 'edit';
+        }],
+        ['Add spliter', function($itemScope) {
+          var list = $itemScope.child.children;
+          var nodeId = appService.uuid();
+          list.push({
+            node: {
+              nodeId: nodeId,
+              nodeType: 'spliter'
+            },
+            editionId: appService.uuid(),
+            path: $itemScope.child.path + '/' + nodeId,
             children: [],
             dirty: true
           });

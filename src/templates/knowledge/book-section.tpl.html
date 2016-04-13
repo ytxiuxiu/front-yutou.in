@@ -1,8 +1,8 @@
-<div class="section-title" id="anchor{{ section.node.nodeId }}">
+<div class="section-title" id="anchor{{ section.node.nodeId }}" ng-if="section.node.nodeType != 'spliter'">
   {{ number }} <span class="h1">{{ section.name }} <small>{{ section.small }}</small></span>
   <span class="pull-right toggle-hidden icon-circle-up" ng-class="{ 'icon-circle-up': !section.hide, 'icon-circle-down': section.hide }" ng-click="section.hide = !section.hide"></span>
 </div>
 <div class="section-content content" ng-hide="section.hide" ng-bind-html="section.content | marked"></div>
-<ul class="section" ng-init="number = number + ($index + 1) + '.'; sections = section.children" ng-hide="section.hide">
+<ul class="section" ng-init="number = section.node.nodeType == 'spliter' ? number : number + ($index + 1) + '.'; sections = section.children" ng-hide="section.hide">
   <li ng-repeat="section in sections" ng-include="'templates/knowledge/book-section.tpl.html'"></li>
 </ul>

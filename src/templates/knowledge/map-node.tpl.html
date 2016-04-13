@@ -1,14 +1,24 @@
 <!-- without popover -->
-<div class="node" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
-  <div>
-    <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
-    <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">
-    <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
+<div class="node">
+  <div class="node-box pull-left" ng-if="child.node.nodeType == 'node'" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
+    <div>
+      <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
+      <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">
+      <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
+    </div>
+    <div>
+      <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description" maxlength="60">
+      <span ng-if="knowledge.mode == 'normal' && child.small" class="small">{{ child.small }}</span>
+    </div>
   </div>
-  <div>
-    <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description" maxlength="60">
-    <span ng-if="knowledge.mode == 'normal' && child.small" class="small">{{ child.small }}</span>
+  <div class="pull-right show-after" ng-if="child.node.hasChild && child.children.length == 0">
+    <a ui-sref="knowledge({nodeId: child.node.nodeId})">
+      <span class="icon-redo"></span> show after...
+    </a>
   </div>
+  <div class="node node-box node-spliter" ng-class="{'spliter-hide': knowledge.mode != 'edit'}" ng-if="child.node.nodeType == 'spliter'" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
+</div>
+  
 </div>
 <!-- end without popover -->
 <ul ng-if="child.children && knowledge.mode === 'edit'"

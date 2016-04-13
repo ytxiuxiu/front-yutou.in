@@ -20,6 +20,11 @@ angular.module('app.controllers')
       }
     };
 
+    $scope.changeTitle = function(title, suffix) {
+      suffix = suffix === undefined ? true : suffix;
+      $('title').text(title + (suffix ? ' - Yutou.in' : ''));
+    };
+
     $scope.auth = {
       user: {},
       logout: function() {

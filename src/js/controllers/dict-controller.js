@@ -3,6 +3,7 @@ angular.module('app.controllers')
     function($scope, $state, $stateParams, $document, appService, knowledgeService) {
 
     $scope.navbar.current = 'knowledge';
+    $scope.changeTitle('Dictionary');
 
     $scope.dict = {
       keyword: null,
@@ -19,6 +20,7 @@ angular.module('app.controllers')
 
     if ($stateParams.keyword) {
       $scope.dict.keyword = $stateParams.keyword;
+      $scope.changeTitle($scope.dict.keyword + ' - Dictionary');
       $scope.dict.find();
     }
 

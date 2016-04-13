@@ -40,31 +40,57 @@
 		position: relative;
 		display: inline-block;
 		vertical-align: middle;
-		height: 25px;
-		border: 1px solid #ccc;
-		padding: 2px 4px;
 		margin: 5px 0;
 		background: #fff;
-		border-radius: 4px;
 		text-align: left;
 		cursor: pointer;
 		transition: all .2s;
 		direction: ltr;
-		max-width: 130px;
 
-		div {
-			overflow: hidden;
-			input {
-				border: none;
-				padding: 0;
-				max-width: 130px !important;
-			}
-			input.ng-invalid {
-				background: red;
-			}
-		}
+    .node-box {
+      height: 25px;
+      border: 1px solid #ccc;
+      padding: 2px 4px;
+      max-width: 130px;
+      border-radius: 4px;
+
+  		div {
+  			overflow: hidden;
+  			input {
+  				border: none;
+  				padding: 0;
+  				max-width: 130px !important;
+          border-radius: 4px;
+  			}
+
+        $place-holder-color: #ffffff;
+        input.ng-invalid::-webkit-input-placeholder {
+          color: $place-holder-color;
+        }
+        input.ng-invalid:-moz-placeholder { /* Firefox 18- */
+          color: $place-holder-color;  
+        }
+        input.ng-invalid::-moz-placeholder {  /* Firefox 19+ */
+          color: $place-holder-color;  
+        }
+        input.ng-invalid:-ms-input-placeholder {  
+          color: $place-holder-color;  
+        }
+  			input.ng-invalid {
+  				background: rgba(255, 0, 0, 0.43);
+  			}
+  		}
+    }
+
+    .show-after {
+      margin-left: 7px;
+    }
+
+    .spliter-hide {
+      display: none;
+    }
 	}
-	.node.has-small, .node.edit-mode {
+	.node-box.has-small, .node-box.edit-mode {
 		height: 45px;
 		input.small {
 			border: none;
@@ -72,7 +98,7 @@
 			max-width: 147px !important;
 		}
 	}
-	.node:hover {
+	.node-box:hover {
   	box-shadow: 0 0 3px 0 #aaaaaa;
   	width: initial;
   	max-width: initial;
@@ -80,12 +106,12 @@
   		box-shadow: 0 0 3px 0 #dddddd;
   	}
 	}
-	.node.editing {
+	.node-box.editing {
 		box-shadow: 0 0 6px 0 #de2222;
 		width: initial;
   	max-width: initial;
 	}
-	.node.dirty {
+	.node-box.dirty {
 		background: #fbfde6;
 		input {
 			background: #fbfde6;
@@ -138,6 +164,9 @@
 			top: 50%;
 			left: 0;
 		}
+    li.spliter-hide:before {
+      border-top: none;
+    }
 		li:first-child:before {
 			left: -1px;
 			bottom: 0;

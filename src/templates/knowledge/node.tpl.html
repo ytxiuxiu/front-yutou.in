@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>{{ knowledge.node.name }} <small>{{ knowledge.node.small }}</small></h1>
+  <hr>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div ng-bind-html="knowledge.node.content | marked"></div>
+    </div>
+  </div>
+</div>

@@ -39,6 +39,11 @@ angular.module('app', [
       templateUrl: 'templates/links/links.tpl.html',
       controller: 'LinksController'
     })
+    .state('knowledge-node', {
+      url: '/knowledge/node/{nodeId}',
+      templateUrl: 'templates/knowledge/node.tpl.html',
+      controller: 'KnowledgeNodeController'
+    })
     .state('knowledge-book', {
       url: '/knowledge/book/{nodeId}',
       templateUrl: 'templates/knowledge/book.tpl.html',
@@ -50,12 +55,12 @@ angular.module('app', [
       controller: 'KnowledgeBookController'
     })
     .state('knowledge', {
-      url: '/knowledge/{nodeId}',
+      url: '/knowledge/map/{nodeId}',
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
     })
     .state('same-as-knowledge', {
-      url: '/knowledge',
+      url: '/knowledge/map',
       templateUrl: 'templates/knowledge/map.tpl.html',
       controller: 'KnowledgeController'
     })

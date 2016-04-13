@@ -74,6 +74,7 @@ angular.module('app.services', ['uuid'])
           idToken: appService.getIdToken(),
           editionId: data.editionId,
           nodeId: data.node.nodeId,
+          nodeType: data.node.nodeType,
           name: data.name,
           path: data.path,
           small: data.small,

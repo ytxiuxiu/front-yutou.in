@@ -1,4 +1,9 @@
-{{ number }} <a class="pointer" ng-click="gotoAnchor(content.node.nodeId)">{{ content.name }}</a>
-<ul ng-init="number = number + ($index + 1) + '.'; contents = content.children">
+<div ng-if="content.node.nodeType != 'spliter'">
+  {{ number }} <a class="pointer" ng-click="gotoAnchor(content.node.nodeId)">{{ content.name }}</a>
+  <a ng-if="content.node.hasChild && content.children.length == 0" ui-sref="knowledge-book({nodeId: content.node.nodeId})">
+    <span class="icon-redo"></span>
+  </a>
+</div>
+<ul ng-init="number = content.node.nodeType == 'spliter' ? number : number + ($index + 1) + '.'; contents = content.children">
   <li ng-repeat="content in contents" ng-include="'templates/knowledge/contents-node.tpl.html'"></li>
 </ul>
