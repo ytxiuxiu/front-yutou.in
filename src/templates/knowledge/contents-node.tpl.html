@@ -1,5 +1,5 @@
 <div ng-if="content.node.nodeType != 'spliter'">
-  {{ number }} <a class="pointer" ng-click="gotoAnchor(content.node.nodeId)">{{ content.name }}</a>
+  {{ number }} <a class="pointer" ng-click="gotoAnchor(content.node.nodeId, '#layout-map')">{{ content.name }}</a>
   <a ng-if="content.node.hasChild && content.children.length == 0" ui-sref="knowledge-book({nodeId: content.node.nodeId})">
     <span class="icon-redo"></span>
   </a>

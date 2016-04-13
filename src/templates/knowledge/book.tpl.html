@@ -5,7 +5,7 @@
   <div id="layout-map" class="ui-layout-center">
     <!-- contents -->
     <div class="panel panel-default">
-      <div class="panel-heading" id="anchortop">Contents of {{ knowledge.map.name }}</div>
+      <div class="panel-heading" id="top">Contents of {{ knowledge.map.name }}</div>
       <div class="panel-body contents" ng-if="knowledge.map">
         <ul>
           <li ng-repeat="content in knowledge.map.children" ng-include="'templates/knowledge/contents-node.tpl.html'"></li>
@@ -31,6 +31,6 @@
   </div>
 </div>
 
-<div class="btn btn-default btn-top" ng-if="knowledge.scroll > 1000" ng-click="gotoAnchor('top')">
+<a class="btn btn-default btn-top" ng-if="knowledge.scroll > 1000" ng-click="gotoAnchor('top', '#layout-map')">
   <span class="icon-up"></span> Top
-</div>
+</a>

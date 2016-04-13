@@ -30,7 +30,7 @@ angular.module('app.controllers')
       }
     });
     $scope.knowledge.layout.sizePane('north', 91);
-    $(window).on('resize', function(){
+    $(window).on('resize', function() {
       $('#map-layout').height($(window).height());
     });
 
@@ -40,5 +40,4 @@ angular.module('app.controllers')
         $scope.knowledge.scroll = $('#layout-map').scrollTop();
       });
     });
-
   }]);

@@ -1,4 +1,4 @@
-<div class="section-title" id="anchor{{ section.node.nodeId }}" ng-if="section.node.nodeType != 'spliter'">
+<div class="section-title" id="{{ section.node.nodeId }}" ng-if="section.node.nodeType != 'spliter'">
   {{ number }} <span class="h1">{{ section.name }} <small>{{ section.small }}</small></span>
   <span class="pull-right toggle-hidden icon-circle-up" ng-class="{ 'icon-circle-up': !section.hide, 'icon-circle-down': section.hide }" ng-click="section.hide = !section.hide"></span>
 </div>
