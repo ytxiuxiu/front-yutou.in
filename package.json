@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "highlight.js": "^9.2.0"
+    "highlight.js": "^9.2.0",
+    "marked": "git+https://github.com/ytxiuxiu/marked.git"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
