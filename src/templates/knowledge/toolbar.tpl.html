@@ -10,11 +10,12 @@
       <span class="icon-edit"></span>&nbsp;Edit
     </label>
     <input type="submit" ng-if="knowledge.mode == 'edit'" ng-click="knowledge.save()" ng-disabled="mapForm.$invalid || knowledge.saving" value="Save" class="btn btn-default">
+    <a class="btn btn-default" ng-disabled="knowledge.nodeId == 'root'" ng-click="knowledge.nodeId == 'root' || back()" ng-hide="knowledge.mode == 'book'">
+      <span class="icon-undo"></span>&nbsp;Show before
+    </a>
   </div>
-  <a class="btn btn-default" ng-click="knowledge.load()" ng-hide="knowledge.mode == 'book'">
-    <span class="icon-reload"></span>&nbsp;Reload
-  </a>
-  <div class="pull-right">
+  
+  <div class="pull-right hide">
     <a class="btn btn-default" href="https://github.com/ytxiuxiu/front-yutou.in/issues/new" target="_blank">
       <span class="icon-bug"></span>&nbsp;Report Bugs
     </a>

@@ -68,6 +68,9 @@ angular.module('app.services', ['uuid'])
       getMap: function(path) {
         return $http.get(API_PREFIX + 'knowledge/map/' + path + '?idToken=' + appService.getIdToken());
       },
+      getNode: function(nodeId) {
+        return $http.get(API_PREFIX + 'knowledge/node/' + nodeId + '?idToken=' + appService.getIdToken());
+      },
       addEdition: function(saveItem) {
         var data = saveItem.node;
         return $http.post(API_PREFIX + 'knowledge/map/edition/add', {

@@ -1,9 +1,12 @@
 <div class="container">
-  <h1>{{ knowledge.node.name }} <small>{{ knowledge.node.small }}</small></h1>
+  <h1>{{ knowledge.node.currentEdition.name }} <small>{{ knowledge.node.currentEdition.small }}</small></h1>
+  <div>
+    {{ knowledge.node.viewsNumber ? knowledge.node.viewsNumber : '0' }} view{{ knowledge.node.viewsNumber > 1 ? 's' : '' }}, Updated at {{ knowledge.node.currentEdition.createdAt | date : 'dd/MMM hh:mm a' }}
+  </div>
   <hr>
   <div class="panel panel-default">
     <div class="panel-body">
-      <div ng-bind-html="knowledge.node.content | marked"></div>
+      <div ng-bind-html="knowledge.node.currentEdition.content | marked"></div>
     </div>
   </div>
 </div>

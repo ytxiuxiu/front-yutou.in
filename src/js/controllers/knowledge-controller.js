@@ -1,6 +1,6 @@
 angular.module('app.controllers')
-  .controller('KnowledgeController', ['$scope', '$state', '$stateParams', '$document', 'AppService', 'KnowledgeService',
-    function($scope, $state, $stateParams, $document, appService, knowledgeService) {
+  .controller('KnowledgeController', ['$scope', '$state', '$stateParams', '$sce', '$document', 'AppService', 'KnowledgeService',
+    function($scope, $state, $stateParams, $sce, $document, appService, knowledgeService) {
 
     $scope.navbar.current = 'knowledge';
     $scope.changeTitle('Knowledge Map');
@@ -8,6 +8,7 @@ angular.module('app.controllers')
     $scope.knowledge = {
       map: null,
       mode: 'normal',
+      nodeId: $stateParams.nodeId ? $stateParams.nodeId : 'root',
       history: [],
       drop: function(event, parent, list, index) {
         var node = list[index];
@@ -33,15 +34,24 @@ angular.module('app.controllers')
           event.dataTransfer.setDragImage(img, 0, 0);
         }
       },
+      popover: 'templates/knowledge/popover.tpl.html',
+      open: function() {
+        $state.go('knowledge-node', { nodeId: $scope.knowledge.currentEditing.node.nodeId });
+      },
+      showAfter: function() {
+        $state.go('knowledge', { nodeId: $scope.knowledge.currentEditing.node.nodeId });
+      },
       showContent: function(node) {
+        $scope.knowledge.currentEditing = node;
         if (node.content && node.content != '' || $scope.knowledge.mode === 'edit') {
-          $scope.knowledge.currentEditing = node;
-          if ($scope.knowledge.editor.isBig) {
-            $scope.knowledge.editor.big();
-          } else {
-            $scope.knowledge.editor.small();
+          if ($(window).width() > 425) {
+            if ($scope.knowledge.editor.isBig) {
+              $scope.knowledge.editor.big();
+            } else {
+              $scope.knowledge.editor.small();
+            }
+            $scope.knowledge.contentEditor.value(node.content ? node.content : '');
           }
-          $scope.knowledge.contentEditor.value(node.content ? node.content : '');
         } else {
           $scope.knowledge.editor.close();
         }
@@ -273,7 +283,22 @@ angular.module('app.controllers')
     $scope.knowledge.layout.close('south');
     $(window).on('resize', function(){
       $('#map-layout').height($(window).height());
+      $('#map-layout').width($(window).width());
+      toggleToolbar();
     });
+
+    function toggleToolbar() {
+      if ($(window).width() <= 425) {
+        $scope.knowledge.layout.hide('north');
+        $scope.knowledge.layout.hide('south');
+        $scope.knowledge.popover = 'templates/knowledge/popover.tpl.html';
+      } else {
+        $scope.knowledge.layout.show('north');
+        $scope.knowledge.layout.show('south');
+        $scope.knowledge.popover = '';
+      }
+    }
+    toggleToolbar();
 
     $scope.$watch('knowledge.mode', function() {
       $scope.knowledge.editor.close();

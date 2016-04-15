@@ -1,6 +1,12 @@
 <!-- without popover -->
 <div class="node">
-  <div class="node-box pull-left" ng-if="child.node.nodeType == 'node'" ng-click="knowledge.showContent(child)" ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
+  <div class="node-box pull-left" 
+    ng-if="child.node.nodeType == 'node'" 
+    ng-click="knowledge.showContent(child)" 
+    popover-placement="bottom" 
+    popover-trigger="mouseenter" 
+    uib-popover-template="knowledge.popover" 
+    ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
     <div>
       <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
       <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">

@@ -17,6 +17,10 @@ angular.module('app.controllers')
       }
     };
 
+    $scope.back = function() {
+      window.history.back();
+    };
+
     $scope.changeTitle = function(title, suffix) {
       suffix = suffix === undefined ? true : suffix;
       $('title').text(title + (suffix ? ' - Yutou.in' : ''));

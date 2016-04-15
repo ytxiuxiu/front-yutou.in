@@ -9,9 +9,9 @@ angular.module('app.controllers')
       node: null,
       mode: 'node',
       load: function() {
-        knowledgeService.getMap($stateParams.nodeId).then(function(response) {
-          $scope.knowledge.node = response.data.map;
-          $scope.changeTitle($scope.knowledge.node.name + ' - Knowledge');
+        knowledgeService.getNode($stateParams.nodeId).then(function(response) {
+          $scope.knowledge.node = response.data.node;
+          $scope.changeTitle($scope.knowledge.node.currentEdition.name + ' - Knowledge');
         });
       }
     };
