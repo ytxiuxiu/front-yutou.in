@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-2">
+    <ul class="list-group">
+      <li ng-repeat="file in editor.storage.saves" 
+        ng-click="editor.switchEditing($index)" 
+        class="pointer list-group-item" 
+        ng-class="{ active: $index == editor.storage.currentEditing }">
+        <div ng-if="$index != editor.storage.currentEditing">
+          {{ file.title ? file.title : 'No Title' }}
+        </div>
+        <div ng-if="$index == editor.storage.currentEditing">
+          <input type="text" class="form-control" placeholder="No title" ng-model="file.title">
+        </div>
+      </li>
+    </ul>
+    <div class="btn-group">
+      <button ng-click="editor.add()" class="btn btn-default"><span class="icon-add"></span> Add</button>
+      <button class="btn btn-default"
+        mwl-confirm
+        title="Remove?"
+        message="Are you sure to remove this document?"
+        confirm-button-type="danger"
+        on-confirm="editor.remove()">
+        <span class="icon-bin"></span> Remove
+      </button>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <textarea id="editor"></textarea>
+  </div>
+</div>

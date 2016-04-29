@@ -23,7 +23,7 @@ angular.module('app.controllers')
 
     $scope.changeTitle = function(title, suffix) {
       suffix = suffix === undefined ? true : suffix;
-      $('title').text(title + (suffix ? ' - Yutou.in' : ''));
+      $('title').text(title + (suffix ? ' - Yutou.in - Yingchen盈琛 Liu刘\'s personal website' : ''));
     };
 
     $scope.auth = {
@@ -61,7 +61,7 @@ angular.module('app.controllers')
         var history = $scope.toast.history;
         // avoid duplicate messages
         for (var i = 0, l = history.length; i < l; i++) {
-          if (new Date() - history[i].openTime < 1000 && history[i].scope.message === message) {
+          if (new Date() - history[i].openTime < 10000 && history[i].scope.message === message) {
             return;
           }
         }

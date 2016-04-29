@@ -6,7 +6,7 @@
     <div id="layout-map" class="ui-layout-center">
       <!-- main section -->
       <!-- map -->
-      <div class="map" ng-if="knowledge.map && knowledge.mode == 'normal' || knowledge.mode == 'edit'" ng-init="child = knowledge.map; list = knowledge.map.children">
+      <div class="map" ng-if="knowledge.map && knowledge.mode == 'normal' || knowledge.mode == 'edit'" ng-init="child = knowledge.map; list = knowledge.map.children" ng-style="{ zoom: knowledge.zoom + '%' }">
         <ul class="map-root">
           <li context-menu="knowledge.contextMenu">
             <div class="node">
@@ -89,7 +89,15 @@
   </div>
 </form>
 
-
+<div class="btn-group zoom hide" style="position: fixed; bottom: 10px; right: 20px;">
+  <a class="btn btn-default btn-xs" ng-click="knowledge.zoomIn()">
+    +
+  </a>
+  <a class="btn btn-default btn-xs" ng-click="knowledge.zoomOut()">
+    -
+  </a>
+  <a>{{ knowledge.zoom }}%</a>
+</div>
 
 
 

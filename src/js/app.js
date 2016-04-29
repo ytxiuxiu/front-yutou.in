@@ -20,7 +20,9 @@ angular.module('app', [
     'ui.layout',
     'ngAnimate',
     'toastr',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'ngAudio',
+    'mwl.confirm'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
@@ -73,6 +75,11 @@ angular.module('app', [
       url: '/dict',
       templateUrl: 'templates/knowledge/dict.tpl.html',
       controller: 'DictController'
+    })
+    .state('editor', {
+      url: '/editor',
+      templateUrl: 'templates/editor/editor.tpl.html',
+      controller: 'EditorController'
     })
     .state('about', {
       url: '/about',

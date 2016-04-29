@@ -1,15 +1,28 @@
 <div class="container">
-  <form class="form" ng-submit="dict.go()">
-    <div class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><span class="icon-search"></span></div>
-        <input type="text" class="form-control input-lg" placeholder="Find..." ng-model="dict.keyword">
+  <div ng-class="{'no-keyword': dict.empty, 'has-keyword': !dict.empty}">
+    <form ng-submit="dict.go()">
+      <div class="input-group" ng-if="!dict.empty">
+        <div class="input-group-addon icon-search"></div>
+        <input class="form-control" type="text" ng-model="dict.keyword" placeholder="Find...">
       </div>
-      <input type="submit" class="hidden"></input>
-    </div>
-  </form>
+      <input ng-if="dict.empty" class="keyword" type="text" ng-model="dict.keyword" placeholder="Find...">
+      <input type="submit" value="Go" class="hidden">
+    </form>
+  </div>
 
-  <div class="panel panel-default" ng-repeat="group in dict.result.explanationGroups">
+  <div class="panel panel-default" ng-if="!dict.empty">
+    <div class="panel-body" ng-if="dict.result.keyword">
+      <b>{{ dict.result.keyword }}</b>
+      <span class="label label-info pointer" ng-click="dict.play(dict.result.audio)">
+        <span class="icon-sound"></span>
+      </span>
+    </div>
+    <div class="panel-body" ng-if="!dict.result.keyword">
+      Searching...
+    </div>
+  </div>
+
+  <div class="panel panel-default" ng-if="!dict.empty" ng-repeat="group in dict.result.explanationGroups">
     <div class="panel-heading" ng-if="group.groupName != 'default'">
       <h3 class="panel-title">
         {{ group.groupName }}
@@ -21,13 +34,19 @@
           <h5>
             <span class="label label-default">{{ explanation.partOfSpeech }}</span>
             {{ explanation.explanation }}
-            <small><span class="label babel-show-ch" ng-class="{ active: explanation.showChinese }" ng-click="explanation.showChinese = !explanation.showChinese">Ch</span></small>
+            <small><span class="label label-info pointer" ng-class="{ active: explanation.showChinese }" ng-click="explanation.showChinese = !explanation.showChinese">Ch</span></small>
           </h5>
           <p ng-show="explanation.showChinese">{{ explanation.explanationChinese }}</p>
           <ul>
             <li ng-repeat="example in explanation.examples">
               <h5>{{ example.english }}
-                <small><span class="label babel-show-ch" ng-class="{ active: example.showChinese }" ng-click="example.showChinese = !example.showChinese">Ch</span></small>
+                <small>
+                  <span class="label label-info pointer" ng-click="dict.play(example.audio)">
+                    <span class="icon-sound"></span>
+                  </span>
+                  &nbsp;
+                  <span class="label label-info pointer" ng-class="{ active: example.showChinese }" ng-click="example.showChinese = !example.showChinese">Ch</span>
+                </small>
               </h5>
               <p ng-show="example.showChinese">{{ example.chinese }}</p>
             </li>

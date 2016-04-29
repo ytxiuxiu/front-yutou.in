@@ -6,6 +6,7 @@
     popover-placement="bottom" 
     popover-trigger="mouseenter" 
     uib-popover-template="knowledge.popover" 
+    popover-popup-delay="10"
     ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
     <div>
       <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>

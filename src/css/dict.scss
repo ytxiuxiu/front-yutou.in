@@ -1,15 +1,38 @@
-span.babel-show-ch {
-  cursor: pointer;
-  background-color: rgba(255, 0, 0, 0.1);
-}
-span.babel-show-ch:hover, span.babel-show-ch.active {
-  cursor: pointer;
-  background-color: rgba(255, 0, 0, 0.8);
-}
+
 .notice {
   text-align: center;
 
   p {
     margin: 0;
+  }
+}
+
+.no-keyword {
+  text-align: center;
+  padding-top: 200px;
+  padding-bottom: 60px;
+}
+
+.has-keyword {
+  padding-top: 0;
+  padding-bottom: 20px;
+}
+
+input.keyword {
+  padding: 10px;
+  width: 70%;
+  font: 16px arial;
+  border: 1px solid #d8d8d8;
+  border-bottom: 1px solid #ccc;
+  vertical-align: top;
+  outline: none;
+  border-radius: 5px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+@media screen and (max-width: 510px) {
+  input.keyword {
+    width: 100%;
   }
 }

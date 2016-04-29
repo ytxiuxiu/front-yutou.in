@@ -5,6 +5,11 @@ angular.module('app.controllers')
     $scope.navbar.current = 'knowledge';
     $scope.changeTitle('Knowledge Map');
 
+    $scope.editorParams = {};
+    angular.extend($scope.editorParams, {
+      element: document.getElementById('node-content-editor')
+    }, common.editor);
+
     $scope.knowledge = {
       map: null,
       mode: 'normal',
@@ -19,6 +24,17 @@ angular.module('app.controllers')
           type: 'update',
           node: node
         });
+      },
+      zoom: 100,
+      zommIn: function() {
+        if ($scope.knowledge.zoom <= 100) {
+          $scope.knowledge.zoom += 10;
+        }
+      },
+      zoomOut: function() {
+        if ($scope.knowledge.zoom >= 70) {
+          $scope.knowledge.zoom -= 10;
+        }
       },
       load: function() {
         var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
@@ -140,38 +156,7 @@ angular.module('app.controllers')
       currentEditing: {
         content: ''
       },
-      contentEditor: new SimpleMDE({
-        element: document.getElementById('node-content-editor'),
-        forceSync: true,
-        placeholder: 'Type here...! Supports Markdown :)',
-        tabSize: 4,
-        toolbar: [
-          "bold", "italic", "heading", "|", 
-          "quote", "code", "|", 
-          "unordered-list", "ordered-list", "|", 
-          "link", "image", "table", "horizontal-rule", "|",
-          "preview", "side-by-side", "fullscreen", "|",
-          {
-            name: "markdown",
-            action: function() {
-              var win = window.open('http://daringfireball.net/projects/markdown/', '_blank');
-              win.focus();
-            },
-            className: "fa fa-question-circle",
-            title: "Guide"
-          }
-        ],
-        insertTexts: {
-          horizontalRule: ["", "\n-----\n"],
-          table: ["", "\n| column1 | column2 | column3 |\n| -----------  | ----------- | ----------- |\n| text1         | text2        | text3        |\n| text1         | text2        | text3        |\n"],
-        },
-        renderingConfig: {
-          codeSyntaxHighlighting: true
-        },
-        blockStyles: {
-          italic: '_'
-        }
-      }),
+      contentEditor: new SimpleMDE($scope.editorParams),
       save: function() {
         var history = $scope.knowledge.history;
         var saveList = [];

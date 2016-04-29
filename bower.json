@@ -37,6 +37,8 @@
     "jquery-layout.css": "http://layout.jquery-dev.com/lib/css/layout-default-latest.css",
     "highlight.js": "https://cdn.jsdelivr.net/highlight.js/latest/highlight.min.js",
     "highlight.css": "https://cdn.jsdelivr.net/highlight.js/latest/styles/github.min.css",
-    "simplemde": "https://github.com/ytxiuxiu/simplemde-markdown-editor.git#~1.10.2"
+    "simplemde": "https://github.com/ytxiuxiu/simplemde-markdown-editor.git#~1.10.2",
+    "angular-audio": "~1.7.2",
+    "angular-bootstrap-confirm": "~1.0.1"
   }
 }
