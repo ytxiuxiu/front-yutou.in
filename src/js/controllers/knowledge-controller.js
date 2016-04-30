@@ -54,8 +54,30 @@ angular.module('app.controllers')
       open: function() {
         $state.go('knowledge-node', { nodeId: $scope.knowledge.currentEditing.node.nodeId });
       },
-      showAfter: function() {
-        $state.go('knowledge', { nodeId: $scope.knowledge.currentEditing.node.nodeId });
+      showAfter: function(nodeId) {
+        // TODO: improve spliter
+
+        nodeId = nodeId ? nodeId : $scope.knowledge.currentEditing.node.nodeId;
+
+        $state.go('knowledge', {nodeId: nodeId});
+
+        // var found;
+        // function find(nodeId, inNode) {
+        //   if (inNode.node.nodeId == nodeId) {
+        //     found = inNode;
+        //   } else {
+        //     for (var i = 0, l = inNode.children.length; i < l; i++) {
+        //       find(nodeId, inNode.children[i]);
+        //     }
+        //   }
+        // }
+        // find(nodeId, $scope.knowledge.map);
+        // console.log(found);
+
+        // knowledgeService.getMap(found.children[0].node.nodeId).then(function(response) {
+        //   console.log(response.data.map);
+        // });
+
       },
       showContent: function(node) {
         $scope.knowledge.currentEditing = node;
@@ -77,7 +99,7 @@ angular.module('app.controllers')
           $state.go('knowledge-node', { nodeId: $itemScope.child.node.nodeId });
         }],
         ['Show after', function($itemScope) {
-          $state.go('knowledge', { nodeId: $itemScope.child.node.nodeId });
+          $scope.knowledge.showAfter($itemScope.child.node.nodeId);
         }],
         [function($itemScope) {
           return $scope.knowledge.mode === 'normal' ? 'Show content' : 'Edit content';

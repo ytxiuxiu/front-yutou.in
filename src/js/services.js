@@ -82,6 +82,8 @@ angular.module('app.services', ['uuid'])
           path: data.path,
           small: data.small,
           content: data.content,
+          status: data.status,
+          priority: data.priority,
           deleted: data.deleted
         });
       },

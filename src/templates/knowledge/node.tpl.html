@@ -2,11 +2,38 @@
   <h1>{{ knowledge.node.currentEdition.name }} <small>{{ knowledge.node.currentEdition.small }}</small></h1>
   <div>
     {{ knowledge.node.viewsNumber ? knowledge.node.viewsNumber : '0' }} view{{ knowledge.node.viewsNumber > 1 ? 's' : '' }}, Updated at {{ knowledge.node.currentEdition.createdAt | date : 'dd/MMM hh:mm a' }}
+    <label class="label label-warning" ng-if="knowledge.node.currentEdition.status == 'construction'">Uncompleted</label>
   </div>
   <hr>
   <div class="panel panel-default">
     <div class="panel-body">
       <div class="content" ng-bind-html="knowledge.node.currentEdition.content | marked"></div>
+    </div>
+  </div>
+
+  <!-- editor -->
+  <div power-control="knowledge.map.edit">
+  
+  <!-- <div class="btn-group" style="padding-bottom: 10px">
+      <label class="btn btn-primary" ng-model="knowledge.edit" uib-btn-radio="'on'">
+        On
+      </label>
+      <label class="btn btn-primary" ng-model="knowledge.edit" uib-btn-radio="'off'">
+        Off
+      </label>
+    </div> -->
+    <button class="btn btn-success" ng-click="knowledge.save()">Save</button>
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="knowledge.node.currentEdition.status" uib-btn-radio="'normal'">
+        Normal
+      </label>
+      <label class="btn btn-default construction" ng-model="knowledge.node.currentEdition.status" uib-btn-radio="'construction'">
+        Construction
+      </label>
+    </div>
+  
+    <div class="editor-container" style="margin-top: 10px">
+      <textarea id="node-content-editor" ng-model="knowledge.node.currentEdition.content"></textarea>
     </div>
   </div>
 </div>
