@@ -31,6 +31,20 @@
         Construction
       </label>
     </div>
+    <div class="btn-group">
+      <label class="btn btn-default priority-high" ng-model="knowledge.node.currentEdition.priority" uib-btn-radio="1">
+        High
+      </label>
+      <label class="btn btn-default priority-medium" ng-model="knowledge.node.currentEdition.priority" uib-btn-radio="2">
+        Medium
+      </label>
+      <label class="btn btn-default priority-low" ng-model="knowledge.node.currentEdition.priority" uib-btn-radio="3">
+        Low
+      </label>
+      <label class="btn btn-default" ng-model="knowledge.node.currentEdition.priority" uib-btn-radio="4">
+        Normal
+      </label>
+    </div>
   
     <div class="editor-container" style="margin-top: 10px">
       <textarea id="node-content-editor" ng-model="knowledge.node.currentEdition.content"></textarea>
