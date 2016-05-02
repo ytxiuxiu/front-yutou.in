@@ -13,9 +13,16 @@
   <div class="panel panel-default" ng-if="!dict.empty">
     <div class="panel-body" ng-if="dict.result.keyword">
       <b>{{ dict.result.keyword }}</b>
-      <span class="label label-info pointer" ng-click="dict.play(dict.result.audio)">
-        <span class="icon-sound"></span>
-      </span>
+      <div>
+        <span ng-if="dict.result.symbolBritish">{{ dict.result.symbolBritish }}</span>
+        <span class="label label-info pointer" ng-if="dict.result.audioBritish" ng-click="dict.play(dict.result.audioBritish)">
+          <span class="icon-sound"></span>
+        </span>
+        <span ng-if="dict.result.symbolAmerican" style="margin-left: 10px;">{{ dict.result.symbolAmerican }}</span>
+        <span class="label label-info pointer" ng-if="dict.result.audioBritish" ng-click="dict.play(dict.result.audioBritish)">
+          <span class="icon-sound"></span>
+        </span>
+      </div>
     </div>
     <div class="panel-body" ng-if="!dict.result.keyword">
       Searching...
