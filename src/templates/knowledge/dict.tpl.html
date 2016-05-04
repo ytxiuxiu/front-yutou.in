@@ -18,9 +18,19 @@
         <span class="label label-info pointer" ng-if="dict.result.audioBritish" ng-click="dict.play(dict.result.audioBritish)">
           <span class="icon-sound"></span>
         </span>
-        <span ng-if="dict.result.symbolAmerican" style="margin-left: 10px;">{{ dict.result.symbolAmerican }}</span>
-        <span class="label label-info pointer" ng-if="dict.result.audioBritish" ng-click="dict.play(dict.result.audioBritish)">
+        <span ng-if="dict.result.symbolAmerican" style="margin-left: 5px;">{{ dict.result.symbolAmerican }}</span>
+        <span class="label label-info pointer" ng-if="dict.result.audioAmerican" ng-click="dict.play(dict.result.audioAmerican)">
           <span class="icon-sound"></span>
+        </span>
+      </div>
+      <div>
+        * rank: 
+        <span uib-popover="Ranked top {{ frequency.rank / frequency.total * 100 | number : 1 }}% in 20,000 words" 
+          popover-trigger="mouseenter" 
+          ng-repeat="frequency in dict.result.frequencies" 
+          class="label label-success pointer" 
+          style="margin-right: 5px;">
+          [{{ frequency.partOfSpeech }}] {{ frequency.rank / frequency.total * 100 | number : 1 }}%
         </span>
       </div>
     </div>
@@ -41,18 +51,27 @@
           <h5>
             <span class="label label-default">{{ explanation.partOfSpeech }}</span>
             {{ explanation.explanation }}
-            <small><span class="label label-info pointer" ng-class="{ active: explanation.showChinese }" ng-click="explanation.showChinese = !explanation.showChinese">Ch</span></small>
+            <small>
+              <span uib-popover="Show Chinese" 
+                popover-trigger="mouseenter" 
+                class="label label-info pointer" 
+                ng-class="{ active: explanation.showChinese }" 
+                ng-click="explanation.showChinese = !explanation.showChinese">Ch</span>
+            </small>
           </h5>
           <p ng-show="explanation.showChinese">{{ explanation.explanationChinese }}</p>
           <ul>
             <li ng-repeat="example in explanation.examples">
               <h5>{{ example.english }}
                 <small>
-                  <span class="label label-info pointer" ng-click="dict.play(example.audio)">
+                  <span class="label label-info pointer" ng-click="dict.play(example.audio)" style="margin-right: 5px;">
                     <span class="icon-sound"></span>
                   </span>
-                  &nbsp;
-                  <span class="label label-info pointer" ng-class="{ active: example.showChinese }" ng-click="example.showChinese = !example.showChinese">Ch</span>
+                  <span uib-popover="Show Chinese" 
+                    popover-trigger="mouseenter"
+                    class="label label-info pointer" 
+                    ng-class="{ active: example.showChinese }" n
+                    g-click="example.showChinese = !example.showChinese">Ch</span>
                 </small>
               </h5>
               <p ng-show="example.showChinese">{{ example.chinese }}</p>
