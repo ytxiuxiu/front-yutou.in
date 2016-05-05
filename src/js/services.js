@@ -88,6 +88,7 @@ angular.module('app.services', ['uuid'])
           nodeType: data.node.nodeType,
           name: data.name,
           path: data.path,
+          brotherNodeId: data.brotherNodeId,
           small: data.small,
           content: data.content,
           status: data.status,

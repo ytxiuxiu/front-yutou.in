@@ -50,6 +50,34 @@ angular.module('app.controllers')
           event.dataTransfer.setDragImage(img, 0, 0);
         }
       },
+      move: function(child) {
+          $scope.knowledge.find(child.node.nodeId, $scope.knowledge.map);
+          console.log($scope.knowledge.found);
+          console.log($scope.knowledge.foundParent);
+        // for (var i = 0, l = list.length; i < l; i++) {
+        //   if (list[i].node.nodeId === child.node.nodeId) {
+        //     break;
+        //   }
+        // }
+        //console.log(i);
+
+        
+      },
+      found: null,
+      foundParent: null,
+      find: function find(nodeId, inNode) {
+        for (var j = 0, lj = inNode.children.length; j < lj; j++) {
+          if (inNode.children[j].node.nodeId == nodeId) {
+            $scope.knowledge.found = inNode.children[j];
+            $scope.knowledge.foundParent = inNode;
+            return;
+          } else {
+            for (var i = 0, l = inNode.children[j].children.length; i < l; i++) {
+              $scope.knowledge.find(nodeId, inNode.children[j].children[i]);
+            }
+          }
+        }
+      },
       popover: 'templates/knowledge/popover.tpl.html',
       open: function() {
         $state.go('knowledge-node', { nodeId: $scope.knowledge.currentEditing.node.nodeId });
@@ -109,6 +137,25 @@ angular.module('app.controllers')
           if ($scope.knowledge.mode === 'normal' && !$itemScope.child.content || $itemScope.child.content === '') {
             return false;
           }
+        }],
+        null,
+        ['Mark as Read', function($itemScope) {
+          var nodeId = $itemScope.child.node.nodeId;
+          if (!$scope.$storage.readList) {
+            $scope.$storage.readList = {};
+          }
+          $scope.$storage.readList[nodeId] = true;
+        }, function($itemScope) {
+          return !$scope.$storage.readList[$itemScope.child.node.nodeId];
+        }],
+        ['Mark as Unread', function($itemScope) {
+          var nodeId = $itemScope.child.node.nodeId;
+          if (!$scope.$storage.readList) {
+            $scope.$storage.readList = {};
+          }
+          $scope.$storage.readList[nodeId] = false;
+        }, function($itemScope) {
+          return $scope.$storage.readList[$itemScope.child.node.nodeId];
         }],
         null,
         ['Add child', function($itemScope) {
@@ -232,6 +279,8 @@ angular.module('app.controllers')
           }
         })();
         saveList.splice(0, saveList.length);
+
+        console.log(saveList);
       },
       editor: {
         isBig: false,

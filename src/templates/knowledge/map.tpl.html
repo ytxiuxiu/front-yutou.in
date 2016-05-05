@@ -32,7 +32,7 @@
               dnd-inserted="knowledge.drop(event, child, list, index)">
               <li ng-repeat="child in list" 
                 dnd-draggable="child"
-                dnd-moved="list.splice($index, 1)"
+                dnd-moved="list.splice($index, 1); knowledge.move(child, list)"
                 ng-include="'templates/knowledge/map-node.tpl.html'" 
                 context-menu="knowledge.contextMenu"
                 class="children-item"></li>
