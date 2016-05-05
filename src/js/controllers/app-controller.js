@@ -39,9 +39,7 @@ angular.module('app.controllers')
         if ($scope.auth.loginModal) {
           $scope.auth.loginModal.close();
         }
-        // refresh
-        $state.go($state.current, {}, {reload: true});
-        $scope.$broadcast('auth.user.change', $scope.auth.user);
+        $scope.refresh();
       });
     });
     $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
@@ -59,7 +57,9 @@ angular.module('app.controllers')
       },
       loginModal: null,
       logout: function() {
-        
+        $scope.$storage.auth.loginToken = null;
+        $scope.auth.user = null;
+        $scope.refresh();
       }
     };
 
@@ -103,6 +103,10 @@ angular.module('app.controllers')
     $scope.changeTitle = function(title, suffix) {
       suffix = suffix === undefined ? true : suffix;
       $('title').text(title + (suffix ? ' - Yutou.in - Yingchen盈琛 Liu刘\'s personal website' : ''));
+    };
+
+    $scope.refresh = function() {
+      window.location.reload();
     };
 
     /*
