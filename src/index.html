@@ -73,7 +73,7 @@
           </ul>
           <ul class="nav navbar-nav pull-right">
             <li ng-class="{ hidden: auth.user.email }">
-               <a id="btn-login">Login</a>
+               <a ng-click="auth.openLoginModal()">Login</a>
             </li>
             <li ng-if="auth.user.email">
               <a ng-bind="auth.user.givenName"></a>
@@ -118,6 +118,7 @@
     <script src="/bower_components/jquery-layout.js/index.js"></script>
     <script src="/bower_components/angular-audio/app/angular.audio.js"></script>
     <script src="/bower_components/angular-bootstrap-confirm/dist/angular-bootstrap-confirm.js"></script>
+    <script src="/bower_components/angular-directive.g-signin/google-plus-signin.js"></script>
     <!-- endbuild -->
     <!-- build:js js/script.js -->
     <script src="js/common.js"></script>
@@ -138,12 +139,6 @@
     <!-- env:product -->
     <script src="js/templates.js"></script>
     <!-- endenv -->
-    <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
-    <script src="https://apis.google.com/js/api:client.js"></script>
-
-    <!-- google login -->
-    <div class="g-signin2" data-onsuccess="onSignIn" style="display: none"></div>
-    <!-- end google login -->
 
     <!-- env:product -->
     <script>

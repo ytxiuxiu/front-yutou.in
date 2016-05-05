@@ -1,10 +1,89 @@
 var GOOGLE_LOGIN_API_GLIENT_ID = '302391598041-f0rue0f55c2lvi8vhpbgakpgm8t2k8ug.apps.googleusercontent.com';
 
 angular.module('app.controllers')
-  .controller('AppController', ['$scope', '$state', '$anchorScroll', '$location', '$localStorage', 'toastr', 'AppService', function($scope, $state, $anchorScroll, $location, $localStorage, toastr, appService) {
+  .controller('AppController', [
+    '$scope', '$state', '$anchorScroll', '$location', '$localStorage', '$uibModal', 'toastr', 'AppService', 
+    function($scope, $state, $anchorScroll, $location, $localStorage, $uibModal, toastr, appService) {
     $scope.navbar = {};
     $scope.theme = {
       current: '5mps'
+    };
+    $scope.$storage = $localStorage;
+
+    function openUpdateModal() {
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'templates/home/modal-update.tpl.html'
+      });
+    }
+    appService.getSiteStatus().then(function(response) {
+      if (response.data.status.update === 'true') {
+        openUpdateModal();
+      }
+    }, function(response) {
+      openUpdateModal();
+    });
+    
+
+    /*
+     * Login
+     */
+    $scope.$on('event:google-plus-signin-success', function (event, authResult) {
+      appService.login(authResult.id_token).then(function(response) {
+        $scope.auth.user = response.data.user;
+        // store idToken in local storage
+        $scope.$storage.auth = {
+          loginToken: response.data.loginToken
+        };
+        $scope.toast.open('success', 'Logined successfully :)');
+        if ($scope.auth.loginModal) {
+          $scope.auth.loginModal.close();
+        }
+        // refresh
+        $state.go($state.current, {}, {reload: true});
+        $scope.$broadcast('auth.user.change', $scope.auth.user);
+      });
+    });
+    $scope.$on('event:google-plus-signin-failure', function (event, authResult) {
+      // Auth failure or signout detected
+    });
+
+    $scope.auth = {
+      user: {},
+      openLoginModal: function(size) {
+        $scope.auth.loginModal = $uibModal.open({
+          animation: true,
+          templateUrl: 'templates/home/modal-login.tpl.html',
+          size: size,
+        });
+      },
+      loginModal: null,
+      logout: function() {
+        
+      }
+    };
+
+    if ($scope.$storage.auth && $scope.$storage.auth.loginToken) {
+      // if loginToken in local storage
+      appService.auth($scope.$storage.auth.loginToken).then(function(response) {
+        $scope.auth.user = response.data.user;
+      }).catch(function(response) {
+        $scope.toast.open('info', 'Login timout! Please login again.');
+      });
+    }
+
+    /*
+     * Common
+     */
+    $scope.safeApply = function(fn) {
+      var phase = this.$root.$$phase;
+      if (phase == '$apply' || phase == '$digest') {
+        if (fn && (typeof(fn) === 'function')) {
+          fn();
+        }
+      } else {
+        this.$apply(fn);
+      }
     };
 
     $scope.gotoAnchor = function(x, element) {
@@ -26,35 +105,9 @@ angular.module('app.controllers')
       $('title').text(title + (suffix ? ' - Yutou.in - Yingchen盈琛 Liu刘\'s personal website' : ''));
     };
 
-    $scope.auth = {
-      user: {},
-      logout: function() {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function() {
-          $scope.auth.user = {};
-          $scope.$storage.auth = null;
-          $scope.$apply();
-
-          // refresh
-          $state.go($state.current, {}, {reload: true});
-          $scope.$broadcast('auth.user.change', $scope.auth.user);
-        });
-      }
-    };
-    $scope.$storage = $localStorage;
-
-    $scope.safeApply = function(fn) {
-      var phase = this.$root.$$phase;
-      if (phase == '$apply' || phase == '$digest') {
-        if (fn && (typeof(fn) === 'function')) {
-          fn();
-        }
-      } else {
-        this.$apply(fn);
-      }
-    };
-
-    // toastr
+    /*
+     * toastr
+     */
     $scope.toast = {
       history: [],
       open: function(type, message, title, params) {
@@ -83,44 +136,9 @@ angular.module('app.controllers')
       }
     };
 
-    // auth
-    if ($scope.$storage.auth && $scope.$storage.auth.idToken) {
-      // if idToken in local storage
-      appService.auth($scope.$storage.auth.idToken).then(function(response) {
-        $scope.auth.user = response.data.user;
-        $scope.$broadcast('auth.user.change', $scope.auth.user);
-      }).catch(function(response) {
-        $scope.toast.open('info', 'Login timout! Please login again.');
-      });
-    }
-
-    // init login button
-    gapi.load('auth2', function() {
-      auth2 = gapi.auth2.init({
-        client_id: GOOGLE_LOGIN_API_GLIENT_ID,
-        cookiepolicy: 'single_host_origin',
-        scope: 'email profile'
-      });
-      auth2.attachClickHandler(document.getElementById('btn-login'), {}, function(googleUser) {
-        var idToken = googleUser.getAuthResponse().id_token;
-        // auth
-        appService.auth(idToken).then(function(response) {
-          $scope.auth.user = response.data.user;
-          // store idToken in local storage
-          $scope.$storage.auth = {
-            idToken: idToken
-          };
-          $scope.toast.open('success', 'Logined successfully :)');
-          // refresh
-          $state.go($state.current, {}, {reload: true});
-          $scope.$broadcast('auth.user.change', $scope.auth.user);
-        });
-      }, function(error) {
-        console.log(JSON.stringify(error, undefined, 2));
-      });
-    });
-
-    // http request handler
+    /*
+     * http request handler
+     */
     $scope.$on('httpRequestError', function(event, error) {
       switch (error.status) {
         case 404:

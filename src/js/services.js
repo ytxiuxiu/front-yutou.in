@@ -9,19 +9,27 @@ var API_SUFFIX = '';
 angular.module('app.services', ['uuid'])
   .factory('AppService', ['$http', 'rfc4122', '$localStorage', function($http, rfc4122, $localStorage) {
     return {
-      auth: function(idToken) {
-        return $http.post(API_PREFIX + 'auth', {
+      login: function(idToken) {
+        return $http.post(API_PREFIX + 'auth/login', {
           idToken: idToken
+        });
+      },
+      auth: function(loginToken) {
+        return $http.post(API_PREFIX + 'auth', {
+          loginToken: loginToken
         });
       },
       getNoLoginUser: function() {
         return $http.get(API_PREFIX + 'auth/no-login-user');
       },
+      getSiteStatus: function() {
+        return $http.get(API_PREFIX + 'site/status');
+      },
       uuid: function() {
         return rfc4122.v4().split('-').join('');
       },
-      getIdToken: function() {
-        return $localStorage.auth ? $localStorage.auth.idToken : 'no-login';
+      getLoginToken: function() {
+        return $localStorage.auth ? $localStorage.auth.loginToken : 'no-login';
       },
       objToParams: function(obj) {
         var query = '';
@@ -66,15 +74,15 @@ angular.module('app.services', ['uuid'])
   .factory('KnowledgeService', ['$http', 'rfc4122', 'AppService', function($http, rfc4122, appService) {
     return {
       getMap: function(path) {
-        return $http.get(API_PREFIX + 'knowledge/map/' + path + '?idToken=' + appService.getIdToken());
+        return $http.get(API_PREFIX + 'knowledge/map/' + path + '?loginToken=' + appService.getLoginToken());
       },
       getNode: function(nodeId) {
-        return $http.get(API_PREFIX + 'knowledge/node/' + nodeId + '?idToken=' + appService.getIdToken());
+        return $http.get(API_PREFIX + 'knowledge/node/' + nodeId + '?loginToken=' + appService.getLoginToken());
       },
       addEdition: function(saveItem) {
         var data = saveItem.node;
         return $http.post(API_PREFIX + 'knowledge/map/edition/add', {
-          idToken: appService.getIdToken(),
+          loginToken: appService.getLoginToken(),
           editionId: data.editionId,
           nodeId: data.node.nodeId,
           nodeType: data.node.nodeType,
@@ -88,7 +96,7 @@ angular.module('app.services', ['uuid'])
         });
       },
       dictFind: function(keyword) {
-        return $http.get(API_PREFIX + '/knowledge/dict/' + keyword + '?idToken=' + appService.getIdToken());
+        return $http.get(API_PREFIX + '/knowledge/dict/' + keyword + '?loginToken=' + appService.getLoginToken());
       }
     };
   }]);

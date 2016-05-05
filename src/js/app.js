@@ -22,7 +22,8 @@ angular.module('app', [
     'toastr',
     'angular-loading-bar',
     'ngAudio',
-    'mwl.confirm'
+    'mwl.confirm',
+    'directive.g+signin'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
