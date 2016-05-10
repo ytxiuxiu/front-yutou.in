@@ -23,7 +23,8 @@
           <span class="icon-sound"></span>
         </span>
       </div>
-      <div>
+      <!-- rank -->
+      <div ng-if="dict.result.frequencies.length">
         * rank: 
         <span uib-popover="Ranked top {{ frequency.rank / frequency.total * 100 | number : 1 }}% in 20,000 words" 
           popover-trigger="mouseenter" 
@@ -33,6 +34,7 @@
           [{{ frequency.partOfSpeech }}] {{ frequency.rank / frequency.total * 100 | number : 1 }}%
         </span>
       </div>
+      <!-- end rank -->
     </div>
     <div class="panel-body" ng-if="!dict.result.keyword">
       Searching...

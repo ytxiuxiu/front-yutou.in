@@ -142,11 +142,16 @@ angular.module('app.controllers')
         ['Mark as Read', function($itemScope) {
           var nodeId = $itemScope.child.node.nodeId;
           if (!$scope.$storage.readList) {
+
             $scope.$storage.readList = {};
           }
           $scope.$storage.readList[nodeId] = true;
         }, function($itemScope) {
-          return !$scope.$storage.readList[$itemScope.child.node.nodeId];
+          if ($scope.$storage.readList) {
+            return !$scope.$storage.readList[$itemScope.child.node.nodeId];
+          } else {
+            return true;
+          }
         }],
         ['Mark as Unread', function($itemScope) {
           var nodeId = $itemScope.child.node.nodeId;
@@ -155,7 +160,11 @@ angular.module('app.controllers')
           }
           $scope.$storage.readList[nodeId] = false;
         }, function($itemScope) {
-          return $scope.$storage.readList[$itemScope.child.node.nodeId];
+          if ($scope.$storage.readList) {
+            return $scope.$storage.readList[$itemScope.child.node.nodeId];
+          } else {
+            return false;
+          }
         }],
         null,
         ['Add child', function($itemScope) {
