@@ -3,16 +3,19 @@
     <form ng-submit="dict.go()">
       <div class="input-group" ng-if="!dict.empty">
         <div class="input-group-addon icon-search"></div>
-        <input class="form-control" type="text" ng-model="dict.keyword" placeholder="Find...">
+        <input class="word form-control" type="text" ng-model="dict.keyword" placeholder="Find...">
       </div>
-      <input ng-if="dict.empty" class="keyword" type="text" ng-model="dict.keyword" placeholder="Find...">
+      <input ng-if="dict.empty" class="word-empty keyword" type="text" ng-model="dict.keyword" placeholder="Find...">
       <input type="submit" value="Go" class="hidden">
     </form>
   </div>
 
   <div class="panel panel-default" ng-if="!dict.empty">
     <div class="panel-body" ng-if="dict.result.keyword">
-      <b>{{ dict.result.keyword }}</b>
+      <div style="overflow: hidden">
+        <h4 class="pull-left"><b>{{ dict.result.keyword }}</b></h4>
+        <span class="pull-right" ng-if="dict.history.length > 1">× {{ dict.history.length }}</span>
+      </div>
       <div>
         <span ng-if="dict.result.symbolBritish">{{ dict.result.symbolBritish }}</span>
         <span class="label label-info pointer" ng-if="dict.result.audioBritish" ng-click="dict.play(dict.result.audioBritish)">

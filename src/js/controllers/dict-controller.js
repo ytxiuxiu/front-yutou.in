@@ -1,6 +1,6 @@
 angular.module('app.controllers')
-  .controller('DictController', ['$scope', '$state', '$stateParams', '$document', 'ngAudio', 'AppService', 'KnowledgeService',
-    function($scope, $state, $stateParams, $document, ngAudio, appService, knowledgeService) {
+  .controller('DictController', ['$scope', '$state', '$stateParams', '$document', '$localStorage', 'ngAudio', 'AppService', 'KnowledgeService',
+    function($scope, $state, $stateParams, $document, $localStorage, ngAudio, appService, knowledgeService) {
 
     $scope.navbar.current = 'knowledge';
     $scope.changeTitle('Dictionary');
@@ -12,6 +12,15 @@ angular.module('app.controllers')
         knowledgeService.dictFind($scope.dict.keyword).then(function(response) {
           $scope.dict.result = response.data.result;
           $scope.dict.empty = false;
+          $('input.word').focus();
+
+          // get finding history
+          if ($localStorage.auth && $localStorage.auth.loginToken) {
+            knowledgeService.findHistory($scope.dict.result.wordId).then(function(response) {
+              $scope.dict.history = response.data.history;
+            });
+          }
+
         });
       },
       go: function() {
@@ -28,6 +37,9 @@ angular.module('app.controllers')
       $scope.changeTitle($scope.dict.keyword + ' - Dictionary');
       $scope.dict.find();
       $scope.dict.empty = false;
+      $('input.word').focus();
+    } else {
+      $('input.word-empty').focus();
     }
 
   }]);

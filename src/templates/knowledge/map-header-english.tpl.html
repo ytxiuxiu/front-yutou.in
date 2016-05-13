@@ -1,0 +1,62 @@
+<div ng-controller="KnowledgeEnglishController" class="panel panel-default">
+  <div class="panel-body" style="padding-top: 0;">
+    <div>
+      <div>
+        <h3>A1 - ESL Podcast</h3>
+        <a href="https://www.eslpod.com/eslpod_blog/what-is-esl-podcast/" target="_blank">What is ESL podcast?</a> | 
+        <a href="https://www.eslpod.com/website/show_all.php" target="_blank">Open the list of postcasts</a>
+      </div>
+      <div style="overflow: hidden">
+        <div class="pull-left">Done</div>
+        <div class="pull-right">
+          {{ english.total - english.finish }} podcasts remaining
+          <span style="color: red">(Listen {{ (english.total - english.finish) / english.reminingDays | number : 2 }}/day)</span>
+        </div>
+      </div>
+      <div class="progress" style="margin-bottom: 10px;">
+        <div class="progress-bar progress-bar-success" 
+          role="progressbar" 
+          aria-valuenow="{{ ((english.finish / english.total) * 100) }}" 
+          aria-valuemin="0" 
+          aria-valuemax="100" 
+          style="width: {{ ((english.finish / english.total) * 100) }}%;">
+          {{ ((english.finish / english.total) * 100) | number : 2 }}% ({{ english.finish }}/{{ english.total }})
+        </div>
+      </div>
+    </div>
+    <div>
+      <div style="overflow: hidden">
+        <div class="pull-left">Days</div>
+        <div class="pull-right">{{ english.reminingDays | number : 0 }} days remaining</div>
+      </div>
+      <div class="progress" style="margin-bottom: 10px;">
+        <div class="progress-bar progress-bar-warning" 
+          role="progressbar" 
+          aria-valuenow="{{ ((english.pastDays / english.duration) * 100) }}" 
+          aria-valuemin="0" 
+          aria-valuemax="100" 
+          style="width: {{ ((english.pastDays / english.duration) * 100) }}%;">
+          {{ ((english.pastDays / english.duration) * 100) | number : 2 }}% ({{ english.pastDays | number : 0 }}/{{ english.duration | number : 0 }})
+        </div>
+      </div>
+    </div>
+    <div>
+      Contributions
+      <div>
+        <div ng-repeat="date in english.contributionDates" 
+          uib-popover="Day {{ $index + 1 }} ({{ date }}): {{ english.contributions[date] }}"
+          popover-trigger="mouseenter"
+          class="contribution" 
+          ng-class="{'contribution-1': english.contributions[date] > 0 
+            && english.contributions[date] <= english.contributionLevels[0], 
+          'contribution-2': english.contributions[date] > english.contributionLevels[0] 
+            && english.contributions[date] <= english.contributionLevels[1], 
+          'contribution-3': english.contributions[date] > english.contributionLevels[1] 
+            && english.contributions[date] <= english.contributionLevels[2], 
+          'contribution-4': english.contributions[date] > english.contributionLevels[2],
+          'contribution-today': english.getStringOfDate() == date}"></div>
+      </div>
+    </div>
+
+  </div>
+</div>

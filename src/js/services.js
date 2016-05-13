@@ -29,7 +29,7 @@ angular.module('app.services', ['uuid'])
         return rfc4122.v4().split('-').join('');
       },
       getLoginToken: function() {
-        return $localStorage.auth ? $localStorage.auth.loginToken : 'no-login';
+        return $localStorage.auth && $localStorage.auth.loginToken ? $localStorage.auth.loginToken : 'no-login';
       },
       objToParams: function(obj) {
         var query = '';
@@ -98,6 +98,9 @@ angular.module('app.services', ['uuid'])
       },
       dictFind: function(keyword) {
         return $http.get(API_PREFIX + '/knowledge/dict/' + keyword + '?loginToken=' + appService.getLoginToken());
+      },
+      findHistory: function(wordId) {
+        return $http.get(API_PREFIX + '/knowledge/dict/finding-history?wordId=' + wordId + '&loginToken=' + appService.getLoginToken());
       }
     };
   }]);
