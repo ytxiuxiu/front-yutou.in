@@ -40,6 +40,7 @@ angular.module('app.controllers')
         var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
         knowledgeService.getMap(nodeId).then(function(response) {
           $scope.knowledge.map = response.data.map;
+          $scope.changeTitle($scope.knowledge.map.name + ' - Knowledge Map');
         });
       },
       onDragstart: function(list, event) {
@@ -65,7 +66,7 @@ angular.module('app.controllers')
       },
       found: null,
       foundParent: null,
-      find: function find(nodeId, inNode) {
+      find: function(nodeId, inNode) {
         for (var j = 0, lj = inNode.children.length; j < lj; j++) {
           if (inNode.children[j].node.nodeId == nodeId) {
             $scope.knowledge.found = inNode.children[j];

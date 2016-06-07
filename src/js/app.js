@@ -86,6 +86,11 @@ angular.module('app', [
       url: '/about',
       templateUrl: 'templates/home/about.tpl.html'
     })
+    .state('projects', {
+      url: '/projects',
+      templateUrl: 'templates/projects/projects.tpl.html',
+      controller: 'ProjectController'
+    })
     .state('404', {
       url: '/404',
       templateUrl: 'templates/error/404.tpl.html'

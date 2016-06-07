@@ -6,8 +6,13 @@
     <div id="layout-map" class="ui-layout-center">
       <!-- main section -->
       <!-- map -->
+      <!-- english -->
       <div ng-if="knowledge.map.node.nodeId == 'c7df5ae80a52407685673ac6b022774d'" 
         ng-include="'templates/knowledge/map-header-english.tpl.html'"></div>
+
+      <!-- music -->
+      <div ng-if="knowledge.map.node.nodeId == '69bf1c7b3da945869408443f6d71a1e0'" 
+        ng-include="'templates/knowledge/map-header-music.tpl.html'"></div>
 
       <div class="map rows" ng-if="knowledge.map && knowledge.mode == 'normal' || knowledge.mode == 'edit'" ng-init="child = knowledge.map; list = knowledge.map.children" ng-style="{ zoom: knowledge.zoom + '%' }">
         <div class="col-md-12">

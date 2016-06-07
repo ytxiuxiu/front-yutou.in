@@ -36,16 +36,6 @@ angular.module('app.controllers')
       }
     };
 
-    if (!$scope.$storage.editor) {
-      $scope.$storage.editor = {
-        currentEditing: 0,
-        saves: [{
-          title: '',
-          content: ''
-        }]
-      };
-    }
-    
     $scope.editor.loadToEditor();
     $scope.editor.editor.codemirror.on('change', function() {
       if ($scope.$storage.editor.saves[$scope.$storage.editor.currentEditing])

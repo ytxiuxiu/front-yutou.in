@@ -2,6 +2,8 @@ angular.module('app.controllers')
   .controller('KnowledgeEnglishController', ['$scope', '$state', '$stateParams', '$sce', '$document', 'AppService', 'KnowledgeService',
     function($scope, $state, $stateParams, $sce, $document, appService, knowledgeService) {
 
+    $scope.changeTitle('English - Knowledge Map');
+
     $scope.english = {
       total: 365,
       finish: 0,

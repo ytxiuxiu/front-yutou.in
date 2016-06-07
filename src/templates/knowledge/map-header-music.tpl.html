@@ -1,0 +1,24 @@
+<div ng-controller="KnowledgeMusicController" class="panel panel-default">
+  <div class="panel-body" style="padding-top: 0;">
+    <div>
+      <div>
+        <h3>Music Time! <small>All that I like :)</small></h3>
+        <hr>
+        Playing: <b>{{ music.found[music.currentMusic].name }}</b>
+        <span ng-if="music.found[music.currentMusic].small">({{ music.found[music.currentMusic].small }})</span>
+        <div>
+          <button ng-if="music.state === 'pause'" class="btn btn-default" ng-click="music.play()">
+            <span class="icon icon-play"></span>
+          </button>
+          <button ng-if="music.state === 'playing'" class="btn btn-default" ng-click="music.pause()">
+            <span class="icon icon-pause"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="music-player" style="position: fixed; top: 120px; right: 30px; height: 270px; width: 480px">
+    
+  </div>
+</div>

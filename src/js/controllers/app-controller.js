@@ -73,6 +73,38 @@ angular.module('app.controllers')
     }
 
     /*
+     * User data collecting
+     */
+    if (!$scope.$storage.client) {
+      $scope.$storage.client = {
+        clientId: appService.uuid()
+      };
+    }
+
+    $scope.$watch(function() {
+      return window.location.href;
+    }, function() {
+      var log = {
+        clientId: $scope.$storage.client.clientId,
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        language: navigator.language,
+        referrer: $scope.referrer ? $scope.referrer : document.referrer,
+        url: window.location.href,
+        screenWidth: screen.width,
+        screenHeight: screen.height,
+        clientWidth: document.documentElement.clientWidth,
+        clientHeight: document.documentElement.clientHeight,
+        title: document.title
+      };
+
+      // appService.log(log);
+
+      $scope.referrer = window.location.href;
+    });
+    
+
+    /*
      * Common
      */
     $scope.safeApply = function(fn) {
@@ -102,7 +134,7 @@ angular.module('app.controllers')
 
     $scope.changeTitle = function(title, suffix) {
       suffix = suffix === undefined ? true : suffix;
-      $('title').text(title + (suffix ? ' - Yutou.in - Yingchen盈琛 Liu刘\'s personal website' : ''));
+      $('title').text(title + (suffix ? ' - Yutou.in - Yingchen Liu(刘盈琛)\'s Personal Website' : ''));
     };
 
     $scope.refresh = function() {
@@ -139,6 +171,17 @@ angular.module('app.controllers')
         history[history.length - 1].openTime = new Date();
       }
     };
+
+    // editor
+    if (!$scope.$storage.editor) {
+      $scope.$storage.editor = {
+        currentEditing: 0,
+        saves: [{
+          title: '',
+          content: ''
+        }]
+      };
+    }
 
     /*
      * http request handler

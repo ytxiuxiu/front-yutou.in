@@ -19,6 +19,9 @@ angular.module('app.services', ['uuid'])
           loginToken: loginToken
         });
       },
+      log: function(log) {
+        return $http.post(API_PREFIX + 'site/log', log);
+      },
       getNoLoginUser: function() {
         return $http.get(API_PREFIX + 'auth/no-login-user');
       },

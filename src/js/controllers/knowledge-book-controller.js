@@ -12,6 +12,7 @@ angular.module('app.controllers')
         var nodeId = $stateParams.nodeId ? $stateParams.nodeId : 'root';
         knowledgeService.getMap(nodeId).then(function(response) {
           $scope.knowledge.map = response.data.map;
+          $scope.changeTitle($scope.knowledge.map.name + ' - Knowledge Map');
         });
       }
     };

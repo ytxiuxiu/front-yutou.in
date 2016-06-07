@@ -69,6 +69,7 @@
           <ul class="nav navbar-nav">
             <li ng-class="{ active: navbar.current == 'home' }"><a ui-sref="home">Home</a></li>
             <li ng-class="{ active: navbar.current == 'knowledge' }"><a ui-sref="knowledge">Knowledge</a></li>
+            <!--<li ng-class="{ active: navbar.current == 'projects' }"><a ui-sref="projects">Projects</a></li>-->
             <li ng-class="{ active: navbar.current == 'about' }"><a ui-sref="about">About</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
@@ -119,16 +120,19 @@
     <script src="/bower_components/angular-audio/app/angular.audio.js"></script>
     <script src="/bower_components/angular-bootstrap-confirm/dist/angular-bootstrap-confirm.js"></script>
     <script src="/bower_components/angular-directive.g-signin/google-plus-signin.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <!-- endbuild -->
     <!-- build:js js/script.js -->
     <script src="js/common.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controllers/app-controller.js"></script>
     <script src="js/controllers/home-controller.js"></script>
+    <script src="js/controllers/project-controller.js"></script>
     <script src="js/controllers/knowledge-controller.js"></script>
     <script src="js/controllers/knowledge-book-controller.js"></script>
     <script src="js/controllers/knowledge-node-controller.js"></script>
     <script src="js/controllers/knowledge-english-controller.js"></script>
+    <script src="js/controllers/knowledge-music-controller.js"></script> 
     <script src="js/controllers/dict-controller.js"></script>
     <script src="js/controllers/link-controller.js"></script>
     <script src="js/controllers/editor-controller.js"></script>

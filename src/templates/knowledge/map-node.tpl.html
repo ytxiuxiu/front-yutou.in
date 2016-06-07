@@ -1,5 +1,5 @@
 <!-- without popover -->
-<div class="node">
+<div class="node" id="node-{{ child.node.nodeId }}">
   <div class="node-box pull-left" 
     ng-if="child.node.nodeType == 'node'" 
     ng-click="knowledge.showContent(child)" 
@@ -12,7 +12,11 @@
       <span ng-if="$storage.readList[child.node.nodeId]" class="icon icon-yes"></span>
       <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
       <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">
-      <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
+      <span ng-if="knowledge.mode == 'normal'">
+        <a ng-if="child.content && child.content !== ''" 
+          ui-sref="knowledge-node({nodeId: child.node.nodeId})" target="_blank">{{ child.name }}</a>
+        <span ng-if="!child.content || child.content === ''">{{ child.name }}</span>
+      </span>
     </div>
     <div>
       <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description" maxlength="60">
@@ -23,7 +27,7 @@
     class="pull-right show-after node-box" 
     ng-class="{'has-small': child.small}" 
     ng-if="child.node.hasChild && child.children.length == 0">
-    <span class="icon-play"></span>
+    <a ui-sref="knowledge({nodeId: child.node.nodeId})"><span class="icon-play"></span></a>
   </div>
   <div class="node node-box node-spliter" 
     ng-class="{'spliter-hide': knowledge.mode != 'edit'}" 
