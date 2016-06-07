@@ -60,10 +60,8 @@ angular.module('app.controllers')
       },
       next: function(music) {
         // remove highlight of the last one
-        console.log($scope.music.currentMusic);
         if ($scope.music.currentMusic !== null) {
           var $node = $('#node-' + $scope.music.found[$scope.music.currentMusic].node.nodeId);
-          console.log($node);
           $node.find('.node-box').css('background-color', '').css('color', '');
           $node.find('a').css('color', '');
         }
@@ -113,9 +111,7 @@ angular.module('app.controllers')
           if (content && content.includes('[video]')) {
             $scope.music.found.push(inNode.children[j]);
           }
-          for (var i = 0, l = inNode.children[j].children.length; i < l; i++) {
-            $scope.music.findAllWithVideo(inNode.children[j].children[i]);
-          }
+          $scope.music.findAllWithVideo(inNode.children[j]);
         }
       },
       init: function() {
