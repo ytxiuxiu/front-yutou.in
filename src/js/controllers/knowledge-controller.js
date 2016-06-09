@@ -146,10 +146,11 @@ angular.module('app.controllers')
 
             $scope.$storage.readList = {};
           }
-          $scope.$storage.readList[nodeId] = true;
+          $scope.$storage.readList[nodeId] = 'read';
         }, function($itemScope) {
           if ($scope.$storage.readList) {
-            return !$scope.$storage.readList[$itemScope.child.node.nodeId];
+            return $scope.$storage.readList[$itemScope.child.node.nodeId] !== true && 
+              $scope.$storage.readList[$itemScope.child.node.nodeId] !== 'read';
           } else {
             return true;
           }
@@ -159,10 +160,25 @@ angular.module('app.controllers')
           if (!$scope.$storage.readList) {
             $scope.$storage.readList = {};
           }
-          $scope.$storage.readList[nodeId] = false;
+          $scope.$storage.readList[nodeId] = 'unread';
         }, function($itemScope) {
           if ($scope.$storage.readList) {
-            return $scope.$storage.readList[$itemScope.child.node.nodeId];
+            console.log($scope.$storage.readList[$itemScope.child.node.nodeId]);
+            return $scope.$storage.readList[$itemScope.child.node.nodeId] !== undefined &&
+              $scope.$storage.readList[$itemScope.child.node.nodeId] !== 'unread';
+          } else {
+            return false;
+          }
+        }],
+        ['Mark as Read Later', function($itemScope) {
+          var nodeId = $itemScope.child.node.nodeId;
+          if (!$scope.$storage.readList) {
+            $scope.$storage.readList = {};
+          }
+          $scope.$storage.readList[nodeId] = 'read-later';
+        }, function($itemScope) {
+          if ($scope.$storage.readList) {
+            return $scope.$storage.readList[$itemScope.child.node.nodeId] !== 'read-later';
           } else {
             return false;
           }

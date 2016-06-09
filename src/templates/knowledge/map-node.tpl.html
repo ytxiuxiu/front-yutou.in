@@ -9,7 +9,8 @@
     popover-popup-delay="10"
     ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId, 'construction': child.status == 'construction', 'priority-high': child.priority == 1, 'priority-medium': child.priority == 2, 'priority-low': child.priority == 3}">
     <div>
-      <span ng-if="$storage.readList[child.node.nodeId]" class="icon icon-yes"></span>
+      <span ng-if="$storage.readList[child.node.nodeId] === true || $storage.readList[child.node.nodeId] === 'read'" class="icon icon-yes"></span>
+      <span ng-if="$storage.readList[child.node.nodeId] === 'read-later'" class="icon icon-clock"></span>
       <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
       <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">
       <span ng-if="knowledge.mode == 'normal'">
