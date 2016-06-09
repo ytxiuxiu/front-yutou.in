@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'icons';
-    src:    url('fonts/icons.eot?aa5eqi');
-    src:    url('fonts/icons.eot?aa5eqi#iefix') format('embedded-opentype'),
-        url('fonts/icons.ttf?aa5eqi') format('truetype'),
-        url('fonts/icons.woff?aa5eqi') format('woff'),
-        url('fonts/icons.svg?aa5eqi#icons') format('svg');
+    src:    url('fonts/icons.eot?pc3vz');
+    src:    url('fonts/icons.eot?pc3vz#iefix') format('embedded-opentype'),
+        url('fonts/icons.ttf?pc3vz') format('truetype'),
+        url('fonts/icons.woff?pc3vz') format('woff'),
+        url('fonts/icons.svg?pc3vz#icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -50,6 +50,9 @@
 }
 .icon-redo:before {
     content: "\e925";
+}
+.icon-again:before {
+    content: "\e92d";
 }
 .icon-search:before {
     content: "\e911";

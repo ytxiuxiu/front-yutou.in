@@ -143,7 +143,6 @@ angular.module('app.controllers')
         ['Mark as Read', function($itemScope) {
           var nodeId = $itemScope.child.node.nodeId;
           if (!$scope.$storage.readList) {
-
             $scope.$storage.readList = {};
           }
           $scope.$storage.readList[nodeId] = 'read';
@@ -180,7 +179,20 @@ angular.module('app.controllers')
           if ($scope.$storage.readList) {
             return $scope.$storage.readList[$itemScope.child.node.nodeId] !== 'read-later';
           } else {
-            return false;
+            return true;
+          }
+        }],
+        ['Mark as Reread', function($itemScope) {
+          var nodeId = $itemScope.child.node.nodeId;
+          if (!$scope.$storage.readList) {
+            $scope.$storage.readList = {};
+          }
+          $scope.$storage.readList[nodeId] = 'reread';
+        }, function($itemScope) {
+          if ($scope.$storage.readList) {
+            return $scope.$storage.readList[$itemScope.child.node.nodeId] !== 'reread';
+          } else {
+            return true;
           }
         }],
         null,
