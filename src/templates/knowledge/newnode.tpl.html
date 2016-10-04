@@ -1,0 +1,109 @@
+
+<div class="container">
+  <h1>{{ node.node.currentEdition.name }} <small>{{ node.node.currentEdition.small }}</small></h1>
+  <div>
+    {{ node.node.viewsNumber ? node.node.viewsNumber : '0' }} view{{ node.node.viewsNumber > 1 ? 's' : '' }}, Updated at {{ node.node.currentEdition.createdAt | date : 'dd/MMM hh:mm a' }}
+    <label class="label label-warning" ng-if="node.node.currentEdition.status == 'construction'">Uncompleted</label>
+  </div>
+  <hr>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="content" ng-bind-html="node.node.currentEdition.content | marked"></div>
+    </div>
+  </div>
+
+  <!-- map -->
+  <div class="panel panel-default" style="overflow-x: scroll">
+    <div class="panel-body">
+      <div class="map rows" ng-if="knowledge.map && knowledge.mode == 'normal' || knowledge.mode == 'edit'" ng-init="child = knowledge.map; list = knowledge.map.children" ng-style="{ zoom: knowledge.zoom + '%' }">
+        <div class="col-md-12">
+
+          <ul class="map-root">
+            <li context-menu="knowledge.contextMenu">
+              <div class="node">
+                <div class="node-box" 
+                ng-click="knowledge.showContent(child)" 
+                popover-placement="bottom" 
+                popover-trigger="mouseenter" 
+                uib-popover-template="knowledge.popover" 
+                ng-class="{'dirty': child.dirty, 'has-small': child.small, 'edit-mode': knowledge.mode == 'edit', editing: knowledge.mode == 'edit' && child.node.nodeId == knowledge.currentEditing.node.nodeId}">
+                  <div>
+                    <span ng-if="child.content && child.content !== ''" class="icon icon-text"></span>
+                    <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="name" ng-model="child.name" ng-change="knowledge.change(child)" placeholder="Node Name" required maxlength="30">
+                    <span ng-if="knowledge.mode == 'normal'">{{ child.name }}</span>
+                  </div>
+                  <div>
+                    <input ng-if="knowledge.mode == 'edit'" type="text" dnd-nodrag pu-elastic-input class="small" ng-model="child.small" ng-change="knowledge.change(child)" placeholder="Description" maxlength="60">
+                    <span ng-if="knowledge.mode == 'normal' && child.small" class="small">{{ child.small }}</span>
+                  </div>
+                </div>
+              </div>
+              <ul class="children" ng-if="knowledge.mode === 'edit'"
+                dnd-list="list"
+                dnd-inserted="knowledge.drop(event, child, list, index)">
+                <li ng-repeat="child in list" 
+                  dnd-draggable="child"
+                  dnd-moved="list.splice($index, 1); knowledge.move(child, list)"
+                  ng-include="'templates/knowledge/map-node.tpl.html'" 
+                  context-menu="knowledge.contextMenu"
+                  class="children-item"></li>
+                <li class="children-item dndPlaceholder">
+                  <div class="node">
+                    <span class="icon-arrow-left"></span> Drop here
+                  </div>
+                </li>
+              </ul>
+              <ul class="children" ng-if="knowledge.mode === 'normal'"
+                ng-init="child = knowledge.map; list = knowledge.map.children">
+                <li ng-repeat="child in list" 
+                  ng-include="'templates/knowledge/map-node.tpl.html'" 
+                  context-menu="knowledge.contextMenu"
+                  class="children-item"></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- editor -->
+  <div power-control="knowledge.map.edit">
+  
+  <!-- <div class="btn-group" style="padding-bottom: 10px">
+      <label class="btn btn-primary" ng-model="knowledge.edit" uib-btn-radio="'on'">
+        On
+      </label>
+      <label class="btn btn-primary" ng-model="knowledge.edit" uib-btn-radio="'off'">
+        Off
+      </label>
+    </div> -->
+    <button class="btn btn-success" ng-click="node.save()">Save</button>
+    <div class="btn-group">
+      <label class="btn btn-default" ng-model="node.node.currentEdition.status" uib-btn-radio="'normal'">
+        Normal
+      </label>
+      <label class="btn btn-default construction" ng-model="node.node.currentEdition.status" uib-btn-radio="'construction'">
+        Construction
+      </label>
+    </div>
+    <div class="btn-group">
+      <label class="btn btn-default priority-high" ng-model="node.node.currentEdition.priority" uib-btn-radio="1">
+        High
+      </label>
+      <label class="btn btn-default priority-medium" ng-model="node.node.currentEdition.priority" uib-btn-radio="2">
+        Medium
+      </label>
+      <label class="btn btn-default priority-low" ng-model="node.node.currentEdition.priority" uib-btn-radio="3">
+        Low
+      </label>
+      <label class="btn btn-default" ng-model="node.node.currentEdition.priority" uib-btn-radio="4">
+        Normal
+      </label>
+    </div>
+  
+    <div class="editor-container" style="margin-top: 10px">
+      <textarea id="node-content-editor" ng-model="node.node.currentEdition.content"></textarea>
+    </div>
+  </div>
+</div>

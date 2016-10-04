@@ -40,6 +40,7 @@
     "simplemde": "https://github.com/ytxiuxiu/simplemde-markdown-editor.git#~1.10.2",
     "angular-audio": "~1.7.2",
     "angular-bootstrap-confirm": "~1.0.1",
-    "angular-directive.g-signin": "~0.1.2"
+    "angular-directive.g-signin": "~0.1.2",
+    "angularfire": "^2.0.2"
   }
 }

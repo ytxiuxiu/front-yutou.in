@@ -10,6 +10,22 @@
     </form>
   </div>
 
+  <div class="panel panel-default rows" ng-if="dict.images">
+    <div class="panel-heading">
+      Pictures from Google
+    </div>
+    <div class="panel-body">
+      <div class="col-md-3">
+        <img ng-src="{{ dict.images[0] }}">
+      </div>
+      <div class="col-md-3">
+        <img ng-src="{{ dict.images[1] }}">
+      </div>
+      <div class="col-md-3">
+        <img ng-src="{{ dict.images[2] }}">
+      </div>
+    </div>
+  </div>
   <div class="panel panel-default" ng-if="!dict.empty">
     <div class="panel-body" ng-if="dict.result.keyword">
       <div style="overflow: hidden">

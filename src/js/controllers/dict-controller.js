@@ -22,6 +22,9 @@ angular.module('app.controllers')
           }
 
         });
+        knowledgeService.findImages($scope.dict.keyword).then(function(response) {
+          $scope.dict.images = response.data.images;
+        });
       },
       go: function() {
         $state.go('dict', { keyword: $scope.dict.keyword });

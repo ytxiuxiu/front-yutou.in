@@ -104,6 +104,9 @@ angular.module('app.services', ['uuid'])
       },
       findHistory: function(wordId) {
         return $http.get(API_PREFIX + '/knowledge/dict/finding-history?wordId=' + wordId + '&loginToken=' + appService.getLoginToken());
+      },
+      findImages: function(keyword) {
+        return $http.get('node-service/dict/google-images?keyword=' + keyword);
       }
     };
   }]);

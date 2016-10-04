@@ -23,7 +23,8 @@ angular.module('app', [
     'angular-loading-bar',
     'ngAudio',
     'mwl.confirm',
-    'directive.g+signin'
+    'directive.g+signin',
+    'firebase'
   ])
   .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
     $stateProvider
@@ -44,8 +45,8 @@ angular.module('app', [
     })
     .state('knowledge-node', {
       url: '/knowledge/node/{nodeId}',
-      templateUrl: 'templates/knowledge/node.tpl.html',
-      controller: 'KnowledgeNodeController'
+      templateUrl: 'templates/knowledge/newnode.tpl.html',
+      controller: 'KnowledgeNewNodeController'
     })
     .state('knowledge-book', {
       url: '/knowledge/book/{nodeId}',

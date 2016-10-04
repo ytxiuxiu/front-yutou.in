@@ -32,6 +32,7 @@
         </div>
         <p>Sharing knowledge of everything about programming</p>
       </div>
+      <!--
       <div class="col-sm-3 col-xs-6 text-center">
         <div class="btn btn-link icon">
           <a ui-sref="dict">
@@ -59,9 +60,18 @@
         </div>
         <p>Trend of AUD to CNY</p>
       </div>
-
+      
       <div class="clearfix"></div>
-
+      -->
+      <div class="col-sm-3 col-xs-6 text-center">
+        <div class="btn btn-link icon">
+          <a href="travel" target="_blank">
+            <div><span class="icon-large icon-airplane"></span></div>
+            <h3>Travel</h3>
+          </a>
+        </div>
+        <p>Life is short to travel</p>
+      </div>
       <div class="col-sm-3 col-xs-6 text-center">
         <div class="btn btn-link icon">
           <a ui-sref="editor">
@@ -84,8 +94,30 @@
   </div>
   <hr>
   <div class="container">
-    <!-- about me -->
+    <!-- recent traveling -->
     <div class="rows">
+      <div class="col-md-12">
+        <h2>Recent Traveling</h2>
+        <div ng-if="places.length === 0">
+          Loading...
+        </div>
+        <div class="row">
+          <div ng-repeat="place in places" class="col-sm-4 col-md-3">
+            <div class="thumbnail">
+              <img ng-src="{{ place.cover.ori }}">
+              <div class="caption">
+                <h4>{{ place.info.name }}</h4>
+                <p>{{ place.info.desc }}</p>
+                <p>{{ place.info.date }}</p>
+                <p><a href="travel/place.html#place-{{ place.info.id }}" target="_blank" class="btn btn-default" role="button">View Photos</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <!-- about me -->
       <div class="col-xs-3">
         <img src="images/me.png" class="img-responsive img-circle me" alt="My Photo">
       </div>
